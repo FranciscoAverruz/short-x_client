@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import BACKEND_URL from "@src/Env.jsx"
+import { BACKEND_URL } from "@src/Env.jsx"
 
 const RedirectHandler = () => {
   const { shortId } = useParams();
 
   useEffect(() => {
-    // window.location.href = `http://localhost:3500/${shortId}`;
     window.location.href = `${BACKEND_URL}/${shortId}`;
   }, [shortId]);
 
