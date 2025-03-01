@@ -1,0 +1,13 @@
+[build]
+  publish = "dist"
+  command = "vite build"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Asegurarse de que Netlify sirva archivos comprimidos .br y .gz cuando corresponda
+    Content-Encoding = "br"
+    Content-Type = "application/javascript; charset=utf-8"
+  [headers.values]
+    Content-Encoding = "gzip"
+    Content-Type = "application/javascript; charset=utf-8"

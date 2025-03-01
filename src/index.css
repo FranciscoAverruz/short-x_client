@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .bg {
+    @apply bg-light-bg dark:bg-dark-bg
+  }
+
+  .grlTxt{
+    @apply text-light-grlText dark:text-dark-grlText
+  }
+
+  .smart{
+    @apply text-light-subTitle dark:text-dark-subTitle font-semibold
+  }
+
+  .dashGrlHeadings{
+    @apply mb-0 md:mb-4 px-5 mt-4 md:mt-0
+  }
+
+  .profileMenuItems{
+    @apply  flex px-4 py-2 justify-start text-sm hover:bg-light-btnMenuHoverBg/10 hover:dark:bg-dark-btnMenuHoverBg w-full gap-3 rounded-none opacity-70
+  }
+
+  .btnPrimary {
+    @apply text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
+    @apply bg-gradient-to-r from-light-primaryFrom via-light-primaryVia to-light-primaryTo hover:brightness-200;
+    @apply dark:from-dark-primaryFrom dark:via-dark-primaryVia dark:to-dark-primaryTo focus:ring-transparent;
+ }
+
+  .btnSecondary {
+    @apply text-light-Title dark:text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
+    @apply bg-gradient-to-r from-light-secondaryFrom/50 via-light-secondaryVia/20 to-light-secondaryTo/20 hover:brightness-150;
+    @apply dark:from-dark-secondaryFrom/20 dark:via-dark-secondaryVia/20 dark:to-dark-secondaryTo/20;
+    @apply border-2 border-light-btnSecBorder dark:border-dark-btnSecBorder/50
+  }
+
+  .btnDanger {
+    @apply text-light-Title dark:text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
+    @apply bg-gradient-to-r from-light-dangerFrom/50 via-light-dangerVia/20 to-light-dangerTo/20 hover:brightness-200;
+    @apply dark:from-dark-dangerFrom/20 dark:via-dark-dangerVia/20 dark:to-dark-dangerTo/20;
+    @apply border-2 border-light-btnDangerBorder dark:border-dark-btnDangerBorder/50;
+  }
+
+  .btnNavbar {
+    @apply text-light-Title dark:text-dark-Title py-1 px-2 transition-all duration-300 justify-center items-center md:gap-3;
+    @apply hover:text-light-hoverTitle dark:hover:text-dark-primaryTo/80 brightness-150
+  }
+
+  .actionBtn{
+    @apply  border-2 border-light-subTitle/30 dark:border-dark-subTitle/30 rounded-md;
+  }
+
+  .btnLink {
+    @apply gap-2 text-light-link font-medium transition-all duration-300 hover:underline;
+    @apply dark:text-dark-link dark:hover:text-light-primaryFrom;
+  }
+
+  .btnIcon {
+    @apply transition-all duration-300 gap-2 p-1 text-sm justify-center items-center;
+    @apply text-light-inputText dark:text-dark-inputText opacity-50 hover:opacity-100;
+  }
+  
+  .sectionBg {
+    @apply bg-light-sectionBg dark:bg-dark-sectionBg transition-colors duration-100
+  }
+
+  .grlContainer{
+    @apply  bg-light-sectionBg dark:bg-dark-sectionBg
+            shadow-md p-3 rounded-xl
+  }
+
+  .labelInput {
+    @apply text-light-grlText dark:text-dark-grlText font-bold
+  }
+
+  .inputStyle {
+    @apply bg-light-inputBg/50 text-light-inputText border-light-inputText/30;
+    @apply dark:bg-dark-inputBg/20 dark:text-dark-inputText/60 dark:border-dark-inputText/30;
+    @apply border px-4 py-2 rounded-md focus:outline-none focus:ring-2;
+  }
+
+  .title {
+    @apply text-3xl md:text-5xl text-light-Title dark:text-dark-Title font-bold;
+  }
+
+  .subTitle1UL {
+    @apply text-2xl md:text-4xl text-light-Title/70 dark:text-dark-subTitle/70 ml-[0.5rem] -indent-[1.8rem];
+  }
+
+  .subTitle1 {
+    @apply text-sm md:text-2xl text-light-inputText dark:text-dark-inputText/60
+  }
+
+  .subTitle2 {
+    @apply text-lg text-light-subTitle dark:text-dark-subTitle font-bold;
+  }
+
+  .paragraphText {
+    @apply text-base text-light-grlText dark:text-dark-grlText flex flex-col gap-2 my-3;
+  }
+
+  .innerlight {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.5);
+  }
+  .innerdark {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.8);
+  }
+
+  .gradientToB {
+    @apply bg-gradient-to-b from-[#F0F9FC] via-[#D3E5E8]/30 to-[#78B7D0] dark:from-dark-inputBg/40 dark:via-dark-btnMenuHoverBg/50 dark:to-dark-bg 
+  }
+ 
+  .checkTrue{
+    @apply text-light-Title dark:text-dark-Title
+  }
+
+  .checkFalse{
+    @apply text-light-Title/70 dark:text-dark-Title/70
+  }
+
+  .plan {
+    @apply w-full shadow-xl flex flex-col justify-between;
+  }
+  
+  /* plan heading gradients */
+.free {
+  @apply bg-gradient-to-r from-transparent to-light-primaryFrom;
+}
+
+.pro {
+  @apply bg-gradient-to-r from-light-primaryFrom  to-light-accent; 
+}
+
+.premium {
+  @apply bg-gradient-to-r from-light-accent to-transparent;
+}
+
+/* FAQ */
+.faq-section {
+  @apply px-20 text-center flex flex-col;
+}
+
+.faq-list {
+  @apply mx-auto w-auto max-h-screen md:w-[80%];
+}
+
+.faq-item {
+  @apply bg-light-cardBg/50 dark:bg-dark-cardBg/20 rounded-lg shadow-md my-2 p-4 ;
+}
+
+.faq-question {
+  @apply bg-transparent border-none text-light-Title dark:text-dark-Title cursor-pointer text-lg font-semibold text-left w-full;
+}
+
+.faq-answer {
+  @apply text-light-grlText/60 dark:text-dark-grlText/60 text-base mt-2 pt-2 ml-5;
+}
+
+@font-face {
+  font-family: 'Audiowide';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/audiowide-regular-webfont.woff2') format('woff2'),
+       url('/fonts/audiowide-regular-webfont.woff') format('woff');
+}
+  .Audiowide-font {
+    font-family: 'Audiowide', cursive;
+    font-style: normal;
+    font-weight: normal; 
+  }
+
+/* Primer nivel de numeración */
+ol {
+  counter-reset: main; /* Reinicia el contador para el primer nivel */
+  list-style-position: inside; /* Coloca la numeración dentro del área del contenedor */
+  padding-left:2rem;
+}
+
+ol > li {
+  counter-increment: main; /* Incrementa el contador para el primer nivel */
+  /* margin-left: 0.5rem;
+  text-indent: -1.8rem; Indenta las líneas subsiguientes a la izquierda para alinearlas */
+}
+
+ol > li::before {
+  content: counter(main) ". "; /* Muestra el contador del primer nivel como 1, 2, 3... */
+  font-weight:700;
+}
+
+/* Segundo nivel de numeración */
+ol > li > ol {
+  counter-reset: sub; /* Reinicia el contador para cada subnivel */
+  /* padding-left: 1rem; */
+}
+
+ol > li > ol > li {
+  counter-increment: sub; /* Incrementa el contador del subnivel */
+  /* margin-left: 0.5rem; */
+}
+
+ol > li > ol > li::before {
+  content: counter(main) "." counter(sub) ". "; /* Muestra la numeración como 1.1, 1.2, 2.1, 2.2 */
+  font-weight:700;
+}
+
+/* Estilo para la lista desordenada (sub-subejemplos) */
+ol > li > ol > li > ul {
+  list-style-type: disc; /* Cambia el estilo de viñeta a un disco (punto) */
+  padding-left: 1rem; /* Reduce el espacio a la izquierda de las viñetas */
+}
+
+/* Ajuste del margen entre los ítems de la lista desordenada */
+ol > li > ol > li > ul > li {
+  margin-left: 0.5rem;
+}
+
+}
