@@ -1,49 +1,70 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import useAuthAxios from "@hooks/useAuthAxios";
+import React, { useContext, useEffect, useState, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "@src/Env.jsx";
 import UrlInfo from "@dashCommon/UrlInfo";
 import { AuthContext } from "@context/AuthContext";
 import { Loader } from "@common/Loader.jsx";
+import useAuthAxios from "@hooks/useAuthAxios";
+import useUrlActions from "@hooks/useUrlActions";
+import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
 
 const UrlDetails = () => {
   const { shortId } = useParams();
   const authAxios = useAuthAxios();
+  const { userId, plan } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [urlData, setUrlData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedUrls, setSelectedUrls] = useState([]);
-  const { userId, plan } = useContext(AuthContext);
+
+  const fetchUrlDetails = useCallback(async () => {
+    if (!userId) return;
+    try {
+      const response = await authAxios.get(`${API_URL}/user/${userId}/stats/${shortId}`);
+      setUrlData(response.data);
+    } catch (error) {
+      console.error("Error al obtener detalles de la URL:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [authAxios, shortId, userId]);
 
   useEffect(() => {
-    const fetchUrlDetails = async () => {
-      if (!userId) return;
-      try {
-        const response = await authAxios.get(`${API_URL}/user/${userId}/stats/${shortId}`);
-        setUrlData(response.data);
-      } catch (error) {
-        console.error("Error fetching URL details:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUrlDetails();
-  }, [shortId, authAxios, userId]);
+  }, [fetchUrlDetails]);
+
+  const {
+    loadingAction,
+    confirmModal,
+    closeConfirmModal,
+    handleDeleteMultiple,
+    openConfirmModal
+  } = useUrlActions(setUrlData, setSelectedUrls, selectedUrls, fetchUrlDetails, shortId);
+
+  const handleSelectForDeletion = () => {
+    setSelectedUrls([shortId]);
+    openConfirmModal();
+  };
+
+  const handleDeleteAndRedirect = async () => {
+    await handleDeleteMultiple();
+
+    navigate("/dashboard/urls");
+  };
 
   if (loading) return <Loader type="spinner" />;
   if (!urlData) return <p>No se encontró la URL.</p>;
-  console.log("urlData UrlDetails ---- ", urlData); 
 
   return (
     <div className="mx-auto p-4 max-w-7xl">
       <h1 className="text-2xl font-bold mb-4">Detalles de la URL</h1>
 
-      <UrlInfo 
-        urlsStats={[urlData]} 
-        selectedUrls={selectedUrls} 
+      <UrlInfo
+        urlsStats={[urlData]}
+        selectedUrls={selectedUrls}
         setSelectedUrls={setSelectedUrls}
-        expiresAt= {urlData.expiresAt}
+        expiresAt={urlData.expiresAt}
       />
 
       <section className="mt-5 p-4 border rounded-lg bg-gray-100 dark:bg-gray-800">
@@ -82,7 +103,23 @@ const UrlDetails = () => {
             ))}
           </div>
         )}
+
+        <button
+          onClick={handleSelectForDeletion}
+          className="mt-4 bg-red-500 text-white p-2 rounded"
+        >
+          Eliminar URL
+        </button>
       </section>
+
+      <ConfirmModal
+        open={confirmModal.isOpen}
+        onClose={closeConfirmModal}
+        title="Confirmar eliminación"
+        content="¿Estás seguro de que deseas eliminar esta URL? Esta acción no se puede deshacer."
+        onConfirm={handleDeleteAndRedirect}
+        loading={loadingAction}
+      />
     </div>
   );
 };

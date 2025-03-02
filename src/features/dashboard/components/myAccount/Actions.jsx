@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 // import { useState } from "react";
 import axios from "axios";
-import useFormatDate from "@hooks/useFormatDate";
+import FormatDate from "@dashCommon/FormatDate.jsx";
 import { Loader } from "@common/Loader.jsx";
 import { lazy, Suspense } from "react";
 const Button = lazy(() => import("@atoms/Button"));
 
 const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
   const isCancellationPending = user.isCancellationPending;
-  const cancelDate = useFormatDate(user.scheduledForDeletion);
+  const cancelDate = FormatDate(user.scheduledForDeletion);
   console.log("user.scheduledForDeletion === ", user.scheduledForDeletion)
 
   const handleCancelAccount = async () => {

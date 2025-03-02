@@ -60,7 +60,7 @@ const Login = () => {
             type="email"
             value={credentials.email}
             onChange={handleChange}
-            required
+            required = "required"
             icon={<IoIosAt />}
           />
           <PasswordInput

@@ -30,7 +30,6 @@ function App() {
     const isTokenValid = () => {
       const token =
         localStorage.getItem("user") || sessionStorage.getItem("user");
-      console.log("Usuario Activo app === ", token);
 
       if (!token) return false;
 

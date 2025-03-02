@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { API_URL } from "@src/Env.jsx";
@@ -15,18 +14,17 @@ import useUrlActions from "@hooks/useUrlActions";
 import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 
-const MyUrls = ({shortenedUrl}) => {
+const MyUrls = () => {
   const [urlsStats, setUrlsStats] = useState([]);
-  console.log("urlsStats MyUrls", urlsStats)
-
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedUrls, setSelectedUrls] = useState([]);
   
-  const { userId } = useContext(AuthContext);
+   const { userId } = useContext(AuthContext);
   const authAxios = useAuthAxios();
   const navigate = useNavigate();
+  
 
   const fetchUrlsStats = useCallback(async () => {
     if (!userId) return;
@@ -87,7 +85,10 @@ const MyUrls = ({shortenedUrl}) => {
     setCurrentPage(page);
   };
 
+  console.log("🔍 openConfirmModal en MyUrls:", openConfirmModal);
+
   return (
+    <>
     <AnimatePresence>
       <main className="px-5">
         <nav className="flex flex-col md:flex-row justify-center md:justify-between items-center md:gap-10 mb-2">
@@ -138,6 +139,7 @@ const MyUrls = ({shortenedUrl}) => {
                   setSelectedUrls={setSelectedUrls}
                   setUrlsStats={setUrlsStats}
                   fetchUrlsStats={fetchUrlsStats}
+                  openConfirmModal={openConfirmModal}
                 />
               ) : (
                 <p>No stats available for your URLs.</p>
@@ -162,7 +164,8 @@ const MyUrls = ({shortenedUrl}) => {
           </section>
         </aside>
 
-        {/* Confirmation modal for deletion */}
+      </main>
+    </AnimatePresence>
         {confirmModal.isOpen && (
           <ConfirmModal
             open={confirmModal.isOpen}
@@ -182,8 +185,7 @@ const MyUrls = ({shortenedUrl}) => {
             loading={loadingAction}
           />
         )}
-      </main>
-    </AnimatePresence>
+        </>
   );
 };
 

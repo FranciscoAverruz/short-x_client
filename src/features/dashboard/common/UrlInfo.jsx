@@ -1,31 +1,21 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-// UrlInfo.jsx
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import useUrlActions from "@hooks/useUrlActions";
-import { Loader } from "@common/Loader";
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion"; 
 import { FRONTEND_URL } from "@src/Env.jsx";
 import { FaLink, FaRegCopy } from "react-icons/fa";
 import { TbListDetails } from "react-icons/tb";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { IoTrashOutline } from "react-icons/io5";
 import Button from "@atoms/Button.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Input from "@molecules/Input.jsx";
-import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
-import useFormatDate from "@hooks/useFormatDate";
+import Tooltip from "@molecules/Tooltip.jsx";
+import FormatDate from "@dashCommon/FormatDate";
 
-const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetchUrlsStats}) => {
-  const {
-    loadingAction,
-    confirmModal,
-    closeConfirmModal,
-    openConfirmModal,
-    handleDeleteMultiple,
-    shortenedUrl
-  } = useUrlActions(setUrlsStats, setSelectedUrls, selectedUrls, fetchUrlsStats);
-    const navigate = useNavigate();
+const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleSelection = (shortId) => {
     setSelectedUrls((prevSelected) =>
@@ -35,12 +25,15 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetch
     );
   };
 
-  const handleDeleteSingle = (shortLink) => {
-    setSelectedUrls([shortLink]);
+  const confirmDelete = (shortId) => {
+    setSelectedUrls([shortId]);
     openConfirmModal();
   };
 
-  const formatDate = useFormatDate; 
+  const tooltipPosition = { top: "-30px", left: "30%", transform: "translateX(-50%)" };
+  const formatDate = FormatDate;
+
+  const isDetailPage = location.pathname.includes("/dashboard/urls/");
 
   return (
     <AnimatePresence>
@@ -48,48 +41,59 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetch
         {urlsStats.map((url, index) => {
           const formattedExpiration = formatDate(url.expiresAt);
           const shortenedUrl = `${FRONTEND_URL}/${url.shortLink}`;
-          const longUrl = new URL(url.originalUrl).hostname;
+          const domain = new URL(url.originalUrl).hostname;
           let faviconUrl = `${url.originalUrl}/favicon.ico`;
+
           const handleError = (e) => {
-            e.target.src = `https://www.google.com/s2/favicons?sz=64&domain=${longUrl}`;
+            e.target.src = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
           };
+
           const copyToClipboard = () => {
             navigator.clipboard.writeText(shortenedUrl);
             alert("¡URL copiada al portapapeles!");
           };
-          const isSelected = selectedUrls.includes(url.shortLink);
+
+          const isSelected = selectedUrls && selectedUrls.includes(url.shortLink);
+
           return (
-            <motion.li 
+            <motion.li
               key={index}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, rotate: 15 }}
-              transition={{ duration: 0.3 }}
-              className={`flex flex-col grlContainer grlTxt max-w-7xl ${isSelected ? 'border border-red-500' : 'border border-transparent'}`}
+              exit={{ 
+                opacity: 0, 
+                scale: 0.9, 
+                rotate: 15, 
+                filter: "brightness(1.5)", 
+                transition: { duration: 0.5 },
+                backgroundColor: "rgba(255, 0, 0, 0.3)",
+              }}
+              transition={{ duration: 0.3 }} 
+              className={`flex flex-col grlContainer grlTxt max-w-7xl border-2 transition-colors duration-300 ease-in-out ${isSelected ? 'border-red-300 bg-red-50' : 'border-transparent'}`}
             >
               <article className="flex flex-col md:flex-row w-full items-start">
-                <aside className="flex flex-row items-start">
+                {!isDetailPage && (
                   <Input
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => toggleSelection(url.shortLink)}
                     className="mr-2"
                   />
-                  <span className="max-w-8 max-h-8 aspect-square mr-5">
-                    {faviconUrl ? (
-                      <img
-                        src={faviconUrl}
-                        alt="Favicon"
-                        className="rounded-md col-span-1 w-8 h-8"
-                        onError={handleError}
-                      />
-                    ) : (
-                      <FaLink className="w-8 h-8" />
-                    )}
-                  </span>
-                </aside>
-                <aside className="w-full">
-                  <span className="flex flex-col-reverse md:flex-row md:justify-between">
+                )}
+                <div className="max-w-8 max-h-8 aspect-square mr-5">
+                  {faviconUrl ? (
+                    <img
+                      src={faviconUrl}
+                      alt="Favicon"
+                      className="rounded-md col-span-1 w-8 h-8"
+                      onError={handleError}
+                    />
+                  ) : (
+                    <FaLink className="w-8 h-8" />
+                  )}
+                </div>
+                <div className="w-full">
+                  <aside className="flex flex-col-reverse md:flex-row md:justify-between">
                     <a
                       href={shortenedUrl}
                       target="_blank"
@@ -102,28 +106,31 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetch
                       <p className="labelInput mr-1">Clicks:</p>
                       <p>{url.totalClicks}</p>
                     </span>
-                  </span>
+                  </aside>
                   <p className="break-all overflow-hidden line-clamp-1 w-full opacity-50">
                     {url.originalUrl}
                   </p>
-                </aside>
+                </div>
               </article>
               <hr className="my-2 border-light-btnSecBorder dark:border-dark-btnSecBorder" />
-              <article className="flex flex-col md:flex-row justify-end gap-2">
+              <article className="flex flex-row justify-end gap-2">
                 <aside className="flex items-center text-sm h-full grlTxt w-ful">
-                {formattedExpiration ? 
-                  <p>Expira: {formattedExpiration}</p> : 
-                  <p>¡Esta URL no expira!</p>
-                }</aside>
-                <span className="flex flex-row justify-end">
-                <Button
-                  onClick={copyToClipboard}
-                  variant="toggle"
-                  icon={FaRegCopy}
-                  ClassBtnIco="w-4 h-4"
-                  className="actionBtn opacity-70"
-                  title="Copiar"
-                />
+                  {formattedExpiration ? (
+                    <p>Expira: {formattedExpiration}</p>
+                  ) : (
+                    <p>¡Esta URL no expira!</p>
+                  )}
+                </aside>
+                    <Tooltip tooltipText="Copiar" tooltipStyles={tooltipPosition}> 
+                      <Button
+                        onClick={copyToClipboard}
+                        variant="toggle"
+                        icon={FaRegCopy}
+                        ClassBtnIco="w-4 h-4"
+                        className="actionBtn opacity-70"
+                        title="Copiar"
+                      />
+                    </Tooltip>
                 <Button
                   onClick={() => {  }}
                   variant="toggle"
@@ -132,14 +139,17 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetch
                   className="actionBtn opacity-70"
                   title="Editar"
                 />
-                <Button
-                  onClick={() => handleDeleteSingle(url.shortLink)} 
-                  variant="toggle"
-                  icon={IoTrashOutline}
-                  ClassBtnIco="w-4 h-4"
-                  className="actionBtn opacity-70"
-                  title="Eliminar"
-                />
+
+                {!isDetailPage && (
+                  <>
+                    <Button
+                      onClick={() => confirmDelete(url.shortLink)} 
+                      variant="toggle"
+                      icon={IoTrashOutline}
+                      ClassBtnIco="w-4 h-4"
+                      className="actionBtn opacity-70"
+                      title="Eliminar"
+                    />
                 <Button
                   onClick={() => navigate(`/dashboard/urls/${url.shortLink}`)}
                   variant="toggle"
@@ -148,31 +158,13 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, setUrlsStats, fetch
                   className="actionBtn opacity-70"
                   title="Detalles"
                 />
-                </span>
+                  </>
+                )}
               </article>
             </motion.li>
           );
         })}
       </ul>
-        {confirmModal.isOpen && (
-          <ConfirmModal
-            open={confirmModal.isOpen}
-            onClose={closeConfirmModal}
-            title="Confirmar Eliminación"
-              content={
-              <div>
-                <p>¿Estás seguro de que deseas eliminar las siguientes URLs?</p>
-                <ol>
-                  {selectedUrls.map((url, index) => (
-                    <li key={index}>{url}</li> 
-                  ))}
-                </ol>
-              </div>
-            }
-            onConfirm={handleDeleteMultiple} 
-            loading={loadingAction}
-          />
-        )}
     </AnimatePresence>
   );
 };

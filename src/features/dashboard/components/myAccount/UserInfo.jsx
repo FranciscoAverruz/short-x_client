@@ -5,7 +5,7 @@ import Input from "@molecules/Input";
 import SubmitButton from "@molecules/SubmitButton";
 import useAuthAxios from "@hooks/useAuthAxios";
 import Button from "@atoms/Button";
-import useFormatDate from "@hooks/useFormatDate";
+import FormatDate from "@dashCommon/FormatDate";
 import PlanLabel from "@dashCommon/PlanLabel.jsx";
 import { API_URL } from "@src/Env.jsx";
 import { AuthContext } from "@context/AuthContext";
@@ -16,8 +16,8 @@ import { FaMedal } from "react-icons/fa6";
 
 const UserInfo = ({ user, setUser, isCancellationPending }) => {
   const { plan } = useContext(AuthContext);
-  const createdAt = useFormatDate(user.createdAt);
-  const updatedAt = useFormatDate(user.updatedAt);
+  const createdAt = FormatDate(user.createdAt);
+  const updatedAt = FormatDate(user.updatedAt);
   const [isEditing, setIsEditing] = useState(false);
   const { dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState({
