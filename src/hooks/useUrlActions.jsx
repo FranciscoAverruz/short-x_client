@@ -27,8 +27,6 @@ const useUrlActions = (setUrlsStats, setSelectedUrls, selectedUrls, fetchUrlsSta
         return;
       }
 
-      console.log("selectedUrls == ", selectedUrls);
-
       const shortIds = selectedUrls;
       setLoadingAction(true);
       try {

@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Input from "@molecules/Input.jsx";
 import Tooltip from "@molecules/Tooltip.jsx";
 import FormatDate from "@dashCommon/FormatDate";
+import { toast } from "sonner";
 
 const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal }) => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
 
   const confirmDelete = (shortId) => {
     setSelectedUrls([shortId]);
+    console.log("shortId >>>>>>>>>> ", shortId )
     openConfirmModal();
   };
 
@@ -50,7 +52,7 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
 
           const copyToClipboard = () => {
             navigator.clipboard.writeText(shortenedUrl);
-            alert("¡URL copiada al portapapeles!");
+            toast.info("¡URL copiada al portapapeles!")
           };
 
           const isSelected = selectedUrls && selectedUrls.includes(url.shortLink);
@@ -128,17 +130,19 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
                         icon={FaRegCopy}
                         ClassBtnIco="w-4 h-4"
                         className="actionBtn opacity-70"
-                        title="Copiar"
+                        // title="Copiar"
                       />
                     </Tooltip>
-                <Button
-                  onClick={() => {  }}
-                  variant="toggle"
-                  icon={MdOutlineModeEdit}
-                  ClassBtnIco="w-4 h-4"
-                  className="actionBtn opacity-70"
-                  title="Editar"
-                />
+                    <Tooltip tooltipText="Editar" tooltipStyles={tooltipPosition}> 
+                      <Button
+                        onClick={() => navigate(`/dashboard/urls/${url.shortLink}/edit`, { state: { urlData: url } })}
+                        variant="toggle"
+                        icon={MdOutlineModeEdit}
+                        ClassBtnIco="w-4 h-4"
+                        className="actionBtn opacity-70"
+                        // title="Editar"
+                      />
+                    </Tooltip>
 
                 {!isDetailPage && (
                   <>

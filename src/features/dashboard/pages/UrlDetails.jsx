@@ -49,8 +49,12 @@ const UrlDetails = () => {
 
   const handleDeleteAndRedirect = async () => {
     await handleDeleteMultiple();
-
     navigate("/dashboard/urls");
+  };
+
+  const handleCloseConfirmModal = () => {
+    setSelectedUrls([]);
+    closeConfirmModal();
   };
 
   if (loading) return <Loader type="spinner" />;
@@ -114,7 +118,7 @@ const UrlDetails = () => {
 
       <ConfirmModal
         open={confirmModal.isOpen}
-        onClose={closeConfirmModal}
+        onClose={handleCloseConfirmModal}
         title="Confirmar eliminación"
         content="¿Estás seguro de que deseas eliminar esta URL? Esta acción no se puede deshacer."
         onConfirm={handleDeleteAndRedirect}

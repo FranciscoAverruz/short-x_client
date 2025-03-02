@@ -2,7 +2,6 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Home from "@home/Home.jsx";
 import Login from "@auth/Login.jsx";
 import Register from "@auth/Register.jsx";
-import Dashboard from "@dashboard/Dashboard.jsx";
 import MainLayout from "@layouts/MainLayout.jsx";
 import DashboardLayout from "@layouts/DashboardLayout.jsx";
 import ShortenUrl from "@dashPage/ShortenUrl.jsx";
@@ -21,6 +20,7 @@ import Success from "@auth/Success.jsx";
 import Cancel from "@auth/Cancel.jsx";
 import { useEffect } from "react";
 import { Toaster } from "sonner";
+import EditUrl from "./features/urlShortener/EditUrl ";
 
 function App() {
   const navigate = useNavigate();
@@ -83,10 +83,11 @@ function App() {
 
         {/* dashboard ========================================================= */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<MyAccount />} />
           <Route path="shorten-url" element={<ShortenUrl />} />
           <Route path="urls" element={<MyUrls />} />
           <Route path="urls/:shortId" element={<UrlDetails />} />
+          <Route path="urls/:shortId/edit" element={<EditUrl />} />
           <Route path="stats" element={<Stats />} />
           <Route path="myaccount" element={<MyAccount />} />
         </Route>

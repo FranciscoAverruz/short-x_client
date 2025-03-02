@@ -12,12 +12,6 @@ import {SidebarItem} from '@dashSideBar/SidebarItem.jsx';
 
 const menuItems = [
   {
-    icon: { default: <TbLayoutDashboard />, active: <TbLayoutDashboardFilled />, },
-    label: "Dashboard",
-    link: "/dashboard",
-    alert,
-  },
-  {
     icon: { default: <HiOutlineUser />, active: <HiUser /> },
     label: "Mi Cuenta",
     link: "/dashboard/myaccount",
