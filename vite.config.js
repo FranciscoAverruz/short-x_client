@@ -36,6 +36,7 @@ export default defineConfig({
       '@dashSideBar': path.resolve(__dirname, 'src/features/dashboard/components/dashSideBar'),
       '@myAccount': path.resolve(__dirname, 'src/features/dashboard/components/myAccount'),
       '@dashCommon': path.resolve(__dirname, 'src/features/dashboard/common'),
+      '@dashCharts': path.resolve(__dirname, 'src/features/dashboard/charts'),
       '@urlShortener': path.resolve(__dirname, 'src/features/urlShortener'),
       '@common': path.resolve(__dirname, 'src/components/common'),
       '@home': path.resolve(__dirname, 'src/features/home'),

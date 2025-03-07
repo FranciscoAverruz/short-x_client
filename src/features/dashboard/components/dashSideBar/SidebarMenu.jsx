@@ -67,8 +67,10 @@ const SidebarMenu = ({ expanded, closeSidebar }) => {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/");
     closeSidebar();
+    setTimeout(() => {
+      navigate("/");  // Redirigir después de que el estado se haya actualizado
+    }, 300);  // 300ms puede ser ajustado según tu necesidad
   };
 
   const handleNavigation = (link) => {

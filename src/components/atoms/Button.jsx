@@ -3,7 +3,7 @@
 /* src/components/atoms/Button.jsx */
 import React from 'react';
 
-const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Icon, className = 'rounded-lg', ClassBtnIco="w-5 h-5",title }) => {
+const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Icon, className = 'rounded-lg', ClassBtnIco="w-5 h-5",title, onMouseEnter, onMouseLeave }) => {
   const buttonClasses = {
     primary: "btnPrimary",
     secondary: "btnSecondary",
@@ -16,6 +16,8 @@ const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Ic
 
   return (
     <button
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       type={type}
       onClick={onClick}
       title={title}

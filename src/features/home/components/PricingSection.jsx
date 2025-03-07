@@ -137,10 +137,10 @@ const PricingSection = ({ handlePlanSelect }) => {
                   onClick={() => handleSelectPlan(plan)}
                   className="p-2 w-3/4 opacity-100"
                   ClassBtnIco={`dropshadow-lg ${
-                    plan.planType === "free" ? "text-[#28A745]" : 
-                    plan.planType === "pro" ? "text-[#C0C0C0]" : 
-                    "text-[#DAA520]" 
-                      }`}
+                    plan.planType === "free" ? "text-light-free" : 
+                    plan.planType === "pro" ? "text-light-pro" : 
+                    "text-light-premium" 
+                      }`} 
                 />
               </div>
             </article>

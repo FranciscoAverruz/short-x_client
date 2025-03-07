@@ -11,13 +11,11 @@ function Success() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
-    const storedSelectedPlan = localStorage.getItem("selectedPlan");
-    const sessionId = localStorage.getItem("sessionId");
+    const storedUserData = sessionStorage.getItem("userData");
+    const storedSelectedPlan = sessionStorage.getItem("selectedPlan");
+    const sessionId = sessionStorage.getItem("sessionId");
 
     if (sessionId && storedUserData && storedSelectedPlan) {
-      console.log("Pago exitoso. Session ID:", sessionId);
-
       const userData = JSON.parse(storedUserData);
       const selectedPlan = storedSelectedPlan;
 
@@ -33,11 +31,9 @@ function Success() {
         .post(`${API_URL}/verify-payment`, dataToSend)
         .then((response) => {
           if (response.data.success) {
-            console.log("Pago verificado correctamente.");
-
-            localStorage.removeItem("userData");
-            localStorage.removeItem("selectedPlan");
-            localStorage.removeItem("sessionId");
+            sessionStorage.removeItem("userData");
+            sessionStorage.removeItem("selectedPlan");
+            sessionStorage.removeItem("sessionId");
 
             setTimeout(() => {
               navigate("/login");

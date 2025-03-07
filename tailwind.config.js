@@ -35,10 +35,10 @@ export default {
           secondaryVia: "#7AAFFF",
           secondaryTo: "#4F8BFF",
 
-          dangerFrom: '#f87171', // Rojo claro o color de advertencia
-          dangerVia: '#f5a9a9', // Color intermedio más suave
-          dangerTo: '#f44336', // Rojo intenso
-          btnDangerBorder: '#f44336', // Borde de color rojo
+          dangerFrom: '#f87171',
+          dangerVia: '#f5a9a9',
+          dangerTo: '#f44336',
+          btnDangerBorder: '#f44336',
           // navbarFrom: "#3B6FFF",
           // navbarVia: "#1C4BFF",
           // navbarTo: "#0F36C8",
@@ -47,6 +47,10 @@ export default {
           iconFrom: "#4F8BFF",
           iconVia: "#3B6FFF",
           iconTo: "#1C4BFF",
+
+          free:"#28A745",
+          pro:"#C0C0C0",
+          premium:"#DAA520"
         },
         dark: {
           bg: "#0d0d0e",
@@ -59,7 +63,6 @@ export default {
           subTitle:	"#9FAEE1",
           grlText:	"#E6E8F0",
           inputText:	"#F1F3FF",
-          // accent:	"#FA7575",
           accent:	"#FFB84D",
           cardBg:	"#5EA2FF",
           cardAccent:	"#19182D",
@@ -74,10 +77,10 @@ export default {
           secondaryVia: "#3B6FFF",
           secondaryTo: "#1C4BFF",
 
-          dangerFrom: '#d32f2f', // Rojo más oscuro para el modo oscuro
-          dangerVia: '#c2185b', // Color intermedio más oscuro
-          dangerTo: '#b71c1c', // Rojo muy intenso para el modo oscuro
-          btnDangerBorder: '#b71c1c', // Borde de color más oscuro en el modo oscuro
+          dangerFrom: '#d32f2f',
+          dangerVia: '#c2185b',
+          dangerTo: '#b71c1c',
+          btnDangerBorder: '#b71c1c',
           // navbarFrom: "#1C4BFF",
           // navbarVia: "#0F36C8",
           // navbarTo: "#081F7A",

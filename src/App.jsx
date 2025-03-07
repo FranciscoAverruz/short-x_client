@@ -20,7 +20,8 @@ import Success from "@auth/Success.jsx";
 import Cancel from "@auth/Cancel.jsx";
 import { useEffect } from "react";
 import { Toaster } from "sonner";
-import EditUrl from "./features/urlShortener/EditUrl ";
+import EditUrl from "@urlShortener/EditUrl ";
+import ChangePassword from "@myAccount/ChangePassword.jsx"
 
 function App() {
   const navigate = useNavigate();
@@ -84,12 +85,13 @@ function App() {
         {/* dashboard ========================================================= */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<MyAccount />} />
+          <Route path="myaccount" element={<MyAccount />} />
           <Route path="shorten-url" element={<ShortenUrl />} />
           <Route path="urls" element={<MyUrls />} />
           <Route path="urls/:shortId" element={<UrlDetails />} />
           <Route path="urls/:shortId/edit" element={<EditUrl />} />
           <Route path="stats" element={<Stats />} />
-          <Route path="myaccount" element={<MyAccount />} />
+          <Route path="password" element={<ChangePassword />} />
         </Route>
 
         {/* 404  ============================================================= */}

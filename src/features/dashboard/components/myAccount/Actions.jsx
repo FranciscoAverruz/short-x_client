@@ -1,40 +1,77 @@
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
-import axios from "axios";
 import FormatDate from "@dashCommon/FormatDate.jsx";
 import { Loader } from "@common/Loader.jsx";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useContext, useState } from "react";
 const Button = lazy(() => import("@atoms/Button"));
+import { AuthContext } from "@context/AuthContext";
+import useAuthAxios from "@hooks/useAuthAxios";
+import { toast } from "sonner";
+import { API_URL } from "@src/Env.jsx"
+import ConfirmModal from "@dashCommon/ConfirmModal";
+import { useNavigate } from "react-router-dom";
 
 const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
+  const navigate = useNavigate();
+  const authAxios = useAuthAxios();
+  const { userId, dispatch} = useContext(AuthContext);
   const isCancellationPending = user.isCancellationPending;
   const cancelDate = FormatDate(user.scheduledForDeletion);
-  console.log("user.scheduledForDeletion === ", user.scheduledForDeletion)
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [loadingCancel, setLoadingCancel] = useState(false);
+  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
+  const [loadingSuspend, setLoadingSuspend] = useState(false);
 
   const handleCancelAccount = async () => {
+    setLoadingCancel(true);
     try {
-      await axios.post(`/api/user/${user._id}/cancel`);
-      alert("Account cancellation requested.");
+      const response = await authAxios.post(`${API_URL}/user/${userId}/request-deletion`, {
+        deletionTimeInHours: 24,
+      });
+
+      toast.success(response.data.message);
+      dispatch({
+        type: "UPDATE_USER",
+        payload: {
+          isCancellationPending: true,
+          scheduledForDeletion: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        },
+      });
+
+      setIsCancelModalOpen(false);
     } catch (error) {
       console.error("Error canceling account:", error);
+      toast.error("Error requesting account deletion.");
+    } finally {
+      setLoadingCancel(false);
     }
   };
 
   const handleSuspendCancellation = async () => {
+    setLoadingSuspend(true);
     try {
-      await axios.post(`/api/user/${user._id}/suspend-cancel`);
-      alert("Account cancellation suspended.");
+      const response = await authAxios.post(`${API_URL}/user/${userId}/cancel-deletion`);
+
+      toast.success(response.data.message);
+
+      dispatch({
+        type: "UPDATE_USER",
+        payload: { isCancellationPending: false, scheduledForDeletion: null },
+      });
+      setIsSuspendModalOpen(false);
     } catch (error) {
-      console.error("Error suspending cancellation:", error);
+      console.error("Error suspendiendo cancelación:", error);
+      toast.error("Error al suspender la cancelación.");
+    } finally {
+      setLoadingSuspend(false);
     }
   };
 
   const handleChangePassword = () => {
-    alert("Redirect to change password");
+    navigate("/dashboard/password");
   };
 
   return (
-    <div className={`flex gap-4 md:gap-6 w-full ${isCancellationPending ? "flex-col-reverse" : "flex-col"} `}>
+    <main className={`flex gap-4 md:gap-6 w-full ${isCancellationPending ? "flex-col-reverse" : "flex-col"} `}>
 
       <section className="grlContainer row-span-1 col-span-1 flex items-center lg:flex-col h-fit justify-center md:p-8 gap-3">
         <article className="flex flex-row space-x-2 w-full h-full items-center">
@@ -70,8 +107,16 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
             <Button
               label="Eliminar Cuenta"
               variant="danger"
-              onClick={handleCancelAccount}
+              onClick={() => setIsCancelModalOpen(true)}
               className="w-full px-4 py-2 "
+            />
+            <ConfirmModal
+              open={isCancelModalOpen}
+              onClose={() => setIsCancelModalOpen(false)}
+              title="¿Estás seguro?"
+              content="Tu cuenta será eliminada en 24 horas. ¿Quieres continuar?"
+              onConfirm={handleCancelAccount}
+              loading={loadingCancel}
             />
           </Suspense>
         )}
@@ -87,14 +132,22 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
               <Button
                 label="Suspender Cancelacion"
                 variant="primary"
-                onClick={handleSuspendCancellation}
+                onClick={() => setIsSuspendModalOpen(true)}
                 className="w-full px-4 py-2"
               />
+              <ConfirmModal
+                  open={isSuspendModalOpen}
+                  onClose={() => setIsSuspendModalOpen(false)}
+                  title="Suspender cancelación"
+                  content="vas suspender la cancelación, tu cuenta ya no será eliminada. ¿Quieres continuar?"
+                  onConfirm={handleSuspendCancellation}
+                  loading={loadingSuspend}
+                />
             </Suspense>
           </article>
         )}
       </section>
-    </div>
+    </main>
   );
 };
 

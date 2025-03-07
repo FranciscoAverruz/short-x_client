@@ -9,10 +9,13 @@ const useUserUrlsStats = () => {
   const [loading, setLoading] = useState(true);
   const [totalUrls, setTotalUrls] = useState(0);
   const [urlsStats, setUrlsStats] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!userId) return;
-
+    if (!user || !userId) { 
+      return 
+    }
+   
     const fetchUserUrlsStats = async () => {
       try {
         const response = await authAxios.get(`${API_URL}/user/${userId}/stats`);
@@ -26,7 +29,7 @@ const useUserUrlsStats = () => {
     };
 
     fetchUserUrlsStats();
-  }, [userId, authAxios]);
+  }, [user, userId, authAxios]);
 
   return { loading, totalUrls, urlsStats };
 };

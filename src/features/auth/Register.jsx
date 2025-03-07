@@ -5,25 +5,21 @@ import { MdAlternateEmail } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import SubmitButton from "@molecules/SubmitButton.jsx";
 import useRegister from "@hooks/useRegister.jsx";
-import PasswordInput from "@molecules/PasswordInput";
 import Button from "@atoms/Button.jsx";
 import PricingModal from "@common/PricingModal";
 import border from "@assets/border.webp";
 import avatar from "@assets/avatar.jpg";
 import AuthLayout from "@auth/AuthLayout";
 import Input from "@molecules/Input.jsx"; 
-import { BiSolidMessageSquareCheck, BiSolidMessageSquareX} from "react-icons/bi";
 import useCheckoutSession from "@hooks/useCheckoutSession.jsx";
-import { UserContext } from "@context/UserContext.jsx";
+import PasswordValidation from "@dashCommon/PasswordValidation";
 
-import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 
 const Register = () => {
   const [searchParams] = useSearchParams();
-  const [plan, setPlan] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [passwordFocused, setPasswordFocused] = useState(false);
   const [conditionsChecked, setConditionsChecked] = useState(false);
   const [passwordChecked, setPasswordChecked] = useState(false);
   const { registerUser, loading, error } = useRegister();
@@ -37,18 +33,8 @@ const Register = () => {
     billingCycle: "", 
     paymentMethodId: ""
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const { createCheckoutSession, loadingCheckout, errorCheckout } = useCheckoutSession();
-
-  const [passwordRequirements, setPasswordRequirements] = useState({
-    minLength: false,
-    uppercase: false,
-    number: false,
-    specialChar: false,
-  });
-
-  const { userData, setUserData, selectedPlan, setSelectedPlan } = useContext(UserContext);
+  const { createCheckoutSession } = useCheckoutSession();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -61,12 +47,6 @@ const Register = () => {
       if (!passwordChecked && value.length > 0) {
         setPasswordChecked(true);
       }
-      setPasswordRequirements({
-        minLength: value.length >= 5,
-        uppercase: /[A-Z]/.test(value),
-        number: /\d/.test(value),
-        specialChar: /[!@#$%^&*]/.test(value),
-      });
     }
   };
 
@@ -82,108 +62,96 @@ const Register = () => {
     }));
     setModalOpen(false);
   };
-
   const stripe = useStripe();
   const elements = useElements();
 
-
 // HANDLE SUBMIT *********************************************************************************************************
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const fullPlan = `${registrationData.plan}_${registrationData.billingCycle === "monthly" ? "monthly" : "annual"}`;
+  const selectedPlan = registrationData.plan ? registrationData.plan : "free";
+  const selectedBillingCycle = registrationData.billingCycle ? registrationData.billingCycle : "monthly";
 
-    if (!conditionsChecked) {
-      alert("Debes aceptar los términos y condiciones para registrarte.");
-      return;
+  const fullPlan = `${selectedPlan}_${selectedBillingCycle === "monthly" ? "monthly" : "annual"}`;
+
+  if (!conditionsChecked) {
+    alert("Debes aceptar los términos y condiciones para registrarte.");
+    return;
+  }
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{5,}$/;
+  if (!passwordRegex.test(registrationData.password)) {
+    alert("La contraseña no cumple con los requisitos.");
+    return;
+  }
+
+  if (registrationData.password !== registrationData.confirmPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
+
+  const dataToSend = {
+    username: registrationData.username,
+    email: registrationData.email,
+    password: registrationData.password,
+    confirmPassword: registrationData.confirmPassword,
+    plan: selectedPlan,
+    billingCycle: selectedBillingCycle,
+    paymentMethodId: registrationData.paymentMethodId,
+
+  };
+
+  const handleError = (err) => {
+    if (err.response?.data?.error === "EMAIL_ALREADY_EXISTS") {
+      setErrorMessage("Este correo ya está registrado.");
+    } else if (err.response?.data?.error === "WEAK_PASSWORD") {
+      setErrorMessage("La contraseña debe cumplir con los requisitos.");
+    } else if (err.response?.data?.error === "PASSWORD_MISMATCH") {
+      setErrorMessage("Las contraseñas no coinciden.");
+    } else {
+      setErrorMessage("Ocurrió un error inesperado. Intenta más tarde.");
     }
+  };
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{5,}$/;
-    if (!passwordRegex.test(registrationData.password)) {
-      alert("La contraseña no cumple con los requisitos.");
-      return;
+  if (registrationData.plan === "free") {
+  try {
+
+    const res = await registerUser(dataToSend);
+
+    if (res && res.message) {
+      setSuccessMessage(res.message);
+      setErrorMessage("");
+      setTimeout(() => navigate("/login"), 3000);
     }
+  } catch (err) {
+    handleError(err);
+  }
+} 
+else if (registrationData.plan === "pro" || registrationData.plan === "premium") {
+  try {
+    sessionStorage.setItem("userData", JSON.stringify(dataToSend));
+    sessionStorage.setItem("selectedPlan", fullPlan);
 
-    if (registrationData.password !== registrationData.confirmPassword) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
-
-    const dataToSend = {
-      username: registrationData.username,
-      email: registrationData.email,
-      password: registrationData.password,
-      confirmPassword: registrationData.confirmPassword,
+    const { sessionId, url } = await createCheckoutSession({
       plan: fullPlan,
       billingCycle: registrationData.billingCycle,
-      paymentMethodId: registrationData.paymentMethodId,
+      email: registrationData.email,
+      username: registrationData.username,
+      successUrl: `${window.location.origin}/register-success`,
+      cancelUrl: `${window.location.origin}/register-cancel`,
+    });
 
-    };
-
-    const handleError = (err) => {
-      if (err.response?.data?.error === "EMAIL_ALREADY_EXISTS") {
-        setErrorMessage("Este correo ya está registrado.");
-      } else if (err.response?.data?.error === "WEAK_PASSWORD") {
-        setErrorMessage("La contraseña debe cumplir con los requisitos.");
-      } else if (err.response?.data?.error === "PASSWORD_MISMATCH") {
-        setErrorMessage("Las contraseñas no coinciden.");
-      } else {
-        setErrorMessage("Ocurrió un error inesperado. Intenta más tarde.");
-      }
-    };
-
-    if (registrationData.plan === "free") {
-      console.log("registrationData.plan free === ", registrationData.plan)
-    try {
-
-      const res = await registerUser(dataToSend);
-
-      if (res && res.message) {
-        setSuccessMessage(res.message);
-        setErrorMessage("");
-        setTimeout(() => navigate("/login"), 3000);
-      }
-    } catch (err) {
-      handleError(err);
+    if (sessionId && url) {
+      sessionStorage.setItem("sessionId", sessionId);
+      window.location.href = url;
+    } else {
+      setErrorMessage("Hubo un problema al crear la sesión de pago.");
     }
-  } 
-  else if (registrationData.plan === "pro" || registrationData.plan === "premium") {
-    console.log("Guardando datos en UserContext:", dataToSend);
-    console.log("Guardando plan en UserContext:", dataToSend.plan);
-    try {
-      localStorage.setItem("userData", JSON.stringify(dataToSend));
-      localStorage.setItem("selectedPlan", fullPlan);
-
-      const { sessionId, url } = await createCheckoutSession({
-        plan: fullPlan,
-        billingCycle: registrationData.billingCycle,
-        email: registrationData.email,
-        username: registrationData.username,
-        successUrl: `${window.location.origin}/register-success`,
-        cancelUrl: `${window.location.origin}/register-cancel`,
-      });
-
-      if (sessionId && url) {
-        localStorage.setItem("sessionId", sessionId);
-        window.location.href = url;
-      } else {
-        setErrorMessage("Hubo un problema al crear la sesión de pago.");
-      }
-    } catch (err) {
-      handleError(err);
-    }
+  } catch (err) {
+    handleError(err);
   }
+}
 };
-
-// *************************************************************************************************************
-  const allRequirementsMet = Object.values(passwordRequirements).every(Boolean);
-
-  const passwordRules = [
-    { key: "minLength", text: "Longitud mínima de 5 caracteres" },
-    { key: "uppercase", text: "Al menos una letra mayúscula" },
-    { key: "number", text: "Al menos un número" },
-    { key: "specialChar", text: "Al menos un carácter especial (!@#$%^&*)" },
-  ];
 
   useEffect(() => {
     const validPlans = ['free', 'pro', 'premium'];
@@ -264,69 +232,14 @@ const Register = () => {
               required
               icon={<MdAlternateEmail />}
             />
-          <div className="relative flex flex-col md:flex-row gap-2 w-full">
-            <PasswordInput
-              label={"Contraseña"}
-              id="password"
-              value={registrationData.password}
-              onChange={handleChange}
-              onFocus={() => setPasswordFocused(true)}
-              onBlur={() => {
-                if (allRequirementsMet) {
-                  setPasswordFocused(false);
-                }
-              }}
-              className="w-full"
-              required
-            />
-            {/* password rules on screen ************************************* */}
-            <ul
-              className={`col-span-2 absolute text-sm mt-3 md:mt-3 transition-all duration-300 top-16 w-full px-2 py-1 md:py-1 z-10  bg rounded-b-lg shadow-md opacity-100
-              ${
-                passwordFocused || (passwordChecked && !allRequirementsMet)
-                  ? "opacity-100 scale-104"
-                  : "opacity-0 scale-0"
-              }`}
-            >
-              <div className="text-light-grlText dark:text-dark-grlText font-bold mb-2">
-                Asegúrate de incluir:
-              </div>
 
-              {passwordRules.map(({ key, text }) => (
-                <li key={key} className="flex items-center">
-                  <span
-                    className={
-                      passwordRequirements[key]
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }
-                  >
-                    {passwordRequirements[key] ? (
-                      <BiSolidMessageSquareCheck />
-                    ) : (
-                      <BiSolidMessageSquareX />
-                    )}
-                  </span>
-                  <span
-                    className={`ml-2 ${
-                      passwordRequirements[key] ? "checkTrue" : "checkFalse"
-                    }`}
-                  >
-                    {text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {/* ************************************************************** */}
-            <PasswordInput
-              label={"Confirmar contraseña"}
-              id="confirmPassword"
-              value={registrationData.confirmPassword}
-              onChange={handleChange}
-              className="w-full"
-              required
-            />
-          </div>
+           <PasswordValidation
+             password={registrationData.password}
+             confirmPassword={registrationData.confirmPassword}
+             onPasswordChange={handleChange}
+             onConfirmPasswordChange={handleChange}
+             passwordChecked={passwordChecked}
+           />
 
           <section className="flex flex-col md:flex-row text-xs my-4">
             <article className="flex flex-row">
@@ -349,7 +262,7 @@ const Register = () => {
               </strong>
             </article>
             <article className="flex flex-row ml-5 md:ml-0 mt-2">
-              <span className="mx-1">y la</span>
+              <span className="mx-1 grlTxt">y la</span>
               <strong>
                 <Button
                   label="Política de Privacidad"
@@ -401,10 +314,3 @@ const Register = () => {
 };
 
 export default Register;
-
-// card space   *******************************************************************
-// <div className="">
-// <label>Detalles de la tarjeta</label>
-// <CardElement options={{ hidePostalCode: true }} />
-// </div>
-// ********************************************************************************

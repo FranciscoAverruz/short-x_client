@@ -12,7 +12,7 @@ export function SidebarItem({ icon, text, active, alert, expanded, onClick, extr
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer transition-colors duration-100 group h-10
         text-light-grlText dark:text-dark-grlText
-        ${active ? 'bg-light-btnMenuHoverBg/10 dark:bg-dark-btnMenuHoverBg' : 'hover:text-light-hoverTitle dark:hover:text-dark-hoverTitle'}
+        ${active ? 'bg-light-btnMenuHoverBg/10 dark:bg-dark-btnMenuHoverBg text-light-hoverTitle dark:text-dark-hoverTitle' : 'hover:text-light-hoverTitle dark:hover:text-dark-hoverTitle'}
         ${extraClass}
       `}
       onClick={onClick}

@@ -38,14 +38,13 @@
 
   .btnDanger {
     @apply text-light-Title dark:text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
-    @apply bg-gradient-to-r from-light-dangerFrom/50 via-light-dangerVia/20 to-light-dangerTo/20 hover:brightness-200;
-    @apply dark:from-dark-dangerFrom/20 dark:via-dark-dangerVia/20 dark:to-dark-dangerTo/20;
+    @apply bg-gradient-to-r from-light-dangerFrom/20 via-light-dangerVia/60 to-light-dangerTo/50 hover:brightness-200;
     @apply border-2 border-light-btnDangerBorder dark:border-dark-btnDangerBorder/50;
   }
 
   .btnNavbar {
     @apply text-light-Title dark:text-dark-Title py-1 px-2 transition-all duration-300 justify-center items-center md:gap-3;
-    @apply hover:text-light-hoverTitle dark:hover:text-dark-primaryTo/80 brightness-150
+    @apply hover:text-light-hoverTitle dark:hover:text-dark-primaryTo brightness-150
   }
 
   .actionBtn{
@@ -72,7 +71,7 @@
   }
 
   .labelInput {
-    @apply text-light-grlText dark:text-dark-grlText font-bold
+    @apply text-light-grlText dark:text-dark-grlText font-medium
   }
 
   .inputStyle {
@@ -135,6 +134,11 @@
 
 .premium {
   @apply bg-gradient-to-r from-light-accent to-transparent;
+}
+
+.chart-container {
+  height: 15rem;
+  width: 10rem;
 }
 
 /* FAQ */

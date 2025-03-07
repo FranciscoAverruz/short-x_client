@@ -11,9 +11,10 @@ const UserContext = createContext({
 const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, selectedPlan, setSelectedPlan }}>
+    <UserContext.Provider value={{ userData, setUserData, selectedPlan, setSelectedPlan, sessionId, setSessionId }}>
       {children}
     </UserContext.Provider>
   );

@@ -28,7 +28,6 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
 
   const confirmDelete = (shortId) => {
     setSelectedUrls([shortId]);
-    console.log("shortId >>>>>>>>>> ", shortId )
     openConfirmModal();
   };
 
@@ -73,7 +72,8 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
               transition={{ duration: 0.3 }} 
               className={`flex flex-col grlContainer grlTxt max-w-7xl border-2 transition-colors duration-300 ease-in-out ${isSelected ? 'border-red-300 bg-red-50' : 'border-transparent'}`}
             >
-              <article className="flex flex-col md:flex-row w-full items-start">
+              <section className="flex flex-col md:flex-row w-full items-start">
+               <article className="flex flex-row mr-5 items-start">
                 {!isDetailPage && (
                   <Input
                     type="checkbox"
@@ -82,18 +82,19 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
                     className="mr-2"
                   />
                 )}
-                <div className="max-w-8 max-h-8 aspect-square mr-5">
+                <div className="max-w-8 max-h-8 aspect-square">
                   {faviconUrl ? (
                     <img
                       src={faviconUrl}
                       alt="Favicon"
-                      className="rounded-md col-span-1 w-8 h-8"
+                      className="rounded-md col-span-1 w-8 h-8 aspect-square"
                       onError={handleError}
                     />
                   ) : (
                     <FaLink className="w-8 h-8" />
                   )}
                 </div>
+                </article>
                 <div className="w-full">
                   <aside className="flex flex-col-reverse md:flex-row md:justify-between">
                     <a
@@ -113,7 +114,7 @@ const UrlInfo = ({ urlsStats, selectedUrls, setSelectedUrls, openConfirmModal })
                     {url.originalUrl}
                   </p>
                 </div>
-              </article>
+              </section>
               <hr className="my-2 border-light-btnSecBorder dark:border-dark-btnSecBorder" />
               <article className="flex flex-row justify-end gap-2">
                 <aside className="flex items-center text-sm h-full grlTxt w-ful">

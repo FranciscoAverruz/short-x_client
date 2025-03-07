@@ -8,7 +8,7 @@ const LabelWithTooltip = ({ htmlFor, children, required, className = '', tooltip
   const showTooltip = required ? tooltipText : '';
 
   return (
-    <div className="flex items-center w-fit">
+    <div className="flex items-center w-fit labelInput">
       <Tooltip tooltipText={showTooltip} tooltipStyles={tooltipStyles}>
         <span className={className} {...rest}>
           {children}
