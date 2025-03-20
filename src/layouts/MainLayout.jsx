@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "@molecules/Navbar";
+import Navbar from "@molecules/NavBar";
 import Footer from "@molecules/Footer";
 import bgDark from "@assets/bgDark.png";
 import bgLight from "@assets/bgLight.png";

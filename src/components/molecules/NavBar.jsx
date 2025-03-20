@@ -31,7 +31,7 @@ const navbarOptions = [
   },
 ];
 
-const Navbar = ({ hasScrolled }) => {
+const NavBar = ({ hasScrolled }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const toggleMenu = () => {
@@ -98,4 +98,4 @@ const Navbar = ({ hasScrolled }) => {
   );
 };
 
-export default Navbar;
+export default NavBar;
