@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { lazy, useContext } from "react";
-import icon from "@assets/icon.png";
 import Sx from "@common/Sx.jsx";
+import icon from "@assets/icon.png";
+import React, { lazy } from "react";
 import Button from "@atoms/Button";
-import { FiMoreVertical } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
-import { AuthContext } from "@context/AuthContext";
+import { FiMoreVertical } from "react-icons/fi";
 const ThemeSwitch = lazy(() => import("@common/ThemeSwitch"));
 const UserProfileMenu = lazy(() => import("@dashNavBar/UserProfileMenu.jsx"));
 

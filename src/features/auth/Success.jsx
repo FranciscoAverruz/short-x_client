@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "@src/Env.jsx";
 import Sx from "@common/Sx.jsx";
 import logo from "@assets/icon.png";
+import axios from "axios";
+import { API_URL } from "@src/Env.jsx";
+import { logError } from "@utils/logger";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Success() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("userData");
     const storedSelectedPlan = sessionStorage.getItem("selectedPlan");
     const sessionId = sessionStorage.getItem("sessionId");
+
+    console.log("storedUserData success >>", storedUserData);
+    console.log("storedSelectedPlan success >>", storedSelectedPlan);
+    console.log("sessionId success >>", sessionId);
 
     if (sessionId && storedUserData && storedSelectedPlan) {
       const userData = JSON.parse(storedUserData);
@@ -25,7 +30,7 @@ function Success() {
         selectedPlan,
       };
 
-      console.log("dataToSend desde success ==== ", dataToSend);
+      console.log("Datos a enviar:", dataToSend);
 
       axios
         .post(`${API_URL}/verify-payment`, dataToSend)
@@ -39,12 +44,12 @@ function Success() {
               navigate("/login");
             }, 3000);
           } else {
-            console.error("El pago no fue exitoso.");
+            logError("El pago no fue exitoso.");
             setError("El pago no fue exitoso. Por favor, inténtalo de nuevo.");
           }
         })
         .catch((error) => {
-          console.error("Error al verificar el pago:", error);
+          logError("Error al verificar el pago:", error);
           setError("Ocurrió un error al verificar el pago.");
         })
         .finally(() => {
@@ -54,7 +59,7 @@ function Success() {
       setError("Faltan datos requeridos para verificar el pago.");
       setLoading(false);
     }
-  }, [navigate]);
+  }, [error, navigate]);
 
   return (
     <main className="bg flex flex-col lg:flex-row items-center justify-center h-screen gap-10">

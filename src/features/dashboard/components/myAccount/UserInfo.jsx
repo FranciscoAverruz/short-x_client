@@ -1,90 +1,125 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useContext, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from "react";
+import Medal from "@dashCommon/Medal.jsx";
 import Input from "@molecules/Input";
+import Button from "@atoms/Button";
+import PlanLabel from "@dashCommon/PlanLabel.jsx";
+import FormatDate from "@dashCommon/FormatDate";
 import SubmitButton from "@molecules/SubmitButton";
 import useAuthAxios from "@hooks/useAuthAxios";
-import Button from "@atoms/Button";
-import FormatDate from "@dashCommon/FormatDate";
-import PlanLabel from "@dashCommon/PlanLabel.jsx";
-import { API_URL } from "@src/Env.jsx";
-import { AuthContext } from "@context/AuthContext";
 import { Loader } from "@common/Loader.jsx";
-import { MdOutlineCancel } from "react-icons/md";
-import { MdOutlineModeEdit } from "react-icons/md";
-import { FaMedal } from "react-icons/fa6";
+import { API_URL } from "@src/Env.jsx";
+import { TbCancel } from "react-icons/tb";
+import { FaRegUser } from "react-icons/fa";
+import { AuthContext } from "@context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { log, logError } from "@utils/logger";
+import { MdOutlineModeEdit, MdAlternateEmail } from "react-icons/md";
 
 const UserInfo = ({ user, setUser, isCancellationPending }) => {
-  const { plan } = useContext(AuthContext);
-  const createdAt = FormatDate(user.createdAt);
-  const updatedAt = FormatDate(user.updatedAt);
+  const navigate = useNavigate();
+  const { userId, plan, subscription, dispatch } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const { dispatch } = useContext(AuthContext);
+  const [localSubscription, setLocalSubscription] = useState(
+    subscription || null
+  );
   const [formData, setFormData] = useState({
     username: user.username,
     email: user.email,
   });
-  const [loading, setLoading] = useState(false);
   const authAxios = useAuthAxios();
+  const createdAt = FormatDate(user.createdAt);
+  const updatedAt = FormatDate(user.updatedAt);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      setLoading(true);
+      try {
+        const response = await authAxios.get(
+          `${API_URL}/subscription/${userId}/info`
+        );
+        log("Datos de la suscripción recibidos:", response.data);
 
-  const handleSave = async () => {
-    setLoading(true);
-    try {
-      const response = await authAxios.put(
-        `${API_URL}/user/${user._id}`,
-        formData
-      );
-      setUser(response.data);
-      dispatch({ type: "UPDATE_USER", payload: response.data });
+        dispatch({
+          type: "SET_SUBSCRIPTION",
+          payload: response.data.subscription,
+        });
+        setLocalSubscription(response.data.subscription);
+      } catch (error) {
+        logError("Error fetching subscription:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating user:", error);
-    } finally {
-      setLoading(false);
+    if (!localSubscription) {
+      fetchSubscription();
     }
-  };
+  }, [localSubscription, userId, authAxios, dispatch]);
 
-  if (loading) {
+  if (!localSubscription || loading) {
     return <Loader type="spinner" className="w-full" />;
   }
 
+  const isPending = localSubscription.status === "pending";
+  const isPendingToFree = localSubscription.status === "pendingToFree";
+
   return (
-    <main className="py-2 px-3 w-full">
+    <main className="py-0 px-3 w-full">
       <section>
         <Input
           label="Username"
           name="username"
+          icon={<FaRegUser />}
           value={formData.username}
-          onChange={handleChange}
+          onChange={(e) =>
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }
           disabled={!isEditing}
         />
         <Input
           label="Email"
           name="email"
+          icon={<MdAlternateEmail />}
           type="email"
           value={formData.email}
-          onChange={handleChange}
+          onChange={(e) =>
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }
           disabled={!isEditing}
         />
       </section>
-      <section className="flex justify-end itmes-center h-11 my-5">
+
+      <section className="flex justify-end itmes-center h-11 my-2">
         {isEditing ? (
           <span className="flex gap-3">
             <SubmitButton
               label="Guardar"
               loading={loading}
-              onClick={handleSave}
+              onClick={async () => {
+                setLoading(true);
+                try {
+                  const response = await authAxios.put(
+                    `${API_URL}/user/${userId}`,
+                    formData
+                  );
+                  setUser(response.data);
+                  dispatch({ type: "UPDATE_USER", payload: response.data });
+                  setIsEditing(false);
+                } catch (error) {
+                  logError("Error updating user:", error);
+                } finally {
+                  setLoading(false);
+                }
+              }}
             />
             <Button
               label="Cancelar"
+              icon={TbCancel}
               variant="secondary"
               onClick={() => setIsEditing(false)}
-              icon={MdOutlineCancel}
             />
           </span>
         ) : (
@@ -99,20 +134,11 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
           </span>
         )}
       </section>
-      <hr />
-      <section className="flex flex-col md:flex-row gap-5">
+
+      <hr className="divider" />
+      <section className="flex flex-col md:flex-row gap-5 mb-3">
         <aside className="flex flex-row md:flex-col items-center justify-center gap-3 w-full md:w-1/3">
-          <span
-            className={`dropshadow-lg text-5xl ${
-              plan === "free"
-                ? "text-[#28A745]"
-                : plan === "pro"
-                ? "text-[#C0C0C0]"
-                : "text-[#DAA520]"
-            }`}
-          >
-            <FaMedal />
-          </span>
+          <Medal plan={plan} classNameIcon="text-5xl" />
           <span className="flex grlTxt w-full justify-center items-center text-center">
             <PlanLabel plan={plan} />
           </span>
@@ -120,24 +146,44 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
             label="ver Suscripión"
             variant="link"
             className="w-full md:w-auto flex justify-center"
+            onClick={() => navigate("/dashboard/subscription")}
           />
         </aside>
 
         <ul className="flex flex-col gap-2 list-disc w-full ml-5 mt-5">
-          <li className="">
+          <li>
             <strong className="mr-5 subTitle2 text-base">
               Fecha de Creación
             </strong>
             <span className="paragraphText my-0 opacity-50">{createdAt}</span>
           </li>
-          <li className="">
+          <li>
             <strong className="mr-5 subTitle2 text-base">
-              Ultima Actualización de datos:
+              Última Actualización de datos:
             </strong>
             <span className="paragraphText my-0 opacity-50">{updatedAt}</span>
           </li>
         </ul>
       </section>
+
+      {/* Shows subscription data */}
+      {isPending && (
+        <>
+          <hr className="divider" />
+          <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-center">
+            Tu suscripción se cancelará el{" "}
+            {FormatDate(localSubscription.renewalDate)}.
+          </p>
+        </>
+      )}
+
+      {isPendingToFree && (
+        <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-baseline">
+          Tu suscripción cambiará a{" "}
+          <strong className="text-xl mx-2">Free</strong> el{" "}
+          {FormatDate(localSubscription.renewalDate)}.
+        </p>
+      )}
     </main>
   );
 };

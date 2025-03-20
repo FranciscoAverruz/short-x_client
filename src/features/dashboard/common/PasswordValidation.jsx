@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { BiSolidMessageSquareCheck, BiSolidMessageSquareX, } from "react-icons/bi";
 import PasswordInput from "@molecules/PasswordInput.jsx";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+import {
+  BiSolidMessageSquareCheck,
+  BiSolidMessageSquareX,
+} from "react-icons/bi";
 
 const PasswordValidation = ({
   password,
@@ -14,6 +17,7 @@ const PasswordValidation = ({
   onConfirmPasswordChange,
 }) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordRequirements, setPasswordRequirements] = useState({
     minLength: false,
     uppercase: false,
@@ -21,17 +25,16 @@ const PasswordValidation = ({
     specialChar: false,
   });
   const location = useLocation();
-  const register = location.pathname === '/register';
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const register = location.pathname === "/register";
 
   useEffect(() => {
     setPasswordRequirements({
-      minLength: (password?.length >= 5 || newPassword?.length >= 5),
+      minLength: password?.length >= 5 || newPassword?.length >= 5,
       uppercase: /[A-Z]/.test(password || newPassword),
       number: /\d/.test(password || newPassword),
       specialChar: /[!@#$%^&*]/.test(password || newPassword),
     });
-}, [password, newPassword]);
+  }, [password, newPassword]);
 
   const allRequirementsMet = Object.values(passwordRequirements).every(Boolean);
 
@@ -47,37 +50,44 @@ const PasswordValidation = ({
   ];
 
   return (
-    <div className={`relative flex flex-col  gap-2 w-full ${register ? "md:flex-row" : "" }`}>
+    <div
+      className={`relative flex flex-col  gap-2 w-full ${
+        register ? "md:flex-row" : ""
+      }`}
+    >
+      {register && (
+        <PasswordInput
+          label="Contraseña"
+          id="password"
+          value={password}
+          onChange={onPasswordChange}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => {
+            if (allRequirementsMet) {
+              setPasswordFocused(false);
+            }
+          }}
+          className="w-full"
+          required
+        />
+      )}
 
-    {register && <PasswordInput
-        label="Contraseña"
-        id="password"
-        value={password}
-        onChange={onPasswordChange}
-        onFocus={() => setPasswordFocused(true)}
-        onBlur={() => {
-          if (allRequirementsMet) {
-            setPasswordFocused(false);
-          }
-        }}
-        className="w-full"
-        required
-      />}
-
-    {!register && <PasswordInput
-        label="Nueva Contraseña"
-        id="newPassword"
-        value={newPassword}
-        onChange={onPasswordChange}
-        onFocus={() => setPasswordFocused(true)}
-        onBlur={() => {
-          if (allRequirementsMet) {
-            setPasswordFocused(false);
-          }
-        }}
-        className="w-full"
-        required
-      />}
+      {!register && (
+        <PasswordInput
+          label="Nueva Contraseña"
+          id="newPassword"
+          value={newPassword}
+          onChange={onPasswordChange}
+          onFocus={() => setPasswordFocused(true)}
+          onBlur={() => {
+            if (allRequirementsMet) {
+              setPasswordFocused(false);
+            }
+          }}
+          className="w-full"
+          required
+        />
+      )}
 
       {/* password rules on screen ************************************* */}
       <ul

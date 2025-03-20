@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import Input from "@molecules/Input.jsx"
-import Button from "@atoms/Button.jsx"
+import Input from "@molecules/Input.jsx";
+import Button from "@atoms/Button.jsx";
 import { CgSearch } from "react-icons/cg";
 
-const DashSearchBar = ({placeholder}) => {
+const DashSearchBar = ({ placeholder }) => {
   return (
     <span className="relative md:w-2/5 items-center">
       <Input
@@ -22,7 +22,7 @@ const DashSearchBar = ({placeholder}) => {
         className="absolute right-1 -translate-y-[2.1rem] bg-transparent text-xl cursor-pointer pl-1 mr-1 border-l-2"
       />
     </span>
-  )
-}
+  );
+};
 
-export default DashSearchBar
+export default DashSearchBar;

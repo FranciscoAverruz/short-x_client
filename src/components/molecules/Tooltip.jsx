@@ -31,10 +31,10 @@ const Tooltip = ({ children, tooltipText, tooltipStyles = {}, ...rest }) => {
         <div
           className="absolute text-xs font-semibold bg-light-ttBg text-light-accent rounded px-2 py-1 opacity-100 transition-opacity duration-200 z-10"
           style={{
-            top: '0px',
-            left: '100%',
-            marginLeft: '5px',
-            whiteSpace: 'nowrap',
+            top: "0px",
+            left: "100%",
+            marginLeft: "5px",
+            whiteSpace: "nowrap",
             ...tooltipStyles,
           }}
         >

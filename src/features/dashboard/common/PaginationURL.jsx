@@ -8,9 +8,8 @@ const PaginationURL = ({
   totalPages,
   currentPage,
   goToPage,
-  className
+  className,
 }) => {
-
   const generatePageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -25,14 +24,24 @@ const PaginationURL = ({
       } else if (currentPage >= totalPages - 2) {
         pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push( 1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages );
+        pages.push(
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages
+        );
       }
     }
     return pages;
   };
 
   return (
-    <section className={`mt-4 flex justify-end items-center gap-1 px-1 text-sm ${className}`}>
+    <section
+      className={`mt-4 flex justify-end items-center gap-1 px-1 text-sm ${className}`}
+    >
       <Buttom
         label="Anterior"
         onClick={handlePrevPage}
@@ -53,9 +62,7 @@ const PaginationURL = ({
               }}
               variant="navbar"
               className={`flex px-2 py-1 rounded-md w-9 h-9 justify-center items-center ${
-                page === currentPage
-                  ? "btnSecondary"
-                  : "hover:bg-gray-200"
+                page === currentPage ? "btnSecondary" : "hover:bg-gray-200"
               }`}
               disabled={page === currentPage}
             />

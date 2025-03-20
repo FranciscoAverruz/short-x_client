@@ -27,7 +27,9 @@ const InputField = ({
     ref={inputRef}
     inputMode={inputMode}
     pattern={pattern}
-    className={`${className} ${type === "checkbox" ? "w-4 h-4 cursor-pointer" : "w-full"}`}
+    className={`${className} ${
+      type === "checkbox" ? "w-4 h-4 cursor-pointer" : "w-full"
+    }`}
     {...rest}
   />
 );

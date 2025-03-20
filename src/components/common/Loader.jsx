@@ -3,7 +3,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export const Loader = ({ type = "", text = "", className = "" }) => {
+export const Loader = ({
+  type = "",
+  text = "",
+  className = "",
+  classSpinner = "w-12 h-12",
+}) => {
   return (
     <div className={`flex justify-center items-center ${className}`}>
       {type === "loading" ? (
@@ -16,7 +21,7 @@ export const Loader = ({ type = "", text = "", className = "" }) => {
         </motion.p>
       ) : (
         <motion.div
-          className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
+          className={` border-4 border-blue-500 border-t-transparent rounded-full ${classSpinner}`}
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
         />

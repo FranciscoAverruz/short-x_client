@@ -1,6 +1,6 @@
-import { useState } from "react";
 import axios from "axios";
-import { API_URL } from '@src/Env.jsx';
+import { API_URL } from "@src/Env.jsx";
+import { useState } from "react";
 
 const useShortenUrlInvited = () => {
   const [link, setLink] = useState("");
@@ -27,7 +27,15 @@ const useShortenUrlInvited = () => {
     }
   };
 
-  return { link, setLink, shortenedUrl, error, loading, shortenUrl, setShortenedUrl };
+  return {
+    link,
+    setLink,
+    shortenedUrl,
+    error,
+    loading,
+    shortenUrl,
+    setShortenedUrl,
+  };
 };
 
 export default useShortenUrlInvited;

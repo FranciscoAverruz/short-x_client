@@ -1,9 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 
-export function SidebarItem({ icon, text, active, alert, expanded, onClick, extraClass, onMouseEnter, onMouseLeave, subItems, isOpen }) {
+export function SidebarItem({
+  icon,
+  text,
+  active,
+  alert,
+  expanded,
+  onClick,
+  extraClass,
+  onMouseEnter,
+  onMouseLeave,
+  subItems,
+  isOpen,
+}) {
   const hasSubItems = subItems && subItems.length > 0;
 
   return (
@@ -12,12 +24,16 @@ export function SidebarItem({ icon, text, active, alert, expanded, onClick, extr
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer transition-colors duration-100 group h-10
         text-light-grlText dark:text-dark-grlText
-        ${active ? 'bg-light-btnMenuHoverBg/10 dark:bg-dark-btnMenuHoverBg text-light-hoverTitle dark:text-dark-hoverTitle' : 'hover:text-light-hoverTitle dark:hover:text-dark-hoverTitle'}
+        ${
+          active
+            ? "bg-light-btnMenuHoverBg/10 dark:bg-dark-btnMenuHoverBg text-light-hoverTitle dark:text-dark-hoverTitle"
+            : "hover:text-light-hoverTitle dark:hover:text-dark-hoverTitle"
+        }
         ${extraClass}
       `}
       onClick={onClick}
-      onMouseEnter = {onMouseEnter}
-      onMouseLeave = {onMouseLeave}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {icon}
       <span
@@ -25,17 +41,19 @@ export function SidebarItem({ icon, text, active, alert, expanded, onClick, extr
         ${expanded ? "w-52 ml-3" : "w-0 ml-0"}`}
       >
         {text}
-
       </span>
-      {/* Indicador de submenú */}
+      {/* submenu indicator*/}
       {hasSubItems && (
-        <span className={`transition-transform ${expanded ? "block mr-1 ml-auto" : "absolute -right-2"}`}>
+        <span
+          className={`transition-transform ${
+            expanded ? "block mr-1 ml-auto" : "absolute -right-2"
+          }`}
+        >
           {isOpen ? <FiChevronDown /> : <FiChevronRight />}
-          
         </span>
       )}
 
-      {/* Indicador de alerta (si existe) */}
+      {/* alert indicator if existing */}
       {alert && (
         <div
           className={`absolute right-2 w-2 h-2 rounded bg-dark-accent group-hover:bg-dark-background transition-all duration-150
@@ -43,7 +61,7 @@ export function SidebarItem({ icon, text, active, alert, expanded, onClick, extr
         />
       )}
 
-      {/* Tooltip para texto cuando está colapsado */}
+      {/* colapsed sidebar toolTip */}
       {!expanded && (
         <div
           className={`

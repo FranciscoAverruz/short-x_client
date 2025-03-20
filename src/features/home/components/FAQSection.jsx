@@ -51,7 +51,9 @@ const FAQSection = () => {
                 {activeIndex === index ? "▲" : "▼"}
               </span>
             </button>
-            {activeIndex === index && <p className="faq-answer text-left">{faq.answer}</p>}
+            {activeIndex === index && (
+              <p className="faq-answer text-left">{faq.answer}</p>
+            )}
           </div>
         ))}
       </div>

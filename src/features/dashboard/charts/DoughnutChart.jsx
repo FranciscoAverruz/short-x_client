@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, RadialLinearScale } from 'chart.js';
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  RadialLinearScale,
+} from "chart.js";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, RadialLinearScale);
 
@@ -11,7 +18,11 @@ const DoughnutChart = ({ data }) => {
   const isLabelsEmpty = !data || data.labels?.length === 0;
 
   if (isDataEmpty || isLabelsEmpty) {
-    return <div className="flex grlContainer w-full h-full justify-center items-center text-center">No hay datos disponibles para mostrar el gráfico</div>;
+    return (
+      <div className="flex grlContainer w-full h-full justify-center items-center text-center">
+        No hay datos disponibles para mostrar el gráfico
+      </div>
+    );
   }
 
   return (
@@ -21,8 +32,8 @@ const DoughnutChart = ({ data }) => {
         responsive: true,
         plugins: {
           legend: {
-            position: 'bottom',
-            align: 'start',
+            position: "bottom",
+            align: "start",
             labels: {
               boxWidth: 10,
               padding: 10,

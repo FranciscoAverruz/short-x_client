@@ -3,9 +3,27 @@
 import React from "react";
 
 const plans = [
-  { id: "free", name: "Free", priceMonthly: "$0", priceYearly: "$0", description: "Acceso limitado a funciones básicas." },
-  { id: "pro", name: "Pro", priceMonthly: "$10", priceYearly: "$100", description: "Acceso a funciones avanzadas y soporte prioritario." },
-  { id: "premium", name: "Premium", priceMonthly: "$20", priceYearly: "$200", description: "Todas las funciones, incluyendo herramientas exclusivas." }
+  {
+    id: "free",
+    name: "Free",
+    priceMonthly: "$0",
+    priceYearly: "$0",
+    description: "Acceso limitado a funciones básicas.",
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    priceMonthly: "$10",
+    priceYearly: "$100",
+    description: "Acceso a funciones avanzadas y soporte prioritario.",
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    priceMonthly: "$20",
+    priceYearly: "$200",
+    description: "Todas las funciones, incluyendo herramientas exclusivas.",
+  },
 ];
 
 const PlanSelect = ({ value, onChange }) => {
@@ -17,7 +35,9 @@ const PlanSelect = ({ value, onChange }) => {
         onChange={onChange}
         className="border p-2 rounded"
       >
-        <option value="" disabled>Selecciona un plan...</option>
+        <option value="" disabled>
+          Selecciona un plan...
+        </option>
         {plans.map((plan) => (
           <option key={plan.id} value={plan.id}>
             {plan.name} - {plan.priceMonthly} / mes | {plan.priceYearly} / año

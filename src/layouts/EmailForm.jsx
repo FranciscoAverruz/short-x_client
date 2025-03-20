@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { IoIosPerson, IoIosPhonePortrait, IoIosAt } from "react-icons/io";
 import Input from "@molecules/Input.jsx";
 import useEmailForm from "@hooks/useEmailForm.jsx";
-import SubmitButton from '@molecules/SubmitButton.jsx';
+import SubmitButton from "@molecules/SubmitButton.jsx";
+import { IoIosPerson, IoIosPhonePortrait, IoIosAt } from "react-icons/io";
 
 const EmailForm = ({ onSubmit }) => {
   const {
@@ -24,9 +24,9 @@ const EmailForm = ({ onSubmit }) => {
     selectedPrefix,
     defaultCountryName,
     defaultCountryFlag,
-    countryOptions
+    countryOptions,
   } = useEmailForm(onSubmit);
- 
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -63,7 +63,10 @@ const EmailForm = ({ onSubmit }) => {
               </option>
             ))}
           </select>
-          <div className="absolute subTitle1 flex items-end flex-row -right-2 text-xs top-1 gap-1 md:w-56 md:justify-end w-56 max-w-40" title={countryName}>
+          <div
+            className="absolute subTitle1 flex items-end flex-row -right-2 text-xs top-1 gap-1 md:w-56 md:justify-end w-56 max-w-40"
+            title={countryName}
+          >
             <span className="flex justify-end max-h-4 overflow-hidden z-[1] cursor-default">
               {countryName || defaultCountryName}
             </span>
@@ -130,7 +133,7 @@ const EmailForm = ({ onSubmit }) => {
         )}
       </section>
 
-      <SubmitButton label="Enviar" className="mt-3"/>
+      <SubmitButton label="Enviar" className="mt-3" />
     </form>
   );
 };

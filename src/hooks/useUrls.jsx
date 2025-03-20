@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { logError } from "@utils/logger";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { useState, useEffect } from "react";
 
 const useUrls = () => {
-  const { userId, token } = useContext(AuthContext);
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { userId, token } = useContext(AuthContext);
 
   useEffect(() => {
     if (!userId) return;
@@ -23,7 +24,7 @@ const useUrls = () => {
         setUrls(response.data.urls);
       } catch (err) {
         setError(err.message);
-        console.error("Error fetching URLs:", err);
+        logError("Error fetching URLs:", err);
       } finally {
         setLoading(false);
       }

@@ -4,7 +4,9 @@ import React from "react";
 
 const Sx = ({ className = "text-sm" }) => {
   return (
-    <strong className={`Audiowide-font text-light-Title dark:text-dark-Title ${className}`}>
+    <strong
+      className={`Audiowide-font text-light-Title dark:text-dark-Title ${className}`}
+    >
       short-X
     </strong>
   );

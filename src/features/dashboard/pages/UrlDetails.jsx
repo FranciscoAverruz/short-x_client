@@ -1,32 +1,33 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { API_URL } from "@src/Env.jsx";
-import { AuthContext } from "@context/AuthContext";
-import { Loader } from "@common/Loader.jsx";
-import { FaMobileAlt } from "react-icons/fa";
-import { GiLaptop } from "react-icons/gi";
-import { IoReturnUpBack } from "react-icons/io5";
-import { motion, AnimatePresence } from "framer-motion";
 import Button from "@atoms/Button.jsx";
 import UrlInfo from "@dashCommon/UrlInfo";
-import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
-import UrlDetailCard from "@dashCommon/UrlDetailCard.jsx";
-import useAuthAxios from "@hooks/useAuthAxios";
-import useUrlActions from "@hooks/useUrlActions";
 import BarChart from "@dashCharts/BarChart";
+import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
+import useAuthAxios from "@hooks/useAuthAxios";
+import UrlDetailCard from "@dashCommon/UrlDetailCard.jsx";
+import useUrlActions from "@hooks/useUrlActions";
 import DoughnutChart from "@dashCharts/DoughnutChart";
+import { Loader } from "@common/Loader.jsx";
+import { API_URL } from "@src/Env.jsx";
+import { GiLaptop } from "react-icons/gi";
+import { logError } from "@utils/logger";
+import { AuthContext } from "@context/AuthContext";
+import { FaMobileAlt } from "react-icons/fa";
+import { IoReturnUpBack } from "react-icons/io5";
+import { useParams, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const UrlDetails = () => {
-  const navigate = useNavigate();
-  const authAxios = useAuthAxios();
-  const { shortId } = useParams();
-  const { userId, plan } = useContext(AuthContext);
   const [urlData, setUrlData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedUrls, setSelectedUrls] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [selectedUrls, setSelectedUrls] = useState([]);
+  const { shortId } = useParams();
+  const { userId, plan } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const authAxios = useAuthAxios();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -54,7 +55,7 @@ const UrlDetails = () => {
       );
       setUrlData(response.data);
     } catch (error) {
-      console.error("Error al obtener detalles de la URL:", error);
+      logError("Error al obtener detalles de la URL:", error);
     } finally {
       setLoading(false);
     }
@@ -147,8 +148,9 @@ const UrlDetails = () => {
       return `rgba(${r}, ${g}, ${b}, ${opacity})`;
     }
 
-    const backgroundColors = countries.map(() => getRandomColor(0.8));
-    const borderColors = countries.map(() => getRandomColor(1));
+    const backgroundColors = countries.map(() => getRandomColor(0.4));
+    // const borderColors = countries.map(() => getRandomColor(1));
+    const borderColors = backgroundColors;
 
     return {
       labels: countries,
@@ -208,49 +210,64 @@ const UrlDetails = () => {
             </section>
 
             {/* ***********1************************ */}
-            <section className={`col-span-1 w-full h-full ${(plan?.startsWith("pro")) ? "md:col-span-5 lg:col-span-2" : "md:col-span-2 lg:col-span-1"}`}>
-                <article className={`grlContainer h-full w-full`}>
-                  <h2 className="flex text-lg grlTxt mb-2">
-                    Clics por Dispositivo
-                  </h2>
-                  <aside className={`flex justify-center md:flex-col itmes-center gap-4 ${
-                      plan?.startsWith("pro")
-                        ? "md:scale-90 md:py-6 lg:py-0 lg:px-10"
-                        : ""
-                    }`}
-                  >
-                    <UrlDetailCard
-                      title="Móviles"
-                      clicks={urlData.mobileClicks}
-                      icon={<FaMobileAlt />}
-                      className="bg-gradient-to-r from-green-400/30 via-teal-500/30 to-blue-600/30"
-                    />
-                    <UrlDetailCard
-                      title="Ordenador"
-                      clicks={urlData.desktopClicks}
-                      icon={<GiLaptop />}
-                      className="bg-gradient-to-r from-blue-600/30 via-purple-500/30 to-pink-500/30"
-                    />
-                  </aside>
-                </article>
+            <section
+              className={`col-span-1 w-full h-full ${
+                plan?.startsWith("pro")
+                  ? "md:col-span-5 lg:col-span-2"
+                  : "md:col-span-2 lg:col-span-1"
+              }`}
+            >
+              <article className={`grlContainer h-full w-full`}>
+                <h2 className="flex text-lg grlTxt mb-2">
+                  Clics por Dispositivo
+                </h2>
+                <aside
+                  className={`flex justify-center md:flex-col itmes-center gap-4 ${
+                    plan?.startsWith("pro")
+                      ? "md:scale-90 md:py-6 lg:py-0 lg:px-10"
+                      : ""
+                  }`}
+                >
+                  <UrlDetailCard
+                    title="Móviles"
+                    clicks={urlData.mobileClicks}
+                    icon={<FaMobileAlt />}
+                    className="bg-gradient-to-r from-green-400/30 via-teal-500/30 to-blue-600/30"
+                  />
+                  <UrlDetailCard
+                    title="Ordenador"
+                    clicks={urlData.desktopClicks}
+                    icon={<GiLaptop />}
+                    className="bg-gradient-to-r from-blue-600/30 via-purple-500/30 to-pink-500/30"
+                  />
+                </aside>
+              </article>
             </section>
             {/* *************2********************************************** */}
-            <section className={`col-span-1 max-h-[23rem] ${(plan?.startsWith("pro")) ? "md:col-span-5 lg:col-span-3" : "md:col-span-3 lg:col-span-2"}`}>
-                {(plan?.startsWith("pro") || plan?.startsWith("premium")) &&
-                  urlData.locationsCount && (
-                    <section className={"flex flex-col grlContainer h-full"}>
-                      <h3 className="text-lg grlTxt w-full">Clics por país:</h3>
-                      <article className="flex justify-center items-center flex-col w-full h-full md:h-[95%] px-0">
-                        <DoughnutChart
-                          key="doughnut-chart"
-                          data={getProChartData(urlData.locationsCount)}
-                        />
-                      </article>
-                    </section>
-                  )}
+            <section
+              className={`col-span-1 max-h-[23rem] ${
+                plan?.startsWith("pro")
+                  ? "md:col-span-5 lg:col-span-3"
+                  : "md:col-span-3 lg:col-span-2"
+              }`}
+            >
+              {(plan?.startsWith("pro") || plan?.startsWith("premium")) &&
+                urlData.locationsCount && (
+                  <section className={"flex flex-col grlContainer h-full"}>
+                    <h3 className="text-lg grlTxt w-full">Clics por país:</h3>
+                    <article className="flex justify-center items-center flex-col w-full h-full md:h-[95%] px-0">
+                      <DoughnutChart
+                        key="doughnut-chart"
+                        data={getProChartData(urlData.locationsCount)}
+                      />
+                    </article>
+                  </section>
+                )}
             </section>
             {/* *************3********************** */}
-            <section className={`col-span-1 md:col-span-5 lg:col-span-2`}>
+            <section
+              className={`col-span-1 md:col-span-5 lg:col-span-2  max-h-[23rem]`}
+            >
               {plan?.startsWith("premium") && urlData.locationsWithDevices && (
                 <section className="grlContainer w-full h-full justify-center items-center">
                   <h3 className="text-lg grlTxt">
@@ -266,13 +283,14 @@ const UrlDetails = () => {
                   </article>
                 </section>
               )}
-              </section>
+            </section>
             {/* **************4********************* */}
             <section className="col-span-1 md:col-span-5 w-full flex justify-end">
               <Button
                 label="Eliminar URL"
-                variant="danger"
+                variant="link"
                 onClick={handleSelectForDeletion}
+                className="text-red-400"
               />
             </section>
           </main>

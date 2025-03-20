@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import {API_COUNTRIES} from "@src/Env.jsx"
+import { logError } from "@utils/logger";
+import { API_COUNTRIES } from "@src/Env.jsx";
+import { useEffect, useState } from "react";
 
 const dCountry = "ES";
 const useCountries = () => {
@@ -78,9 +79,9 @@ const useCountries = () => {
         const defaultCountry = formattedOptions.find(
           (opt) => opt.code === dCountry
         );
-        if (defaultCountry) setSelectedPrefix(`${defaultCountry.prefix} `)
+        if (defaultCountry) setSelectedPrefix(`${defaultCountry.prefix} `);
       } catch (error) {
-        console.error("Error fetching countries:", error);
+        logError("Error fetching countries:", error);
       }
     };
 

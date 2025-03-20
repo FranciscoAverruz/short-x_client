@@ -1,13 +1,13 @@
-// hooks/useFetchUrlsStats.js
-import { useState, useEffect, useCallback } from "react";
 import { API_URL } from "@src/Env.jsx";
+import { logError } from "@utils/logger";
+import { useState, useEffect, useCallback } from "react";
 import useAuthAxios from "@hooks/useAuthAxios";
 
 const useFetchUrlsStats = (userId, currentPage) => {
   const [urlsStats, setUrlsStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
-  
+
   const authAxios = useAuthAxios();
 
   const fetchUrlsStats = useCallback(async () => {
@@ -24,8 +24,7 @@ const useFetchUrlsStats = (userId, currentPage) => {
       setUrlsStats(urlsRes.data.stats || []);
       setTotalPages(urlsRes.data.pagination.totalPages);
     } catch (error) {
-      console.error("Error fetching URLs stats:", error);
-      alert(error);
+      logError("Error fetching URLs stats:", error);
       setUrlsStats([]);
     } finally {
       setLoading(false);
@@ -33,6 +32,7 @@ const useFetchUrlsStats = (userId, currentPage) => {
   }, [userId, currentPage, authAxios]);
 
   useEffect(() => {
+    if (!userId) return;
     fetchUrlsStats();
   }, [userId, currentPage, fetchUrlsStats]);
 

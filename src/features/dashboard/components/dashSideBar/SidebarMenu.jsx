@@ -1,14 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState, useContext, useRef } from 'react';
-import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { TbLayoutDashboard, TbLayoutDashboardFilled } from "react-icons/tb";
-import { HiOutlineUser, HiUser, HiOutlineGlobeAlt, HiGlobeAlt } from "react-icons/hi2";
-import { PiLinkSimpleHorizontalLight, PiLinkSimpleHorizontalDuotone, PiBookmarkSimpleLight, PiBookmarkSimpleFill, PiGear, PiGearFill } from "react-icons/pi";
-import { IoStatsChartOutline, IoStatsChartSharp, IoExitOutline, IoExit } from "react-icons/io5";
-import { AuthContext } from '@context/AuthContext';
-import { useNavigate, useLocation } from 'react-router-dom';
-import {SidebarItem} from '@dashSideBar/SidebarItem.jsx';
+import React, { useState, useContext } from "react";
+import { SidebarItem } from "@dashSideBar/SidebarItem.jsx";
+import { AuthContext } from "@context/AuthContext";
+import { IoExitOutline, IoExit } from "react-icons/io5";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  HiOutlineUser,
+  HiUser,
+  HiOutlineGlobeAlt,
+  HiGlobeAlt,
+} from "react-icons/hi2";
+import {
+  PiLinkSimpleHorizontalLight,
+  PiLinkSimpleHorizontalDuotone,
+  PiBookmarkSimpleLight,
+  PiBookmarkSimpleFill,
+  PiGear,
+  PiGearFill,
+} from "react-icons/pi";
 
 const menuItems = [
   {
@@ -23,7 +33,7 @@ const menuItems = [
     },
     label: "Mis URLs",
     link: "/dashboard/urls",
-    alert,
+    // alert,
     // subItems: [
     //   { label: "Ver", link: "/dashboard/urls/view" },
     //   { label: "Editar", link: "/dashboard/urls/edit" },
@@ -31,18 +41,12 @@ const menuItems = [
     // ]
   },
   {
-    icon: { default: <IoStatsChartOutline />, active: <IoStatsChartSharp /> },
-    label: "Estadísticas",
-    link: "/dashboard/stats",
-  },
-  {
     icon: {
       default: <PiBookmarkSimpleLight />,
       active: <PiBookmarkSimpleFill />,
     },
     label: "Suscripción",
-    link: "/dashboard/suscription",
-    alert,
+    link: "/dashboard/subscription",
   },
   {
     icon: { default: <HiOutlineGlobeAlt />, active: <HiGlobeAlt /> },
@@ -53,24 +57,23 @@ const menuItems = [
     icon: { default: <PiGear />, active: <PiGearFill /> },
     label: "Configuración",
     link: "/dashboard/config",
-    alert,
   },
 ];
 
 const SidebarMenu = ({ expanded, closeSidebar }) => {
   const { dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [openSubmenus, setOpenSubmenus] = useState({});
   const [hoveredLink, setHoveredLink] = useState(null);
   const [hoveredExit, setHoveredExit] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState({});
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     closeSidebar();
     setTimeout(() => {
-      navigate("/");  // Redirigir después de que el estado se haya actualizado
-    }, 300);  // 300ms puede ser ajustado según tu necesidad
+      navigate("/");
+    }, 300);
   };
 
   const handleNavigation = (link) => {

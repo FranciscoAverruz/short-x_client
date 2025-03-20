@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import ColorPalette from '@src/ColorPalette.jsx'
+import React from "react";
+import ColorPalette from "@src/ColorPalette.jsx";
 
 const Paleta = () => {
   return (
     <div>
-        <ColorPalette />
+      <ColorPalette />
     </div>
-  )
-}
+  );
+};
 
-export default Paleta
+export default Paleta;

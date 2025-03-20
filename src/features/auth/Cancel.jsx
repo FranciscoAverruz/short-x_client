@@ -1,8 +1,8 @@
+import Sx from "@common/Sx.jsx";
+import logo from "@assets/icon.png";
 import Button from "@atoms/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import Sx from "@common/Sx.jsx";
-import logo from "@assets/icon.png";
 
 function Cancel() {
   const navigate = useNavigate();

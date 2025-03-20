@@ -1,4 +1,4 @@
- const FormatDate = (fechaString) => {
+const FormatDate = (fechaString) => {
   if (!fechaString) return "";
   const fecha = new Date(fechaString);
   if (isNaN(fecha)) return "Fecha inválida";

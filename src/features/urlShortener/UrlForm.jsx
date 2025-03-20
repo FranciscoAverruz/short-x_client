@@ -2,40 +2,41 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect } from "react";
 import Input from "@molecules/Input";
-import SubmitButton from "@molecules/SubmitButton.jsx";
 import Button from "@atoms/Button";
-import { TbLinkPlus } from "react-icons/tb";
-import { FaRegCopy } from "react-icons/fa";
-import { AuthContext } from "@context/AuthContext";
+import SubmitButton from "@molecules/SubmitButton.jsx";
 import useShortenUrlInvited from "@hooks/useShortenUrlInvited";
 import useShortenUrlForUser from "@hooks/useShortenUrlForUser";
-import {FRONTEND_URL} from "@src/Env.jsx"
+import { toast } from "sonner";
+import { FaRegCopy } from "react-icons/fa";
+import { TbLinkPlus } from "react-icons/tb";
+import { AuthContext } from "@context/AuthContext";
+import { FRONTEND_URL } from "@src/Env.jsx";
 
-const UrlForm = ({ updateUrlsList}) => {
-  const { user } = useContext(AuthContext);  
-    const urlInvited = useShortenUrlInvited();
-    const urlForUser = useShortenUrlForUser();
-    const {
-      link,
-      setLink,
-      shortenedUrl,
-      error,
-      loading,
-      shortenUrl,
-      setShortenedUrl,
-      setCustomId, 
-      customId 
-    } = user ? urlForUser : urlInvited;
+const UrlForm = ({ updateUrlsList, classUrlForm }) => {
+  const urlInvited = useShortenUrlInvited();
+  const urlForUser = useShortenUrlForUser();
+  const { userId } = useContext(AuthContext);
+  const {
+    link,
+    setLink,
+    shortenedUrl,
+    error,
+    loading,
+    shortenUrl,
+    setShortenedUrl,
+    setCustomId,
+    customId,
+  } = userId ? urlForUser : urlInvited;
 
   useEffect(() => {
-    if (user && shortenedUrl) {
+    if (userId && shortenedUrl) {
       updateUrlsList();
     }
-  }, [user, shortenedUrl, updateUrlsList]);
+  }, [userId, shortenedUrl, updateUrlsList]);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shortenedUrl);
-    alert("¡URL copiada al portapapeles!");
+    toast.success("¡URL copiada al portapapeles!");
   };
 
   const resetForm = () => {
@@ -44,7 +45,7 @@ const UrlForm = ({ updateUrlsList}) => {
   };
 
   return (
-    <main className="w-full">
+    <main className={`w-full ${classUrlForm}`}>
       <form onSubmit={shortenUrl}>
         <Input
           type="url"
@@ -56,8 +57,8 @@ const UrlForm = ({ updateUrlsList}) => {
           required
         />
 
-        {user && (
-          <article className="flex flex-col md:flex-row lg:flex-col mb-3">
+        {userId && (
+          <article className="flex flex-col md:flex-row md:gap-5 lg:flex-col mb-3">
             <span className="w-full">
               <Input
                 value={FRONTEND_URL}
@@ -84,10 +85,12 @@ const UrlForm = ({ updateUrlsList}) => {
               shortenedUrl ? "" : "hidden md:block"
             }`}
           >
-            {shortenedUrl && !user && (
+            {shortenedUrl && !userId && (
               <div className="relative w-full px-2 py-2 pt-[6px] text-lg flex flex-col md:flex-row items-center justify-between m-0">
                 <article className="flex flex-col md:flex-row gap-2">
-                  <p className="absolute md:relative top-0 md:right-auto subTitle1 text-lg">URL Acortada:</p>
+                  <p className="absolute md:relative top-0 md:right-auto subTitle1 text-lg">
+                    URL Acortada:
+                  </p>
                   <a
                     href={shortenedUrl}
                     target="_blank"
@@ -95,7 +98,7 @@ const UrlForm = ({ updateUrlsList}) => {
                     className="btnLink title text-xl pt-8 md:pt-0"
                   >
                     {shortenedUrl}
-                </a>
+                  </a>
                 </article>
                 <Button
                   onClick={copyToClipboard}
@@ -108,7 +111,7 @@ const UrlForm = ({ updateUrlsList}) => {
             )}
           </div>
           <div className="col-span-1 self-end w-full">
-            {shortenedUrl && !user ? (
+            {shortenedUrl && !userId ? (
               <Button
                 type="button"
                 onClick={resetForm}
@@ -122,7 +125,7 @@ const UrlForm = ({ updateUrlsList}) => {
                 label={loading ? "Acortando..." : "Acortar"}
                 className="w-full lg:w-36 mt-2"
                 disabled={loading}
-              />  
+              />
             )}
           </div>
         </section>

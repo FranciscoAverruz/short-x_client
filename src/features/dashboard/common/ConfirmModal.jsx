@@ -1,26 +1,58 @@
 /* eslint-disable react/prop-types */
-// ConfirmModal.jsx
-import React from 'react';
-import Dialog from '@common/Dialog.jsx';
+import React from "react";
+import Dialog from "@common/Dialog.jsx";
+import Button from "@atoms/Button.jsx";
+import { TbCancel } from "react-icons/tb";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
-const ConfirmModal = ({ open, onClose, title, content, onConfirm, loading }) => {
+const ConfirmModal = ({
+  open,
+  onClose,
+  title,
+  content,
+  onConfirm,
+  secondaryAction,
+  loading,
+  secondaryLabel = "Cancelar",
+}) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className="p-4">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <div>
-          {React.isValidElement(content) ? content : <div>{content}</div>}
-        </div>
-        <div className="flex justify-end mt-4">
-          <button onClick={onClose} className="bg-gray-300 p-2 rounded mr-2">Cancelar</button>
-          <button onClick={onConfirm} className="bg-red-500 text-white p-2 rounded" disabled={loading}>
-            {loading ? 'Eliminando...' : 'Confirmar'}
-          </button>
-        </div>
-      </div>
+      <aside className="p-4">
+        <h2 className="flex title text-2xl font-medium w-full justify-center text-center my-8 subTitle2">
+          {title}
+        </h2>
+        <hr className="divider mb-5" />
+        <section className="flex justify-center">
+          {React.isValidElement(content) ? content : <span>{content}</span>}
+        </section>
+        <section className="flex justify-end mt-8">
+          <Button
+            label="Cancelar"
+            icon={TbCancel}
+            variant="secondary"
+            className="mr-3"
+            onClick={onClose}
+          />
+          {secondaryAction && (
+            <Button
+              label={secondaryLabel}
+              icon={TbCancel}
+              variant="secondary"
+              className="mr-3"
+              onClick={secondaryAction}
+              disabled={loading}
+            />
+          )}
+          <Button
+            label={loading ? "Procesando..." : "Confirmar"}
+            icon={IoMdCheckmarkCircleOutline}
+            onClick={onConfirm}
+            disabled={loading}
+          />
+        </section>
+      </aside>
     </Dialog>
   );
 };
 
 export default ConfirmModal;
-

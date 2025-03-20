@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "@src/Env.jsx";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -11,16 +11,16 @@ const useLogin = () => {
   const login = async (credentials, rememberMe, dispatch) => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const res = await axios.post(`${API_URL}/login`, credentials);
       const userData = res.data;
-  
+
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: { user: userData, rememberMe },
       });
-  
+
       navigate("/dashboard");
     } catch (err) {
       let errorMessage = "Error desconocido";
@@ -42,7 +42,7 @@ const useLogin = () => {
   return {
     login,
     loading,
-    error
+    error,
   };
 };
 

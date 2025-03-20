@@ -1,7 +1,7 @@
-// src/hooks/useCheckoutSession.js
-import { useState } from 'react';
-import axios from 'axios';
-import { API_URL } from '@src/Env.jsx';
+import axios from "axios";
+import { API_URL } from "@src/Env.jsx";
+import { useState } from "react";
+import { logError } from "@utils/logger";
 
 const useCheckoutSession = () => {
   const [loadingCheckout, setLoadingCheckout] = useState(false);
@@ -28,8 +28,8 @@ const useCheckoutSession = () => {
         throw new Error("No se recibió sessionId o url.");
       }
     } catch (err) {
-      console.error('Error al crear la sesión de checkout:', err);
-      setErrorCheckout('Hubo un error al procesar tu pago.');
+      logError("Error al crear la sesión de checkout:", err);
+      setErrorCheckout("Hubo un error al procesar tu pago.");
       throw err;
     } finally {
       setLoadingCheckout(false);

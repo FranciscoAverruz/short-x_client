@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import HeroSection from "@homeSections/HeroSection.jsx";
-import BenefitsSection from "@homeSections/BenefitsSection.jsx";
-import PricingSection from "@homeSections/PricingSection.jsx";
-// import FinalCTA from "@homeSections/FinalCTA.jsx";
 import FAQSection from "@homeSections/FAQSection.jsx";
+import HeroSection from "@homeSections/HeroSection.jsx";
+import PricingSection from "@homeSections/PricingSection.jsx";
+import BenefitsSection from "@homeSections/BenefitsSection.jsx";
+// import FinalCTA from "@homeSections/FinalCTA.jsx";
 
 const Home = () => {
   return (
@@ -30,7 +30,7 @@ const Home = () => {
 
       {/* FAQ */}
       <section className="h-fit">
-        <FAQSection/>
+        <FAQSection />
       </section>
 
       {/* CTA */}
@@ -54,9 +54,11 @@ export default Home;
 // }}
 
 // Bordes
-{/* <aside className="hidden md:flex absolute left-0 -bottom-[6.1rem] lg:-bottom-[7.8rem] w-28 lg:w-36 z-0 md:z-[2] scale-y-[-1] -rotate-90 overflow-hidden">
+{
+  /* <aside className="hidden md:flex absolute left-0 -bottom-[6.1rem] lg:-bottom-[7.8rem] w-28 lg:w-36 z-0 md:z-[2] scale-y-[-1] -rotate-90 overflow-hidden">
   <img src={border} alt="border left" />
 </aside>
 <aside className="absolute md:right-0 -bottom-[6.1rem] lg:-bottom-[7.8rem] w-28 lg:w-36 z-0 md:z-[2] -scale-y-[-2] md:-scale-y-[-1] -rotate-90">
   <img src={border} alt="border left" />
-</aside> */}
+</aside> */
+}

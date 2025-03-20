@@ -1,9 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-/* src/components/atoms/Button.jsx */
-import React from 'react';
+import React from "react";
 
-const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Icon, className = 'rounded-lg', ClassBtnIco="w-5 h-5",title, onMouseEnter, onMouseLeave }) => {
+const Button = ({
+  label,
+  onClick,
+  type = "button",
+  variant = "primary",
+  icon: Icon,
+  className = "rounded-lg",
+  ClassBtnIco = "w-5 h-5",
+  title,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
   const buttonClasses = {
     primary: "btnPrimary",
     secondary: "btnSecondary",
@@ -11,7 +21,7 @@ const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Ic
     link: "btnLink",
     toggle: "btnIcon",
     danger: "btnDanger",
-    action: "actionBtn"
+    action: "actionBtn",
   };
 
   return (
@@ -23,7 +33,9 @@ const Button = ({ label, onClick, type = 'button', variant = 'primary', icon: Ic
       title={title}
       className={`flex flex-row ${buttonClasses[variant]} ${className}`}
     >
-      {Icon && <Icon className={`flex justify-center items-center ${ClassBtnIco}`} />}
+      {Icon && (
+        <Icon className={`flex justify-center items-center ${ClassBtnIco}`} />
+      )}
       {label}
     </button>
   );
