@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "@molecules/NavBar";
+import NavBar from "@molecules/NavBar";
 import Footer from "@molecules/Footer";
 import bgDark from "@assets/bgDark.png";
 import bgLight from "@assets/bgLight.png";
@@ -58,7 +58,7 @@ const MainLayout = () => {
         }`}
         style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 5 }}
       >
-        <Navbar hasScrolled={hasScrolled} />
+        <NavBar hasScrolled={hasScrolled} />
       </header>
       <main className="relative flex-grow flex justify-center items-center pt-5 shadow-xl">
         {/* main backgorund */}
