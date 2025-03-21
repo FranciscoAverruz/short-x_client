@@ -19,6 +19,7 @@ import UrlDetails from "@dashPage/UrlDetails.jsx";
 import ColorPalette from "@pages/ColorPalette.jsx";
 import Subscription from "@dashPage/Subscription.jsx";
 import RetryPayment from "@dashPage/RetryPayment.jsx";
+import VerifyDomain from "./features/dashboard/pages/VerifyDomain";
 import ChangePassword from "@myAccount/ChangePassword.jsx";
 import DashboardLayout from "@layouts/DashboardLayout.jsx";
 import RedirectHandler from "@urlShortener/RedirectHandler.jsx";
@@ -89,6 +90,7 @@ function App() {
           <Route index element={<MyAccount />} />
           <Route path="myaccount" element={<MyAccount />} />
           <Route path="domains" element={<Domains />} />
+          <Route path="domains/verify-domain" element={<VerifyDomain />} />
           <Route path="password" element={<ChangePassword />} />
           <Route path="urls" element={<MyUrls />} />
           <Route path="urls/:shortId" element={<UrlDetails />} />

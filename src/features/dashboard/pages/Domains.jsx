@@ -7,6 +7,7 @@ import useAuthAxios from "@hooks/useAuthAxios";
 import { toast } from "sonner";
 import { API_URL } from "@src/Env.jsx";
 import { AuthContext } from "@context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Domains = () => {
   const { userId } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Domains = () => {
   const [domain, setDomain] = useState("");
   const [domains, setDomains] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const authAxios = useAuthAxios();
 
   const fetchDomains = useCallback(async () => {
@@ -30,7 +32,7 @@ const Domains = () => {
   useEffect(() => {
     fetchDomains();
   }, [fetchDomains]);
-
+// **************************************************************
   const handleAddDomain = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -47,6 +49,7 @@ const Domains = () => {
     setLoading(false);
   };
 
+// **************************************************************
   const handleDeleteDomain = async (domainId) => {
     try {
       await authAxios.delete(
@@ -58,22 +61,27 @@ const Domains = () => {
     }
   };
 
-  const handleVerifyDomain = async (customDomain) => {
-    const token = prompt("Ingrese el token de verificación:");
-    if (!token) return;
-    try {
-      await authAxios.post(`${API_URL}/user/${userId}/custom-domains/verify`, {
-        domain: customDomain.domain,
-        token,
-      });
-      fetchDomains();
+// **************************************************************
+const handleVerifyDomain = async (customDomain) => {
+  const token = prompt("Ingrese el token de verificación:");
+  if (!token) return;
+
+  try {
+    const response = await authAxios.post(
+      `${API_URL}/user/${userId}/custom-domains/verify`,
+      { token, domain: customDomain.domain }
+    );
+    
+    if (response.status === 200) {
       toast.success("Dominio verificado correctamente");
-    } catch (err) {
-      toast.error(
-        "La verificación falló. Revise el token y vuelva a intentarlo."
-      );
+      fetchDomains();
+    } else {
+      toast.error("La verificación falló. Revise el token y vuelva a intentarlo.");
     }
-  };
+  } catch (err) {
+    toast.error("Error al verificar el dominio.");
+  }
+};
 
   return (
     <div className="max-w-4xl mx-auto p-4">
