@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { BACKEND_URL } from "@src/Env.jsx";
 
@@ -10,15 +9,7 @@ const useRedirectUrl = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${BACKEND_URL}/${shortId}`, {
-        withCredentials: true,
-      });
-
-      if (response.data.originalUrl) {
-        window.location.href = response.data.originalUrl;
-      } else {
-        throw new Error("URL no encontrada");
-      }
+      window.location.href = `${BACKEND_URL}/${shortId}`;
     } catch (err) {
       setError(err.response?.data?.message || "Error al redirigir");
     } finally {
