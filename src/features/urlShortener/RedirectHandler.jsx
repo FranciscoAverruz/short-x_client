@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useRedirectUrl } from "@hooks/useRedirectUrl.jsx";
+import useRedirectUrl from "@hooks/useRedirectUrl.jsx";
 
 const RedirectHandler = () => {
   const { shortId } = useParams();
