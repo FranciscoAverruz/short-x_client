@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BACKEND_URL } from "@src/Env.jsx";
+import { useRedirectUrl } from "@hooks/useRedirectUrl.jsx";
 
 const RedirectHandler = () => {
   const { shortId } = useParams();
+  const { redirectToOriginalUrl } = useRedirectUrl();
 
   useEffect(() => {
-    console.log("Redirigiendo a:", `${BACKEND_URL}/${shortId}`);
-    window.location.href = `${BACKEND_URL}/${shortId}`;
-  }, [shortId]);
+    redirectToOriginalUrl(shortId);
+  }, [shortId, redirectToOriginalUrl]);
 
   return <p>Redirigiendo...</p>;
 };
