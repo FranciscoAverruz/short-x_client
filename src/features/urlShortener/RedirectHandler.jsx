@@ -7,7 +7,9 @@ const RedirectHandler = () => {
   const { redirectToOriginalUrl } = useRedirectUrl();
 
   useEffect(() => {
-    redirectToOriginalUrl(shortId);
+    if (shortId) {
+      redirectToOriginalUrl(shortId);
+    }
   }, [shortId, redirectToOriginalUrl]);
 
   return <p>Redirigiendo...</p>;

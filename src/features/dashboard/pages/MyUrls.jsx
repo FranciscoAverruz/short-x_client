@@ -1,11 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import Button from "@atoms/Button";
 import UrlInfo from "@dashCommon/UrlInfo.jsx";
 import UrlForm from "@urlShortener/UrlForm.jsx";
@@ -117,14 +111,10 @@ const MyUrls = () => {
 
   return (
     <>
+      <h1 className="title dashGrlHeadings text-2xl">Mis URLs</h1>
+      <hr className="divider mb-8" />
       <AnimatePresence>
         <main className="px-5">
-          <nav className="flex flex-col md:flex-row justify-center md:justify-between items-center md:gap-10 mb-2">
-            <h1 className="title dashGrlHeadings text-2xl mb-0 w-full">
-              Mis URL
-            </h1>
-          </nav>
-          <hr className="mb-3" />
           <aside className="flex flex-col lg:flex-row max-w-7xl mx-auto lg:gap-10">
             <motion.section
               initial={{ opacity: 0, y: -10 }}

@@ -7,6 +7,7 @@ const useShortenUrlForUser = () => {
   const [link, setLink] = useState("");
   const [originalUrl, setOriginalUrl] = useState("");
   const [customId, setCustomId] = useState("");
+  const [customDomain, setCustomDomain] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ const useShortenUrlForUser = () => {
         {
           originalUrl: link,
           customId: customId || null,
+          customDomain: customDomain
         }
       );
 
@@ -50,6 +52,8 @@ const useShortenUrlForUser = () => {
     setOriginalUrl,
     customId,
     setCustomId,
+    customDomain, 
+    setCustomDomain
   };
 };
 

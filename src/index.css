@@ -16,7 +16,7 @@
   }
 
   .dashGrlHeadings {
-    @apply mb-0 md:mb-4 px-5 mt-4 md:mt-0;
+    @apply mb-0 md:mb-3 px-5 mt-4 md:mt-0;
   }
 
   .divider {

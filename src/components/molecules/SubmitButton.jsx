@@ -8,7 +8,7 @@ const SubmitButton = ({
   label,
   loading,
   onClick,
-  className = "",
+  classNameButton = "",
   icon = TbSend,
   ...props
 }) => {
@@ -21,7 +21,7 @@ const SubmitButton = ({
         variant="primary"
         className={`px-4 py-2 ${
           loading ? "bg-light-grlText" : ""
-        } ${className}`}
+        } ${classNameButton}`}
         icon={icon}
         onClick={onClick}
         {...props}

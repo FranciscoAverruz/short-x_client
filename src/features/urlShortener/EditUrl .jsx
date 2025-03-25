@@ -85,7 +85,7 @@ const EditUrl = () => {
       toast.success("URL actualizada con éxito.");
       navigate("/dashboard/urls");
     } catch (error) {
-      logError("❌ Error en la actualización:", error);
+      logError("Error en la actualización:", error);
 
       if (error.response && error.response.data?.errorCode) {
         const errorMessages = {
@@ -117,63 +117,69 @@ const EditUrl = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Editar URL</h2>
-      <form onSubmit={handleSubmit}>
-        <Input
-          label="URL Original"
-          type="text"
-          name="originalUrl"
-          value={formData.originalUrl}
-          onChange={handleChange}
-          required
-        />
-
-        <Input
-          label="Identificador Corto"
-          type="text"
-          name="shortId"
-          value={formData.shortId}
-          onChange={handleChange}
-          required
-        />
-
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Dominio Personalizado
-          </label>
-          <select
-            name="customDomain"
-            value={formData.customDomain}
+    <main className="flex w-full h-full justify-center items-center">
+      <div className="md:min-w-[40rem] max-w-xl mx-auto grlContainer p-6 md:p-10">
+        <h2 className="title text-2xl font-semibold mb-4">Editar URL</h2>
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="URL Original"
+            type="text"
+            name="originalUrl"
+            value={formData.originalUrl}
             onChange={handleChange}
-            className="w-full px-4 py-2 mt-1 border rounded-md focus:ring focus:ring-indigo-300"
-          >
-            <option value="">{FRONTEND_URL}</option>
-            {domains.map((domain) => (
-              <option key={domain._id} value={domain._id}>
-                {domain.domain}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex justify-between mt-4">
-          <Button
-            label="Cancelar"
-            icon={TbCancel}
-            onClick={() => navigate("/dashboard/urls")}
-            variant="secondary"
+            required
           />
-          <SubmitButton label="Guardar Cambios" loading={loading} />
-        </div>
-
-        {errorMessage && (
-          <div className="mt-4 p-2 text-red-700 bg-red-100 border border-red-400 rounded">
-            {errorMessage}
+          <div className="mt-1">
+            <label className="labelInput w-full">Dominio Personalizado</label>
+            <select
+              name="customDomain"
+              value={formData.customDomain}
+              onChange={handleChange}
+              className="flex inputStyle shadow px-4 py-2 h-10 w-full"
+            >
+              <option value="">{FRONTEND_URL}</option>
+              {loading ? (
+                <option disabled>Cargando...</option>
+              ) : (
+                domains.map((domain) => (
+                  <option key={domain._id} value={domain._id}>
+                    {domain.domain}
+                  </option>
+                ))
+              )}
+            </select>
           </div>
-        )}
-      </form>
-    </div>
+          <Input
+            label="Identificador Corto"
+            type="text"
+            name="shortId"
+            value={formData.shortId}
+            onChange={handleChange}
+            required
+          />
+
+          <div className="flex flex-col md:flex-row justify-end mt-5 gap-3">
+            <SubmitButton
+              label="Guardar Cambios"
+              loading={loading}
+              classNameButton="w-full"
+            />
+            <Button
+              label="Cancelar"
+              icon={TbCancel}
+              onClick={() => navigate("/dashboard/urls")}
+              variant="secondary"
+            />
+          </div>
+
+          {errorMessage && (
+            <div className="mt-4 p-2 text-red-700 bg-red-100 border border-red-400 rounded">
+              {errorMessage}
+            </div>
+          )}
+        </form>
+      </div>
+    </main>
   );
 };
 

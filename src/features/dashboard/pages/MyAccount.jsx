@@ -13,8 +13,8 @@ import { useState, useEffect, useContext } from "react";
 const MyAccount = () => {
   const [user, setUser] = useState(null);
   const { userId } = useContext(AuthContext);
-  const { loading, totalUrls } = useUserUrlsStats();
   const { user: contextUser } = useContext(AuthContext);
+  const { loading, totalUrls } = useUserUrlsStats();
   const authAxios = useAuthAxios();
   const navigate = useNavigate();
 
@@ -51,7 +51,8 @@ const MyAccount = () => {
 
   return (
     <AnimatePresence>
-      <h1 className="title dashGrlHeadings text-2xl">My Account</h1>
+      <h1 className="title dashGrlHeadings text-2xl">Mi Cuenta</h1>
+      <hr className="divider mb-8" />
       <motion.main
         key="myAccountMain"
         initial={{ opacity: 0, y: -10 }}

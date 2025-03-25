@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { BACKEND_URL } from "@src/Env.jsx";
+import axios from "axios";
 
 const useRedirectUrl = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const hasRegisteredClick = useRef(false);
 
-  const redirectToOriginalUrl = async (shortId) => {
+  const redirectToOriginalUrl = useCallback(async (shortId) => {
+    if (hasRegisteredClick.current) return;
+    hasRegisteredClick.current = true;
+
     setLoading(true);
-    setError(null);
+
     try {
+      const response = await axios.get(
+        `${BACKEND_URL}/${shortId}/register-click`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.data?.originalUrl) {
+        window.location.href = response.data.originalUrl;
+      } else {
+        console.warn( "No se recibió la URL de destino. Redirigiendo por fallback..." );
+        window.location.href = `${BACKEND_URL}/${shortId}`;
+      }
+    } catch (error) {
+      console.warn( "No se pudo registrar el clic, pero se continuará con la redirección.", error );
       window.location.href = `${BACKEND_URL}/${shortId}`;
-    } catch (err) {
-      setError(err.response?.data?.message || "Error al redirigir");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  return { redirectToOriginalUrl, loading, error };
+  return { redirectToOriginalUrl, loading };
 };
 
 export default useRedirectUrl;

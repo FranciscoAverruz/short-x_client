@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from "react";
 import Input from "@molecules/Input";
 import Button from "@atoms/Button";
 import SubmitButton from "@molecules/SubmitButton.jsx";
+import useCustomDomains from "@hooks/useCustomDomains";
 import useShortenUrlInvited from "@hooks/useShortenUrlInvited";
 import useShortenUrlForUser from "@hooks/useShortenUrlForUser";
 import { toast } from "sonner";
@@ -26,7 +27,10 @@ const UrlForm = ({ updateUrlsList, classUrlForm }) => {
     setShortenedUrl,
     setCustomId,
     customId,
+    customDomain,
+    setCustomDomain,
   } = userId ? urlForUser : urlInvited;
+  const { domains, loadingDomains } = useCustomDomains();
 
   useEffect(() => {
     if (userId && shortenedUrl) {
@@ -58,15 +62,25 @@ const UrlForm = ({ updateUrlsList, classUrlForm }) => {
         />
 
         {userId && (
-          <article className="flex flex-col md:flex-row md:gap-5 lg:flex-col mb-3">
-            <span className="w-full">
-              <Input
-                value={FRONTEND_URL}
-                label="Dominio"
-                className="labelInput"
-                disabled
-              />
-            </span>
+          <article className="flex flex-col md:flex-row md:gap-5 lg:gap-0 lg:flex-col items-baseline">
+            <aside className="flex w-full flex-col">
+              <label className="labelInput w-full">Dominio</label>
+              {loadingDomains ? (
+                <p>Cargando dominios...</p>
+              ) : (
+                <select
+                  className="flex inputStyle shadow px-4 py-2 h-10"
+                  onChange={(e) => setCustomDomain(e.target.value)}
+                >
+                  <option value="">{FRONTEND_URL}</option>
+                  {domains.map((domain) => (
+                    <option key={domain._id} value={domain.domain}>
+                      {domain.domain}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </aside>
             <span className="w-full">
               <Input
                 type="text"
@@ -79,7 +93,7 @@ const UrlForm = ({ updateUrlsList, classUrlForm }) => {
             </span>
           </article>
         )}
-        <section className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 items-baseline md:items-center w-full h-fit justify-center gap-3">
+        <section className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 items-baseline md:items-center w-full h-fit justify-center gap-3 mt-5">
           <div
             className={`col-span-1 md:col-span-4 w-full h-fit innerlight rounded-lg bg-light-bg dark:bg-dark-bg ${
               shortenedUrl ? "" : "hidden md:block"
