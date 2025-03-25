@@ -10,7 +10,7 @@ const PrincingModal = ({ isOpen, closeModal, handlePlanSelect }) => {
 
   return createPortal(
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-[60]">
-      <div className="bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-sm h-full overflow-auto p-4 pb-10 rounded-lg shadow-lg relative w-full scale-90">
+      <div className="bg-light-bg dark:bg-dark-bg h-full overflow-auto p-4 pb-10 rounded-lg shadow-lg relative w-full scale-90">
         <Button
           className="fixed top-1 right-3 text-3xl font-bold z-[70]"
           variant="navbar"
