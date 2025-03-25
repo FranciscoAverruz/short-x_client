@@ -50,9 +50,10 @@ const MyAccount = () => {
   };
 
   return (
-    <AnimatePresence>
+    <>
       <h1 className="title dashGrlHeadings text-2xl">Mi Cuenta</h1>
       <hr className="divider mb-8" />
+    <AnimatePresence>
       <motion.main
         key="myAccountMain"
         initial={{ opacity: 0, y: -10 }}
@@ -84,6 +85,7 @@ const MyAccount = () => {
         </section>
       </motion.main>
     </AnimatePresence>
+</>
   );
 };
 
