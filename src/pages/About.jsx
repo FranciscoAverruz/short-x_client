@@ -2,7 +2,6 @@
 import Sx from "@common/Sx.jsx";
 import icon from "@assets/icon.png";
 import React from "react";
-import border from "@assets/border.webp";
 import avatar from "@assets/avatar.jpg";
 
 const About = () => {
@@ -14,12 +13,6 @@ const About = () => {
             className="hidden lg:block absolute inset-0 bg-cover bg-center rounded-xl"
             style={{ backgroundImage: `url(${avatar})` }}
           ></div>
-          <aside className="absolute -left-[30px] -top-9 w-20 z-0 md:z-[2] scale-y-[-1]">
-            <img src={border} alt="" />
-          </aside>
-          <aside className="absolute -right-[30px] -bottom-9 w-20 z-0 md:z-[2] scale-x-[-1] hidden lg:block">
-            <img src={border} alt="" />
-          </aside>
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-8">
             <div className="w-16 md:w-28 lg:w-40 drop-shadow-xl z-10">
               <img src={icon} alt="" />

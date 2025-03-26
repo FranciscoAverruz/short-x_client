@@ -25,6 +25,7 @@ const EmailForm = ({ onSubmit }) => {
     defaultCountryName,
     defaultCountryFlag,
     countryOptions,
+    isLoading
   } = useEmailForm(onSubmit);
 
   return (
@@ -50,7 +51,7 @@ const EmailForm = ({ onSubmit }) => {
         </div>
 
         {/* Phone  *********************************************************** */}
-        <div className="relative mb-2 md:w-[40%]">
+        <div className="relative md:w-[40%] -mt-2 md:mt-0">
           <select
             name="countryCode"
             value={countryCode}
@@ -64,7 +65,7 @@ const EmailForm = ({ onSubmit }) => {
             ))}
           </select>
           <div
-            className="absolute subTitle1 flex items-end flex-row -right-2 text-xs top-1 gap-1 md:w-56 md:justify-end w-56 max-w-40"
+            className="absolute subTitle1 flex items-end flex-row -right-2 text-xs top-3 gap-1 md:w-56 justify-end w-56 max-w-40"
             title={countryName}
           >
             <span className="flex justify-end max-h-4 overflow-hidden z-[1] cursor-default">
@@ -95,7 +96,7 @@ const EmailForm = ({ onSubmit }) => {
       </section>
 
       {/* ===================================== 2 ===================================== */}
-      <section className="mt-2 md:mt-auto">
+      <section className="md:mt-auto">
         <Input
           label={"Email"}
           id="email"
@@ -111,7 +112,7 @@ const EmailForm = ({ onSubmit }) => {
       </section>
 
       {/* ===================================== 3 ===================================== */}
-      <section className="mt-2 w-full">
+      <section className="w-full">
         <Input
           label={"Mensaje"}
           id="message"
@@ -133,7 +134,7 @@ const EmailForm = ({ onSubmit }) => {
         )}
       </section>
 
-      <SubmitButton label="Enviar" className="mt-3" />
+      <SubmitButton label="Enviar" className="mt-5" />
     </form>
   );
 };

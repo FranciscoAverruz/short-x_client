@@ -52,7 +52,7 @@ const Login = () => {
       borderSrc={border}
       imageSrc={avatar}
       onSubmit={handleSubmit}
-      className="mt-14 mb-5 md:mt-auto md:mb-auto"
+      className="md:w-[70%] mt-10 mb-10"
       formContent={
         <>
           <Input
@@ -107,7 +107,7 @@ const Login = () => {
             </span>
           </article>
 
-          <article className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-5">
+          <article className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-10">
             <span className="labelInput">¿Aún no tienes una Cuenta?</span>
             <Button
               label="Regístrate"
@@ -117,12 +117,6 @@ const Login = () => {
             />
           </article>
         </>
-      }
-      borderClasses={
-        {
-          // left: "scale-y-[-1] -rotate-90",
-          // right: "scale-y-[-1] rotate-90"
-        }
       }
     />
   );

@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
-import border from "@assets/border.webp";
 import avatar from "@assets/avatar.jpg";
 import AuthLayout from "@auth/AuthLayout";
 import useRegister from "@hooks/useRegister.jsx";
@@ -203,10 +202,9 @@ const Register = () => {
   return (
     <AuthLayout
       title="Registrarse"
-      borderSrc={border}
       imageSrc={avatar}
       onSubmit={handleSubmit}
-      className="mt-16 md:mt-5 lg:w-[70%] relative"
+      className="mt-10 md:mt-5 md:w-[70%] mb-10"
       formContent={
         <>
           <article className="flex flex-col-reverse md:flex-row w-full gap-2">
@@ -309,7 +307,7 @@ const Register = () => {
               <SubmitButton
                 label="Registrarse"
                 loading={loading}
-                disabled={loading} // Agrega esta línea para evitar envíos repetidos
+                disabled={loading}
                 className="z-[2] w-full md:w-auto"
               />
             </span>

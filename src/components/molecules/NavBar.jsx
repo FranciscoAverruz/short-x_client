@@ -47,21 +47,21 @@ const NavBar = ({ hasScrolled }) => {
     <nav
       className={`w-full h-16 md:h-auto flex items-center flex-col md:flex-row md:justify-between md:px-6 py-2 ${
         menuOpen
-          ? "shadow-md bg-light-bg dark:bg-dark-bg backdrop-blur-sm bg-opacity-90"
+          ? "md:shadow-md bg-light-bg dark:bg-dark-bg backdrop-blur-sm bg-opacity-90"
           : ""
       }`}
     >
       <section
-        onClick={() => navigate("/")}
-        className="flex flex-row gap-9 md:gap-3 items-center cursor-pointer"
+        className="flex flex-row justify-between px-3 md:gap-3 items-center cursor-pointer w-screen md:w-auto"
       >
-        <div
-          className={`transition-all duration-300 ${
-            hasScrolled || menuOpen ? "opacity-100" : "opacity-0"
+        <span
+          onClick={() => navigate("/")}
+          className={`transition-all duration-200 ${
+            hasScrolled || menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
           }`}
         >
           <Brand />
-        </div>
+        </span>
         <Button
           className="md:hidden text-light-Title dark:text-dark-Title p-2 self-center"
           onClick={toggleMenu}
@@ -72,7 +72,7 @@ const NavBar = ({ hasScrolled }) => {
       <section
         className={`flex flex-row justify-center gap-0 md:mt-0 md:max-h-screen md:opacity-100 md:bg-transparent w-screen md:w-auto py-2 md:py-0 transition-all duration-200 ease-in-out ${
           menuOpen
-            ? "max-h-screen opacity-100 bg-light-bg/90 dark:bg-dark-bg/90 backdrop-blur-md mt-0"
+            ? "max-h-screen opacity-100 bg-light-bg/90 dark:bg-dark-bg/20 backdrop-blur-md mt-0 w-screen md:w-auto"
             : "max-h-0 opacity-0"
         }`}
       >
@@ -89,7 +89,7 @@ const NavBar = ({ hasScrolled }) => {
               />
             ))}
           </article>
-          <article className="rotate-90 scale-75 md:rotate-0 md:scale-100 h-5 md:h-auto w-fit p-0 md:p-1">
+          <article className="flex rotate-90 scale-75 md:rotate-0 md:scale-100 h-5 md:h-fit w-fit p-0 md:p-1 justify-center items-center">
             <ThemeSwitch />
           </article>
         </aside>

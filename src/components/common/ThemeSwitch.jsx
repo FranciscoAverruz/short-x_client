@@ -30,7 +30,7 @@ const ThemeSwitch = () => {
       {/* Toggle gor (lg)-screens  ******************************************************************** */}
       <label
         htmlFor="toggle-dark"
-        className=" lg:flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer"
       >
         <Input
           type="checkbox"
