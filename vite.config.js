@@ -32,28 +32,17 @@ export default defineConfig({
       "@dashboard": path.resolve(__dirname, "src/features/dashboard"),
       "@dashPage": path.resolve(__dirname, "src/features/dashboard/pages"),
       "@dashComp": path.resolve(__dirname, "src/features/dashboard/components"),
-      "@myAccount": path.resolve(
-        __dirname,
-        "src/features/dashboard/components/myAccount"
-      ),
-      "@dashNavBar": path.resolve(
-        __dirname,
-        "src/features/dashboard/components/dashNavBar"
-      ),
-      "@dashSideBar": path.resolve(
-        __dirname,
-        "src/features/dashboard/components/dashSideBar"
-      ),
-      "@dashSubscription": path.resolve(
-        __dirname,
-        "src/features/dashboard/components/subscription"
-      ),
+      "@myAccount": path.resolve(__dirname, "src/features/dashboard/components/myAccount"),
+      "@dashNavBar": path.resolve(__dirname, "src/features/dashboard/components/dashNavBar"),
+      "@dashSideBar": path.resolve(__dirname, "src/features/dashboard/components/dashSideBar"),
+      "@dashDomains": path.resolve(__dirname, "src/features/dashboard/components/domains"),
+      "@dashSubscription": path.resolve(__dirname, "src/features/dashboard/components/subscription"),
       "@dashCommon": path.resolve(__dirname, "src/features/dashboard/common"),
       "@dashCharts": path.resolve(__dirname, "src/features/dashboard/charts"),
       "@urlShortener": path.resolve(__dirname, "src/features/urlShortener"),
       "@common": path.resolve(__dirname, "src/components/common"),
       "@home": path.resolve(__dirname, "src/features/home"),
-      "@homeSections": path.resolve(__dirname, "src/features/home/components"),
+      "@homeSections": path.resolve(__dirname, "src/features/home/sections"),
       "@assets": path.resolve(__dirname, "src/assets"),
       "@context": path.resolve(__dirname, "src/context"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
