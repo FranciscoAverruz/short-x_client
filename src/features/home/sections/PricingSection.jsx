@@ -2,9 +2,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import plans from "@dashCommon/PlansData.jsx";
-import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
 import bgPricing from "@assets/bgPricing.webp";
+import ToggleBillingCycle from "@homeSections/ToggleBillingCycle";
 import { FaMedal } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
@@ -33,44 +33,10 @@ const PricingSection = ({ handlePlanSelect }) => {
       <h2 className="flex title mb-3 p-5">
         Encuentra el Plan Perfecto para Ti
       </h2>
-      <label className="flex w-52 justify-center items-center mb-16">
-        {/* toggle *************************************************************************/}
-        <Input
-          type="checkbox"
-          id="toggle-dark"
-          className="sr-only"
-          checked={isAnnual}
-          onChange={togglePlanType}
-          aria-label="Toggle dark mode"
-          role="switch"
-          aria-checked={isAnnual}
-        />
-        <div className="relative bg-light-bg dark:bg-dark-bg w-[14.6rem] h-8 rounded-full shadow-md flex items-center justify-between px-2 transition-colors duration-300 cursor-pointer">
-          <span
-            className={`flex justify-center items-center -ml-1 w-28 h-6 rounded-full font-bold transition-colors duration-300 ${
-              isAnnual
-                ? "text-light-subTitle dark:text-dark-subTitle"
-                : "text-light-Title"
-            } z-10`}
-          >
-            Mensual
-          </span>
-          <div
-            className={`absolute left-1 top-1 bg-dark-accent w-28 h-6 rounded-full flex items-center justify-center text-white font-bold shadow-inner transition-transform duration-300 ${
-              isAnnual ? "translate-x-full" : ""
-            } z-0`}
-          ></div>
-          <span
-            className={`flex justify-center items-center -mr-1 w-28 h-6 rounded-full font-bold transition-colors duration-300 ${
-              isAnnual
-                ? "text-light-Title"
-                : "text-light-subTitle dark:text-dark-subTitle"
-            } z-10`}
-          >
-            Anual
-          </span>
-        </div>
-      </label>
+      {/* Billing Cycle Toggle *************************************************************/}
+      <article className="flex w-full justify-center mb-16">
+        <ToggleBillingCycle isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
+      </article>
 
       {/* Pricing Cards ********************************************************************/}
       <section className="grid w-[90%] md:w-full grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
