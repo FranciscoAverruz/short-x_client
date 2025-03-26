@@ -16,8 +16,6 @@ import {
   PiLinkSimpleHorizontalDuotone,
   PiBookmarkSimpleLight,
   PiBookmarkSimpleFill,
-  PiGear,
-  PiGearFill,
 } from "react-icons/pi";
 
 const menuItems = [
@@ -33,12 +31,6 @@ const menuItems = [
     },
     label: "Mis URLs",
     link: "/dashboard/urls",
-    // alert,
-    // subItems: [
-    //   { label: "Ver", link: "/dashboard/urls/view" },
-    //   { label: "Editar", link: "/dashboard/urls/edit" },
-    //   { label: "Eliminar", link: "/dashboard/urls/delete" }
-    // ]
   },
   {
     icon: {
@@ -52,11 +44,6 @@ const menuItems = [
     icon: { default: <HiOutlineGlobeAlt />, active: <HiGlobeAlt /> },
     label: "Dominios personalizados",
     link: "/dashboard/domains",
-  },
-  {
-    icon: { default: <PiGear />, active: <PiGearFill /> },
-    label: "Configuración",
-    link: "/dashboard/config",
   },
 ];
 
