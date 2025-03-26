@@ -31,7 +31,6 @@ const GetPaymentHistory = () => {
         const response = await authAxios.get(
           `${API_URL}/subscription/${userId}/payment-history`
         );
-        console.log("response en PAYMENT ISTORY >> ", response);
 
         setPaymentHistory(response.data.payments || []);
 

@@ -49,7 +49,6 @@ const UrlInfo = ({
       <ul className="flex flex-col gap-2 w-full h-fit">
         {urlsStats.map((url, index) => {
           const formattedExpiration = formatDate(url.expiresAt);
-          // const urlToRedirect = `${FRONTEND_URL}/${url.shortLink}`;
           const shortenedUrl = `${url.customDomain}/${url.shortLink}`;
           const domain = new URL(url.originalUrl).hostname;
           let faviconUrl = `${url.originalUrl}/favicon.ico`;
