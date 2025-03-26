@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
 import PlanLabel from "@dashCommon/PlanLabel.jsx";
@@ -9,12 +9,14 @@ import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
 import PricingModal from "@common/PricingModal";
 import SubmitButton from "@molecules/SubmitButton.jsx";
 import useAuthAxios from "@hooks/useAuthAxios";
+import PremiumModal from "@homeSections/PremiumModal.jsx";
 import { toast } from "sonner";
 import { Loader } from "@common/Loader.jsx";
 import { API_URL } from "@src/Env.jsx";
 import { logError } from "@utils/logger";
 import { AuthContext } from "@context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
   const [newPlan, setNewPlan] = useState(currentPlan);
@@ -22,8 +24,11 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [upcomingPayment, setUpcomingPayment] = useState(null);
   const { userId, dispatch, subscription, plan } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const authAxios = useAuthAxios();
 
   const handlePlanSelect = (planType, billingCycle) => {
@@ -90,7 +95,15 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("plan") === "premium") {
+      setIsPremiumOpen(true);
+    }
+  }, [location]);
+
   return (
+    <>
     <AnimatePresence>
       <motion.main
         key="updateSubscription"
@@ -102,15 +115,18 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
         <aside className="flex flex-col justify-between h-full w-full md:w-full">
           <h2 className="text-xl subTitle1">Cambiar Plan</h2>
           <article className="flex flex-col md:flex-row lg:flex-col md:gap-5 lg:gap-0 md:w-full md:justify-center">
-            <span className="flex flex-row lg:flex-row items-end p-0 w-full">
-              <Input
-                label={"Nuevo Plan"}
-                type="text"
-                id="newPlan"
-                value={newPlan}
-                className="rounded-r-none w-full"
-                readOnly
-              />
+            <span className="relative flex flex-row lg:flex-row items-end p-0 w-full">
+            <Input
+              label={"Nuevo Plan"}
+              type="text"
+              id="newPlan"
+              value={newPlan}
+              className="rounded-r-none w-full text-transparent "
+              readOnly
+            />
+            <span className="absolute left-4 top-10 transform text-amber-500 font-semibold text-lg">
+              <PlanLabel plan={newPlan} /> {/* this will show over id="newPlan" */}
+            </span>
               <Button
                 label="Cambiar"
                 onClick={() => setModalOpen(true)}
@@ -136,7 +152,6 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
           closeModal={() => setModalOpen(false)}
           handlePlanSelect={handlePlanSelect}
         />
-
         {loading ? (
           <Loader
             type="spinner"
@@ -209,6 +224,19 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
         )}
       </motion.main>
     </AnimatePresence>
+            <PremiumModal
+            isOpen={isPremiumOpen}
+            onClose={() => {
+              setIsPremiumOpen(false);
+              navigate("/dashboard/subscription");
+            }}
+            handlePlanSelect={(planType, billing) => {
+              setNewPlan(`${planType}_${billing}`);
+              setIsPremiumOpen(false);
+              navigate("/dashboard/subscription");
+            }}
+          />
+          </>
   );
 };
 
