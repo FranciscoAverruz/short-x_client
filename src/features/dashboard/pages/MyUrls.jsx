@@ -163,7 +163,7 @@ const MyUrls = () => {
                     openConfirmModal={openConfirmModal}
                   />
                 ) : (
-                  <p>No hay estadisticas disponibles</p>
+                  <p className="grlTxt">No hay estadisticas disponibles</p>
                 )}
               </aside>
               <PaginationURL
