@@ -8,7 +8,7 @@
   }
 
   .grlTxt {
-    @apply text-light-grlText dark:text-dark-grlText;
+    @apply text-light-grlText dark:text-dark-inputBg;
   }
 
   .smart {
