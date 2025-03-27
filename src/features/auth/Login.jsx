@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import Input from "@molecules/Input.jsx";
-import border from "@assets/border.webp";
-import avatar from "@assets/avatar.jpg";
 import Button from "@atoms/Button.jsx";
 import useLogin from "@hooks/useLogin";
 import AuthLayout from "@auth/AuthLayout";
@@ -49,10 +47,7 @@ const Login = () => {
   return (
     <AuthLayout
       title="Iniciar sesión"
-      borderSrc={border}
-      imageSrc={avatar}
       onSubmit={handleSubmit}
-      className="md:w-[70%] mt-10 mb-10"
       formContent={
         <>
           <Input

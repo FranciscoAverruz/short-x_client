@@ -204,11 +204,10 @@ const Register = () => {
       title="Registrarse"
       imageSrc={avatar}
       onSubmit={handleSubmit}
-      className="mt-10 md:mt-5 md:w-[70%] mb-10"
       formContent={
         <>
           <article className="flex flex-col-reverse md:flex-row w-full gap-2">
-            <span className="w-full">
+            <aside className="w-full">
               <Input
                 label={"Nombre de Usuario"}
                 type="text"
@@ -218,26 +217,30 @@ const Register = () => {
                 icon={<FaRegUser />}
                 required
               />
-            </span>
-            <span className="w-full md:w-[70%] flex items-end p-0">
-              <Input
+            </aside>
+            <aside className="md:w-[70%] flex items-end p-0">
+              <span className="w-full">
+                <Input
                 label={"Plan"}
                 type="text"
                 id="plan"
                 value={`${registrationData?.plan || "free"} - ${
                   registrationData?.billingCycle || "monthly"
                 }`}
-                className="rounded-r-none w-[14.1rem] md:w-full"
+                className="rounded-r-none w-full"
                 readOnly
                 required
               />
+              </span>
+
               <Button
                 label="Cambiar"
                 onClick={() => setModalOpen(true)}
-                className="h-[2.6rem] m-0 px-4 md:px-2 text-xs rounded-none rounded-r-lg inputStyle items-center hover:brightness-125"
+                className=" h-[2.6rem] m-0 px-4 md:px-2 text-xs rounded-none rounded-r-lg inputStyle items-center hover:brightness-125"
                 variant="secondary"
               />
-            </span>
+
+            </aside>
           </article>
           <Input
             label={"Correo electrónico"}

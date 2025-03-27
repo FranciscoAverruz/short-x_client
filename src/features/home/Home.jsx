@@ -44,21 +44,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// style={{
-//   backgroundImage:
-//     "url(https://images.pexels.com/photos/14657167/pexels-photo-14657167.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
-//   backgroundAttachment: "fixed",
-//   backgroundSize: "cover",
-//   backgroundPosition: "center",
-// }}
-
-// Bordes
-{
-  /* <aside className="hidden md:flex absolute left-0 -bottom-[6.1rem] lg:-bottom-[7.8rem] w-28 lg:w-36 z-0 md:z-[2] scale-y-[-1] -rotate-90 overflow-hidden">
-  <img src={border} alt="border left" />
-</aside>
-<aside className="absolute md:right-0 -bottom-[6.1rem] lg:-bottom-[7.8rem] w-28 lg:w-36 z-0 md:z-[2] -scale-y-[-2] md:-scale-y-[-1] -rotate-90">
-  <img src={border} alt="border left" />
-</aside> */
-}

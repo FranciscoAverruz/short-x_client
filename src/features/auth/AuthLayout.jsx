@@ -6,15 +6,15 @@ const AuthLayout = ({
   formContent,
   title,
   onSubmit,
-  className = "mt-20 w-full md:w-full lg:w-[50%]",
+  classNameAL = "w-[90%] lg:w-[80%] mt-5 md:mt-24 mb-10",
 }) => {
   return (
-    <section className={`flex md:flex-col lg:flex-row justify-center w-[80%]  gap-5 ${className}`}>
-      <article className="hidden md:flex lg:flex-col items-center md:justify-center lg:justify-start h-full border-r-0 md:border-b-2 lg:border-b-0 lg:border-r-2 md:pb-16 lg:pb-0 lg:pr-8 min-w-52">
+    <section className={`flex md:flex-col lg:flex-row justify-center gap-5 ${classNameAL}`}>
+      <article className="hidden md:flex lg:flex-col items-center md:justify-center lg:justify-start border-r-0 md:border-b-2 lg:border-b-0 lg:border-r-2 md:pb-16 lg:pb-0 lg:pr-8 min-w-52 lg:mr-2">
         <img
           src={logo}
           alt="Logo"
-          className={"md:w-28 lg:w-36 drop-shadow-xl lg:mt-8 md:mr-5 lg:mr-0"}
+          className={"md:w-20 lg:w-28 drop-shadow-xl lg:mt-5 md:mr-5 lg:mr-0 lg:mb-8"}
         />
         <div className="hidden md:flex flex-col lg:items-center md:mb-0">
           <Sx className="md:text-6xl lg:text-4xl -mb-3 md:-mb-0" />

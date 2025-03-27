@@ -60,7 +60,7 @@ const MainLayout = () => {
       >
         <NavBar hasScrolled={hasScrolled} />
       </header>
-      <main className="relative flex-grow flex justify-center items-center pt-5 shadow-xl">
+      <main className="relative flex-grow flex justify-center pt-5 shadow-xl">
         {/* main backgorund */}
         <div
           key={isDarkMode ? "dark" : "light"}
@@ -68,7 +68,7 @@ const MainLayout = () => {
           style={background}
         />
 
-        <div className="relative flex justify-center w-[95%] md:w-[90%] lg:w-[80%] z-[1]">
+        <div className="relative flex justify-center items-start h-full w-[95%] md:w-[90%] lg:w-[80%] z-[1]">
           <Outlet />
         </div>
       </main>
