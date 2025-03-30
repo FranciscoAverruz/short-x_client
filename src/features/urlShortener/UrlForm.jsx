@@ -97,7 +97,7 @@ const UrlForm = ({ updateUrlsList, classUrlForm }) => {
             </span>
           </article>
         )}
-        <section className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 items-baseline md:items-center w-full h-fit justify-center gap-3 mt-5">
+        <section className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 items-baseline md:items-center w-full h-fit justify-center gap-3 mt-5 md:mt-0">
           <div
             className={`col-span-1 md:col-span-4 w-full h-fit innerlight rounded-lg bg-light-bg dark:bg-dark-bg ${
               shortenedUrl ? "" : "hidden md:block"

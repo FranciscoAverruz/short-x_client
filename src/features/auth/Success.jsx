@@ -56,10 +56,9 @@ function Success() {
       setLoading(false);
     }
   }, [error, navigate]);
-
   return (
+    <main className="w-screen h-screen flex justify-center items-start">
     <AuthLayout
-      title="Iniciar sesión"
       formContent={
         <section className="flex flex-col items-center justify-center text-center">
           {loading && (
@@ -73,6 +72,7 @@ function Success() {
               </p>
             </div>
           )}
+          
 
           {error && (
             <div className="flex flex-col items-center justify-center">
@@ -98,6 +98,7 @@ function Success() {
         </section>
       }
     />
+    </main>
   );
 }
 
