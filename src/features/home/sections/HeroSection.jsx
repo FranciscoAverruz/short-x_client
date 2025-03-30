@@ -41,7 +41,7 @@ const HeroSection = () => {
       </p>
 
       {/* Form */}
-      <section className="w-full md:w-3/4 mt-3 md:mt-16 px-0 md:px-4 mb-16 md:mb-0">
+      <section className="w-full md:w-5/6 mt-3 md:mt-16 px-0 md:px-4 mb-16 md:mb-0">
         <UrlForm link={link} setLink={setLink} onSubmit={handleSubmit} />
       </section>
     </main>

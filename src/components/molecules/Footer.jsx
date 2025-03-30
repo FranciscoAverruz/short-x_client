@@ -41,7 +41,10 @@ const Footer = () => {
             label={option.label}
             variant="navbar"
             icon={RiArrowRightDoubleFill}
-            onClick={() => navigate(option.link)}
+            onClick={() => {
+              navigate(option.link);
+              window.scrollTo(0, 0);
+            }}
           />
         ))}
       </div>
