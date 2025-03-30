@@ -11,7 +11,7 @@ const Condiciones = () => {
       <section>
         <h1 className="title">Términos y Condiciones de Uso</h1>
         <p className="mb-5 paragraphText font-semibold">
-          Última actualización: 15 de enero de 2025
+          Última actualización: 30 de marzo de 2025
         </p>
         <article className="mb-3 paragraphText">
           <p>

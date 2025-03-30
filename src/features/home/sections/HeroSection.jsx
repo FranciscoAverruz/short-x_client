@@ -20,7 +20,7 @@ const HeroSection = () => {
       />
 
       <h1 className="title drop-shadow-xl font-bold lg:gap-0 mt-8">
-        Acorta tus enlaces de manera fácil y rápida
+      ¡Acorta enlaces como un pro!
       </h1>
 
       <h2 className="subTitle1 w-full font-semibold">

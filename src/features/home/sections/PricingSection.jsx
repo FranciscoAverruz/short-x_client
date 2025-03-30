@@ -45,7 +45,7 @@ const PricingSection = ({ handlePlanSelect }) => {
             key={index}
             className={`plan flex flex-col md:flex-row lg:flex-col transition-all duration-300 shadow-lg rounded-xl md:rounded-none lg:rounded-xl m-1 ${
               plan.isRelevant
-                ? "bg-dark-sectionBg/50 text-dark-Title dark:bg-light-sectionBg/40 dark:text-light-Title scale-110 z-20"
+                ? "bg-dark-sectionBg/40 text-dark-Title dark:bg-light-sectionBg/30 dark:text-dark-Title scale-110 z-20"
                 : "bg-light-sectionBg/50 dark:bg-dark-sectionBg/50  grlTxt scale-100 z-10"
             }`}
           >
@@ -66,6 +66,9 @@ const PricingSection = ({ handlePlanSelect }) => {
               <p className="absolute md:hidden lg:flex top-0 left-0 flex text-lg text-light-Title dark:text-dark-Title bg-light-bg/70 dark:bg-dark-bg/50 p-2 font-bold opacity-100 w-full justify-center items-center">
                 {isAnnual ? plan.pricing.annual : plan.pricing.monthly}
               </p>
+              <h1 className={`grlTxt text-xl mb-5 font-semibold drop-shadow-md ${plan.isRelevant ? "dark:text-dark-ttBg" : ""}`}> 
+                {plan.description}
+              </h1>
               <section>
                 <ul className="list-disc pl-4 mb-1 text-start my-1">
                   {plan.features.map((feature, idx) => (
