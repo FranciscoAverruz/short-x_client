@@ -5,6 +5,7 @@ import NavBar from "@molecules/NavBar";
 import Footer from "@molecules/Footer";
 import bgDark from "@assets/bgDark.png";
 import bgLight from "@assets/bgLight.png";
+import ScrollToTopButton from "@common/ScrollToTopButton.jsx";
 
 const MainLayout = () => {
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -72,7 +73,7 @@ const MainLayout = () => {
           <Outlet />
         </div>
       </main>
-
+        <ScrollToTopButton />
       <footer className="z-[10] bg-light-bg dark:bg-dark-bg opacity-100">
         <Footer />
       </footer>
