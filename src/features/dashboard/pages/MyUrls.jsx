@@ -5,7 +5,7 @@ import UrlInfo from "@dashCommon/UrlInfo.jsx";
 import UrlForm from "@urlShortener/UrlForm.jsx";
 import useAuthAxios from "@hooks/useAuthAxios";
 import ConfirmModal from "@dashCommon/ConfirmModal.jsx";
-import DashSearchBar from "@dashCommon/DashSearchBar.jsx";
+// import DashSearchBar from "@dashCommon/DashSearchBar.jsx";
 import useUrlActions from "@hooks/useUrlActions";
 import PaginationURL from "@dashCommon/PaginationURL";
 import { Loader } from "@common/Loader.jsx";
@@ -135,7 +135,7 @@ const MyUrls = () => {
               className="flex flex-col w-full lg:w-2/3"
             >
               <aside className="flex flex-row justify-between items-center mb-3 gap-3">
-                <DashSearchBar placeholder="Buscar URL" />
+                {/* <DashSearchBar placeholder="Buscar URL" /> */}
                 {selectedUrls.length > 0 && (
                   <Button
                     onClick={openConfirmModal}
