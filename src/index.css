@@ -181,42 +181,38 @@
 
   /* Primer nivel de numeración */
   ol {
-    counter-reset: main; /* Reinicia el contador para el primer nivel */
-    list-style-position: inside; /* Coloca la numeración dentro del área del contenedor */
+    counter-reset: main;
+    list-style-position: inside;
     padding-left: 2rem;
   }
 
   ol > li {
-    counter-increment: main; /* Incrementa el contador para el primer nivel */
-    /* margin-left: 0.5rem;
-  text-indent: -1.8rem; Indenta las líneas subsiguientes a la izquierda para alinearlas */
+    counter-increment: main;
   }
 
   ol > li::before {
-    content: counter(main) ". "; /* Muestra el contador del primer nivel como 1, 2, 3... */
+    content: counter(main) ". ";
     font-weight: 700;
   }
 
   /* Segundo nivel de numeración */
   ol > li > ol {
-    counter-reset: sub; /* Reinicia el contador para cada subnivel */
-    /* padding-left: 1rem; */
+    counter-reset: sub;
   }
 
   ol > li > ol > li {
-    counter-increment: sub; /* Incrementa el contador del subnivel */
-    /* margin-left: 0.5rem; */
+    counter-increment: sub;
   }
 
   ol > li > ol > li::before {
-    content: counter(main) "." counter(sub) ". "; /* Muestra la numeración como 1.1, 1.2, 2.1, 2.2 */
+    content: counter(main) "." counter(sub) ". ";
     font-weight: 700;
   }
 
   /* Estilo para la lista desordenada (sub-subejemplos) */
   ol > li > ol > li > ul {
-    list-style-type: disc; /* Cambia el estilo de viñeta a un disco (punto) */
-    padding-left: 1rem; /* Reduce el espacio a la izquierda de las viñetas */
+    list-style-type: disc;
+    padding-left: 1rem;
   }
 
   /* Ajuste del margen entre los ítems de la lista desordenada */

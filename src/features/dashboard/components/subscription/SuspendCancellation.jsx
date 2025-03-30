@@ -52,6 +52,7 @@ const SuspendCancellation = () => {
         icon={TbCancel}
         onClick={openConfirmationDialog}
         disabled={loading}
+        className="w-full md:w-auto"
       />
 
       {error && toast.error(error)}

@@ -5,8 +5,7 @@ import logo from "@assets/icon.png";
 const AuthLayout = ({
   formContent,
   title,
-  onSubmit,
-  classNameAL = "w-[90%] lg:w-[80%] mt-5 md:mt-24 mb-10",
+  classNameAL = "w-[90%] lg:w-[70%] mt-5 md:mt-24 mb-10",
 }) => {
   return (
     <section className={`flex md:flex-col lg:flex-row justify-center gap-5 ${classNameAL}`}>
@@ -24,12 +23,10 @@ const AuthLayout = ({
         </div>
       </article>
       <article className="w-full py-5">
-        <form onSubmit={onSubmit}>
           <h2 className="flex title mb-8 justify-center lg:justify-start">
             {title}
           </h2>
           {formContent}
-        </form>
       </article>
     </section>
   );

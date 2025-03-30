@@ -78,7 +78,7 @@ const GetPaymentHistory = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="p-4 md:p-0 lg:p-5  w-full h-full"
+        className="p-4 md:p-0 lg:py-5 px-1 w-full h-full"
       >
         <h2 className="text-xl subTitle1">Historial de Pagos</h2>
         <ul className="mt-0 items-center">
@@ -87,23 +87,23 @@ const GetPaymentHistory = () => {
             return (
               <li key={payment._id || payment.transactionId}>
                 <article className="flex flex-row justify-between items-center paragraphText text-sm">
-                  <span className="flex flex-row md:gap-8">
-                    <p>
-                      <strong className="subTitle2 text-base mr-2">
+                  <span className="flex flex-row gap-3 md:gap-8">
+                    <p className="flex flex-wrap items-baseline">
+                      <strong className="subTitle2 text-base mr-1">
                         Fecha:
-                      </strong>{" "}
+                      </strong>
                       {new Date(payment.timestamp).toLocaleDateString()}
                     </p>
-                    <p className=" hidden lg:block">
-                      <strong className="subTitle2 text-base mr-2">
-                        Factura:{" "}
+                    <p className="hidden lg:flex flex-wrap items-baseline">
+                      <strong className="subTitle2 text-base mr-1">
+                        Factura:
                       </strong>
                       {payment.invoiceNumber}
                     </p>
-                    <p>
-                      <strong className="subTitle2 text-base mr-2">
+                    <p className="flex flex-wrap items-baseline">
+                      <strong className="subTitle2 text-base mr-1">
                         Monto:
-                      </strong>{" "}
+                      </strong>
                       {payment.amount} {payment.currency}
                     </p>
                   </span>
@@ -117,23 +117,22 @@ const GetPaymentHistory = () => {
                 </article>
                 <hr className="divider -my-1" />
                 {isDetailsVisible && (
-                  <>
-                    <article className="flex flex-col lg:flex-row items-start justify-start lg:items-center lg:justify-between lg:gap-5 mt-2 pl-3 bg rounded-lg paragraphText text-sm dark:opacity-80">
-                      <aside className="flex flex-col md:flex-row md:gap-5">
-                        <p className="block lg:hidden">
-                          <strong className="subTitle1 text-sm font-normal mr-2">
+                    <article className="flex flex-col md:flex-row items-start justify-start lg:items-center md:justify-between mt-2 pl-3 bg rounded-lg paragraphText text-sm dark:opacity-80 w-full">
+                      <aside className="flex md:flex-row gap-x-5 w-full flex-wrap">
+                        <p className="flex flex-col lg:hidden">
+                          <strong className="subTitle1 text-sm font-normal mr-1">
                             Factura:
                           </strong>
                           {payment.invoiceNumber}
                         </p>
-                        <p>
-                          <strong className="subTitle1 text-sm font-normal mr-2">
+                        <p className="flex flex-col md:flex-row flex-wrap">
+                          <strong className="subTitle1 text-sm font-normal mr-1">
                             Método de pago:
                           </strong>
                           {payment.paymentMethod}
                         </p>
-                        <p className="flex flex-row gap-2">
-                          <strong className="subTitle1 text-sm font-normal mr-2">
+                        <p className="flex flex-col lg:flex-row lg:gap-x-2 flex-wrap">
+                          <strong className="subTitle1 text-sm font-normal mr-1">
                             Estado:
                           </strong>
                           <span
@@ -146,24 +145,26 @@ const GetPaymentHistory = () => {
                             {payment.status}
                           </span>
                         </p>
-                        <p>
+                        <p className="flex flex-col lg:flex-row flex-wrap">
                           <strong className="subTitle1 text-sm font-normal mr-2">
                             Transacción:
-                          </strong>{" "}
-                          {payment.transactionId}
+                          </strong>
+                          <span className="overflow-y-hidden">{payment.transactionId}</span>
                         </p>
                       </aside>
+                      <aside className="flex self-end w-full md:w-fit">
                       {payment.invoiceUrl && (
                         <Button
                           label={"Factura"}
                           icon={TbInvoice}
                           variant="secondary"
                           onClick={() => viewInvoice(payment.invoiceUrl)}
-                          className="w-full md:w-auto"
+                          className="w-full md:w-fit gap-1 text-xs p-1"
+                          ClassBtnIco="text-sm"
                         />
                       )}
+                      </aside>
                     </article>
-                  </>
                 )}
               </li>
             );

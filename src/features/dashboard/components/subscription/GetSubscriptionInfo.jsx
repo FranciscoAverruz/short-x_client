@@ -81,7 +81,7 @@ const GetSubscriptionInfo = () => {
       </AnimatePresence>
 
       <hr className="divider" />
-      <aside className="flex w-full items-center mt-2">
+      <aside className="flex flex-col md:flex-row w-full items-center mt-2">
         {subscription.status === "pending" && (
           <p className="text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold">
             Tu suscripción se cancelará el{" "}
@@ -94,7 +94,7 @@ const GetSubscriptionInfo = () => {
             el {FormatDate(subscription.renewalDate)}.
           </p>
         )}
-        <article className="ml-auto">
+        <article className="ml-auto w-full md:w-auto">
           {subscription.status === "pending" ? (
             <SuspendCancellation />
           ) : subscription.status === "pendingToFree" ? (
