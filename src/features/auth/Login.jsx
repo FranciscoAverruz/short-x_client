@@ -49,7 +49,7 @@ const Login = () => {
       title="Iniciar sesión"
       onSubmit={handleSubmit}
       formContent={
-        <>
+        <form onSubmit={handleSubmit}>
           <Input
             label={"Correo electrónico"}
             id="email"
@@ -74,6 +74,7 @@ const Login = () => {
               label="Mantener sesión iniciada"
               checked={keepLoggedIn}
               onChange={() => setKeepLoggedIn(!keepLoggedIn)}
+              className="ml-3"
             />
 
             <span className="ml-[1.4rem] md:mr-2">
@@ -97,7 +98,7 @@ const Login = () => {
               <SubmitButton
                 label="Iniciar Sesión"
                 loading={loading}
-                className="z-[2] w-full md:w-auto gap-1 px-[0.4rem]"
+                className="z-[2] w-full md:w-auto gap-1 p-3"
               />
             </span>
           </article>
@@ -111,7 +112,7 @@ const Login = () => {
               className="font-bold mt-5 md:ml-1"
             />
           </article>
-        </>
+        </form>
       }
     />
   );

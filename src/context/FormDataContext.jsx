@@ -7,12 +7,12 @@ const FormDataContext = createContext();
 const FormDataProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [flag, setFlag] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+34");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [countryCode, setCountryCode] = useState("ES");
   const [countryName, setCountryName] = useState("");
-  const [selectedPrefixCont, setSelectedPrefixCont] = useState("+34");
+  const [selectedPrefixCont, setSelectedPrefixCont] = useState("");
 
   const [formData, setFormData] = useState({
     name: name,
@@ -28,13 +28,12 @@ const FormDataProvider = ({ children }) => {
   const resetForm = () => {
     setFormData({
       name: "",
-      phone: "",
+      phone: "+34",
       email: "",
       message: "",
       countryCode: "ES",
       countryName: "",
       flag: "",
-      selectedPrefixCont: "+34",
     });
   };
 

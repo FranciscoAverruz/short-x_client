@@ -9,6 +9,7 @@ const ConfirmModal = ({
   open,
   onClose,
   title,
+  subtitle,
   content,
   onConfirm,
   secondaryAction,
@@ -18,8 +19,11 @@ const ConfirmModal = ({
   return (
     <Dialog open={open} onClose={onClose}>
       <aside className="p-4">
-        <h2 className="flex title text-2xl font-medium w-full justify-center text-center my-8 subTitle2">
+        <h1 className="flex title md:text-2xl font-medium w-full justify-center text-center my-8">
           {title}
+        </h1>
+        <h2 className="flex subTitle1 md:text-xl justify-center text-center">
+          {subtitle}
         </h2>
         <hr className="divider mb-5" />
         <section className="flex justify-center">

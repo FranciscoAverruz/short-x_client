@@ -13,16 +13,18 @@ const useCustomDomains = () => {
 
   const fetchDomains = useCallback(async () => {
     setLoading(true);
-    try {
-      const response = await authAxios.get(
-        `${API_URL}/user/${userId}/custom-domains`
-      );
-      setDomains(response.data);
-    } catch (error) {
-      logError("Error al obtener los dominios personalizados.");
-      setError(error);
-    } finally {
-      setLoading(false);
+    if (userId) {
+      try {
+        const response = await authAxios.get(
+          `${API_URL}/user/${userId}/custom-domains`
+        );
+        setDomains(response.data);
+      } catch (error) {
+        logError("Error al obtener los dominios personalizados.");
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     }
   }, [authAxios, userId]);
 

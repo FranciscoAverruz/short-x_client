@@ -10,10 +10,12 @@ import useShortenUrlForUser from "@hooks/useShortenUrlForUser";
 import { toast } from "sonner";
 import { FaRegCopy } from "react-icons/fa";
 import { TbLinkPlus } from "react-icons/tb";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "@context/AuthContext";
 import { FRONTEND_URL } from "@src/Env.jsx";
 
 const UrlForm = ({ updateUrlsList, classUrlForm }) => {
+  const location = useLocation();
   const urlInvited = useShortenUrlInvited();
   const urlForUser = useShortenUrlForUser();
   const { userId } = useContext(AuthContext);
@@ -68,9 +70,11 @@ const UrlForm = ({ updateUrlsList, classUrlForm }) => {
               {loadingDomains ? (
                 <p>Cargando dominios...</p>
               ) : (
+                userId &&
                 <select
                   className="flex inputStyle shadow px-4 py-2 h-10"
                   onChange={(e) => setCustomDomain(e.target.value)}
+                  value={customDomain}
                 >
                   <option value="">{FRONTEND_URL}</option>
                   {domains.map((domain) => (

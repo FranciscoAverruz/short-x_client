@@ -21,13 +21,13 @@ const navbarOptions = [
     label: "Login",
     icon: PiSignInFill,
     link: "/login",
-    variant: "secondary",
+    variant: "navbar",
   },
   {
     label: "Registro",
     icon: HiOutlineUserPlus,
     link: "/register",
-    variant: "primary",
+    variant: "secondary",
   },
 ];
 
@@ -56,7 +56,7 @@ const NavBar = ({ hasScrolled }) => {
       >
         <span
           onClick={() => navigate("/")}
-          className={`transition-all duration-200 ${
+          className={`transition-all duration-75 md:duration-200 ${
             hasScrolled || menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-0"
           }`}
         >
@@ -72,7 +72,7 @@ const NavBar = ({ hasScrolled }) => {
       <section
         className={`flex flex-row justify-center gap-0 md:mt-0 md:max-h-screen md:opacity-100 md:bg-transparent w-screen md:w-auto py-2 md:py-0 transition-all duration-200 ease-in-out ${
           menuOpen
-            ? "max-h-screen opacity-100 bg-light-bg/90 dark:bg-dark-bg/20 backdrop-blur-md mt-0 w-screen md:w-auto"
+            ? "max-h-screen opacity-100 bg-light-bg/90 dark:bg-dark-bg/90 backdrop-blur-md mt-0 w-screen md:w-auto"
             : "max-h-0 opacity-0"
         }`}
       >
@@ -85,7 +85,7 @@ const NavBar = ({ hasScrolled }) => {
                 icon={option.icon}
                 onClick={() => handleNavigation(option.link)}
                 variant={option.variant}
-                className="flex flex-col md:flex-row w-[6.5rem] md:w-auto px-1 md:px-2 py-1 scale-90 md:scale-100 gap-2"
+                className={`flex flex-col md:flex-row w-[6.5rem] md:w-auto px-1 md:px-2 py-1 scale-90 md:scale-100 gap-2 ${option.variant === "secondary" ? "brightness-75 dark:brightness-200 dark:hover:brightness-90 mr-2" : ""}`}
               />
             ))}
           </article>

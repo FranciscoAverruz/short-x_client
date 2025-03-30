@@ -25,7 +25,7 @@ const EmailForm = ({ onSubmit }) => {
     defaultCountryName,
     defaultCountryFlag,
     countryOptions,
-    isLoading
+    isLoading,
   } = useEmailForm(onSubmit);
 
   return (
@@ -96,7 +96,7 @@ const EmailForm = ({ onSubmit }) => {
       </section>
 
       {/* ===================================== 2 ===================================== */}
-      <section className="md:mt-auto">
+      <section>
         <Input
           label={"Email"}
           id="email"
@@ -134,7 +134,7 @@ const EmailForm = ({ onSubmit }) => {
         )}
       </section>
 
-      <SubmitButton label="Enviar" className="mt-5" />
+      <SubmitButton label="Enviar" className="mt-5 p-3" />
     </form>
   );
 };

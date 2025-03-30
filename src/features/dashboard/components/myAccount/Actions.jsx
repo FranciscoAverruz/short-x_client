@@ -10,40 +10,48 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "@context/AuthContext";
 import { IoTrashOutline } from "react-icons/io5";
 import { lazy, Suspense, useContext, useState } from "react";
+import Input from "@molecules/Input.jsx";
 import FormatDate from "@dashCommon/FormatDate.jsx";
 import useAuthAxios from "@hooks/useAuthAxios";
 import ConfirmModal from "@dashCommon/ConfirmModal";
 const Button = lazy(() => import("@atoms/Button"));
 
 const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
-  const { userId, dispatch } = useContext(AuthContext);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const { userId, dispatch, subscription } = useContext(AuthContext);
+
   const [loadingCancel, setLoadingCancel] = useState(false);
-  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
   const [loadingSuspend, setLoadingSuspend] = useState(false);
+  const [cancelationOption, setCancelationOption] = useState("");
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
   const authAxios = useAuthAxios();
-  const cancelDate = FormatDate(user.scheduledForDeletion);
+  const accountCancelDate = FormatDate(user.scheduledForDeletion);
+  const suscriptionRenewalDate = FormatDate(subscription?.renewalDate);
+
   const isCancellationPending = user.isCancellationPending;
   const navigate = useNavigate();
 
+  const handleChange = (event) => {
+    setCancelationOption(event.target.value);
+  };
+
+  // Account Cancelation ****************************************************************
   const handleCancelAccount = async () => {
     setLoadingCancel(true);
+    console.log();
+
     try {
       const response = await authAxios.post(
         `${API_URL}/user/${userId}/request-deletion`,
         {
-          deletionTimeInHours: 24,
+          deletionScheduled:
+            cancelationOption === "wait" ? subscription?.renewalDate : 24,
+          actionChoice: cancelationOption,
         }
       );
 
       toast.success(response.data.message);
-      dispatch({
-        type: "UPDATE_USER",
-        payload: {
-          isCancellationPending: true,
-          scheduledForDeletion: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        },
-      });
+      navigate("/register");
 
       setIsCancelModalOpen(false);
     } catch (error) {
@@ -54,6 +62,7 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
     }
   };
 
+  // Suspends Account Cancelation *******************************************************
   const handleSuspendCancellation = async () => {
     setLoadingSuspend(true);
     try {
@@ -76,6 +85,7 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
     }
   };
 
+  // Changes Password *******************************************************************
   const handleChangePassword = () => {
     navigate("/dashboard/password");
   };
@@ -130,7 +140,44 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
               open={isCancelModalOpen}
               onClose={() => setIsCancelModalOpen(false)}
               title="¿Estás seguro?"
-              content="Tu cuenta será eliminada en 24 horas. ¿Quieres continuar?"
+              subtitle="La cancelación de las cuenta toma 24 horas en procesarse"
+              content={
+                subscription?.status === "pending" ? (
+                  <article className="w-[80%]">
+                    <span className="flex flex-col w-full items-center mb-8">
+                      <strong className="title text-xl">
+                        Aún Puedes usar tu suscripción hasta:
+                      </strong>
+                      <p className="text-center my-2 w-full sectionBg p-2 font-semibold smart text-xl drop-shadow-md rounded-md">
+                        {suscriptionRenewalDate}
+                      </p>
+                      <p>Tienes algunas Opciones</p>
+                    </span>
+                    <Input
+                      type="radio"
+                      id="wait"
+                      name="cancelOption"
+                      label="Esperar a que la suscripción se haya cancelado"
+                      value="wait"
+                      checked={cancelationOption === "wait"}
+                      onChange={handleChange}
+                      classCheckBox="subTitle2 text-base"
+                    />
+                    <Input
+                      type="radio"
+                      id="cancelNow"
+                      name="cancelOption"
+                      label="Programar la cancelación para dentro de 24 horas"
+                      value="cancelNow"
+                      checked={cancelationOption === "cancelNow"}
+                      onChange={handleChange}
+                      classCheckBox="subTitle2 text-base"
+                    />
+                  </article>
+                ) : (
+                  "Tu cuenta será eliminada en 24 horas. ¿Quieres continuar?"
+                )
+              }
               onConfirm={handleCancelAccount}
               loading={loadingCancel}
             />
@@ -140,7 +187,7 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
           <article>
             <div className="text-center mb-2">
               <p className="subTitle1 text-base">Cancelación programada:</p>
-              <span className="title text-base">{cancelDate}</span>
+              <span className="title text-base">{accountCancelDate}</span>
             </div>
             <Suspense fallback={<Loader type="spinner" />}>
               <Button
@@ -154,7 +201,9 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
                 open={isSuspendModalOpen}
                 onClose={() => setIsSuspendModalOpen(false)}
                 title="Suspender cancelación"
-                content="vas suspender la cancelación, tu cuenta ya no será eliminada. ¿Quieres continuar?"
+                content={
+                  "vas suspender la cancelación, tu cuenta ya no será eliminada. ¿Quieres continuar?"
+                }
                 onConfirm={handleSuspendCancellation}
                 loading={loadingSuspend}
               />

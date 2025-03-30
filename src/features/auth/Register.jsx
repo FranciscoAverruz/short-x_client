@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
 import avatar from "@assets/avatar.jpg";
+import PlanLabel from "@dashCommon/PlanLabel.jsx";
 import AuthLayout from "@auth/AuthLayout";
 import useRegister from "@hooks/useRegister.jsx";
 import PricingModal from "@common/PricingModal";
@@ -199,13 +200,15 @@ const Register = () => {
     }
   }, [searchParams, errorMessage]);
 
+  const currentPlanValue = `${registrationData?.plan || "free"}_${
+    registrationData?.billingCycle || "monthly"
+  }`;
   return (
     <AuthLayout
       title="Registrarse"
       imageSrc={avatar}
-      onSubmit={handleSubmit}
       formContent={
-        <>
+        <form onSubmit={handleSubmit}>
           <article className="flex flex-col-reverse md:flex-row w-full gap-2">
             <aside className="w-full">
               <Input
@@ -219,18 +222,21 @@ const Register = () => {
               />
             </aside>
             <aside className="md:w-[70%] flex items-end p-0">
-              <span className="w-full">
+              <span className="relative w-full">
                 <Input
-                label={"Plan"}
-                type="text"
-                id="plan"
-                value={`${registrationData?.plan || "free"} - ${
-                  registrationData?.billingCycle || "monthly"
-                }`}
-                className="rounded-r-none w-full"
-                readOnly
-                required
-              />
+                  label={"Plan"}
+                  type="text"
+                  id="plan"
+                  value={currentPlanValue}
+                  className="rounded-r-none w-full"
+                  style={{ textIndent: "-9999px" }}
+                  readOnly
+                  required
+                />
+                <span className="absolute left-4 top-10 transform text-amber-500 font-semibold text-lg">
+                  <PlanLabel plan={currentPlanValue} />
+                  {/* this will show over id="newPlan" */}
+                </span>
               </span>
 
               <Button
@@ -239,7 +245,6 @@ const Register = () => {
                 className=" h-[2.6rem] m-0 px-4 md:px-2 text-xs rounded-none rounded-r-lg inputStyle items-center hover:brightness-125"
                 variant="secondary"
               />
-
             </aside>
           </article>
           <Input
@@ -268,7 +273,7 @@ const Register = () => {
                 label="Acepto los"
                 checked={conditionsChecked}
                 onChange={handleCheckboxChange}
-                className="mt-0"
+                className="mt-0 ml-3"
                 required
               />
               <strong>
@@ -311,7 +316,7 @@ const Register = () => {
                 label="Registrarse"
                 loading={loading}
                 disabled={loading}
-                className="z-[2] w-full md:w-auto"
+                className="z-[2] w-full md:w-auto p-3"
               />
             </span>
           </article>
@@ -332,7 +337,7 @@ const Register = () => {
             closeModal={() => setModalOpen(false)}
             handlePlanSelect={handlePlanSelect}
           />
-        </>
+        </form>
       }
     />
   );

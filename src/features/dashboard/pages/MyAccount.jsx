@@ -12,9 +12,8 @@ import { useState, useEffect, useContext } from "react";
 
 const MyAccount = () => {
   const [user, setUser] = useState(null);
-  const { userId } = useContext(AuthContext);
-  const { user: contextUser } = useContext(AuthContext);
   const { loading, totalUrls } = useUserUrlsStats();
+  const { user: contextUser, userId } = useContext(AuthContext);
   const authAxios = useAuthAxios();
   const navigate = useNavigate();
 
@@ -53,39 +52,39 @@ const MyAccount = () => {
     <>
       <h1 className="title dashGrlHeadings text-2xl">Mi Cuenta</h1>
       <hr className="divider mb-8" />
-    <AnimatePresence>
-      <motion.main
-        key="myAccountMain"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <section className="md:max-w-xl lg:max-w-5xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-auto gap-4 md:gap-6 h-fit">
-          {/* User info */}
-          <article className="row-span-1 col-span-1 grlContainer md:p-8 flex items-center">
-            {user && (
-              <UserInfo
-                user={user}
-                setUser={setUser}
-                isCancellationPending={user.isCancellationPending}
-              />
-            )}
-          </article>
+      <AnimatePresence>
+        <motion.main
+          key="myAccountMain"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <section className="md:max-w-xl lg:max-w-5xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-[1fr_auto] grid-rows-auto gap-4 md:gap-6 h-fit">
+            {/* User info */}
+            <article className="row-span-1 col-span-1 grlContainer md:p-8 flex items-center">
+              {user && (
+                <UserInfo
+                  user={user}
+                  setUser={setUser}
+                  isCancellationPending={user.isCancellationPending}
+                />
+              )}
+            </article>
 
-          {/* Actions */}
-          <section className="row-span-1 col-span-1 flex items-center justify-center w-full h-full">
-            {user && (
-              <Actions
-                user={user}
-                handleRedirectToMyUrls={handleRedirectToMyUrls}
-                totalUrls={totalUrls}
-              />
-            )}
+            {/* Actions */}
+            <section className="row-span-1 col-span-1 flex items-center justify-center w-full h-full">
+              {user && (
+                <Actions
+                  user={user}
+                  totalUrls={totalUrls}
+                  handleRedirectToMyUrls={handleRedirectToMyUrls}
+                />
+              )}
+            </section>
           </section>
-        </section>
-      </motion.main>
-    </AnimatePresence>
-</>
+        </motion.main>
+      </AnimatePresence>
+    </>
   );
 };
 
