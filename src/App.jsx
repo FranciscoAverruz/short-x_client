@@ -16,7 +16,6 @@ import Conditions from "@pages/Conditions.jsx";
 import MainLayout from "@layouts/MainLayout.jsx";
 import ShortenUrl from "@dashPage/ShortenUrl.jsx";
 import UrlDetails from "@dashPage/UrlDetails.jsx";
-import ColorPalette from "@pages/ColorPalette.jsx";
 import Subscription from "@dashPage/Subscription.jsx";
 import RetryPayment from "@dashPage/RetryPayment.jsx";
 import VerifyDomain from "./features/dashboard/pages/VerifyDomain";
@@ -65,8 +64,6 @@ function App() {
       <Toaster richColors position="top-center" />
 
       <Routes>
-        <Route path="/paleta" element={<ColorPalette />} />
-
         {/* public   ========================================================== */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
