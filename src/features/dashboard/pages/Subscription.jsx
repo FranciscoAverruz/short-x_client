@@ -20,7 +20,7 @@ const Subscription = () => {
     );
   }
 
-  if (!subscription) {
+  if (!subscription && !(plan?.startsWith("free"))) {
     return <p>Cargando información de suscripción...</p>;
   }
 
@@ -35,14 +35,14 @@ const Subscription = () => {
           </article>
 
           <article className="col-span-1 md:col-span-6 lg:col-span-2">
-            {subscription ? (
+            {/* {subscription && !plan.startsWith("free") ? ( */}
               <UpdateSubscription
                 currentPlan={plan}
-                subscriptionId={subscriptionId}
+                subscriptionId={subscriptionId ?? undefined}
               />
-            ) : (
+            {/* ) : (
               <p>Cargando información de suscripción...</p>
-            )}
+            )} */}
           </article>
 
           <article className="grlContainer col-span-1 md:col-span-6 lg:col-span-4">
