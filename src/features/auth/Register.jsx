@@ -64,7 +64,6 @@ const Register = () => {
   // HANDLE SUBMIT *********************************************************************************************************
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Intentando registrar usuario...", registrationData);
 
     const selectedPlan = registrationData.plan ? registrationData.plan : "free";
     const selectedBillingCycle = registrationData.billingCycle
@@ -103,8 +102,6 @@ const Register = () => {
       paymentMethodId: registrationData.paymentMethodId,
     };
 
-    console.log("dataToSend.plan en register >> ", dataToSend.plan);
-
     const handleError = (err) => {
       if (err.response?.data?.error === "EMAIL_ALREADY_EXISTS") {
         setErrorMessage("Este correo ya está registrado.");
@@ -116,13 +113,10 @@ const Register = () => {
         setErrorMessage("Ocurrió un error inesperado. Intenta más tarde.");
       }
     };
-    console.log("registrationData.plan en register >> ", registrationData.plan);
 
     if (dataToSend.plan.startsWith("free")) {
       try {
         const res = await registerUser(dataToSend);
-        console.log("dataToSend en register>> ", dataToSend);
-
         if (res && res.message) {
           setSuccessMessage(res.message);
           setErrorMessage("");
