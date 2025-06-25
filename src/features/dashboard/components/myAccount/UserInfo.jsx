@@ -54,17 +54,18 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
       }
     };
 
-    if (!localSubscription) {
+    if (plan && !plan.startsWith("free") && !localSubscription) {
       fetchSubscription();
     }
-  }, [localSubscription, userId, authAxios, dispatch]);
+  }, [localSubscription, userId, plan, dispatch, authAxios]);
+  
 
-  if (!localSubscription || loading) {
+  if ((loading || !localSubscription) && !plan.startsWith("free")) {
     return <Loader type="spinner" className="w-full" />;
   }
 
-  const isPending = localSubscription.status === "pending";
-  const isPendingToFree = localSubscription.status === "pendingToFree";
+  const isPending = localSubscription?.status === "pending";
+  const isPendingToFree = localSubscription?.status === "pendingToFree";
 
   return (
     <main className="py-0 px-3 w-full">
@@ -142,12 +143,14 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
           <span className="flex grlTxt w-full justify-center items-center text-center">
             <PlanLabel plan={plan} />
           </span>
+          {/* { !plan.startsWith("free") &&  */}
           <Button
             label="ver Suscripión"
             variant="link"
             className="w-full md:w-auto flex justify-center"
             onClick={() => navigate("/dashboard/subscription")}
           />
+         {/* } */}
         </aside>
 
         <ul className="flex flex-col gap-2 list-disc w-full ml-5 mt-5">
@@ -167,7 +170,7 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
       </section>
 
       {/* Shows subscription data */}
-      {isPending && (
+      {localSubscription && isPending && !plan.startsWith("free") (
         <>
           <hr className="divider" />
           <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-center">
@@ -177,7 +180,7 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
         </>
       )}
 
-      {isPendingToFree && (
+      {localSubscription && isPendingToFree && !plan.startsWith("free") (
         <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-baseline">
           Tu suscripción cambiará a{" "}
           <strong className="text-xl mx-2">Free</strong> el{" "}
