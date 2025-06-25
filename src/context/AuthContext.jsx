@@ -108,6 +108,7 @@ const AuthContextProvider = ({ children }) => {
   const email = state.user?.email || decodedToken?.email;
   const isAdmin = state.user?.isAdmin || decodedToken?.isAdmin;
   const plan = state.user?.plan || decodedToken?.plan;
+  const startDate = decodedToken?.startDate;
 
   // user's subscription
   useEffect(() => {
@@ -183,6 +184,7 @@ const AuthContextProvider = ({ children }) => {
         email,
         isAdmin,
         plan,
+        startDate,
         subscription: state.subscription,
         paymentHistory: state.paymentHistory,
         dispatch,
