@@ -145,7 +145,6 @@ const UpdateSubscription = ({ currentPlan = "free_monthly" }) => {
             />
           </article>
         </aside>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
 
         <PricingModal
           isOpen={modalOpen}
