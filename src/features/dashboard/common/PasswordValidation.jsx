@@ -10,6 +10,7 @@ import {
 
 const PasswordValidation = ({
   password,
+  passwordInfo,
   newPassword,
   confirmPassword,
   passwordChecked,
@@ -50,7 +51,7 @@ const PasswordValidation = ({
   ];
 
   return (
-    <div
+    <article
       className={`relative flex flex-col  gap-2 w-full ${
         register ? "md:flex-row" : ""
       }`}
@@ -93,7 +94,7 @@ const PasswordValidation = ({
       <ul
         className={`col-span-2 absolute text-sm mt-3 md:mt-3 transition-all duration-300 top-16 w-full px-2 py-1 md:py-1 z-10  bg rounded-b-lg shadow-md opacity-100
               ${
-                passwordFocused || (passwordChecked && !allRequirementsMet)
+                (passwordFocused && !allRequirementsMet) || (passwordChecked && !allRequirementsMet)
                   ? "opacity-100 scale-104"
                   : "opacity-0 scale-0"
               }`}
@@ -132,9 +133,11 @@ const PasswordValidation = ({
         value={confirmPassword}
         onChange={onConfirmPasswordChange}
         className="w-full"
+        variant={`${passwordInfo.match ? "default" :"error" }`}
         required
       />
-    </div>
+      
+    </article>
   );
 };
 
