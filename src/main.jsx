@@ -9,6 +9,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { UserProvider } from "@context/UserContext.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FormDataProvider } from "@context/FormDataContext";
+import { RegisterProvider } from "@context/RegisterContext";
 import "@src/index.css";
 import "@src/scroll.css";
 
@@ -19,13 +20,15 @@ const stripePromise = loadStripe(STRIPE_KEY);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <UserProvider>
     <AuthContextProvider>
-      <Elements stripe={stripePromise}>
-        <FormDataProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </FormDataProvider>
-      </Elements>
+      <RegisterProvider>
+        <Elements stripe={stripePromise}>
+          <FormDataProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </FormDataProvider>
+        </Elements>
+      </RegisterProvider>
     </AuthContextProvider>
   </UserProvider>
 );
