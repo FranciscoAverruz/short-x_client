@@ -19,6 +19,8 @@ const PasswordInput = forwardRef(
       onFocus,
       onBlur,
       required,
+      classInput,
+      variant
     },
     ref
   ) => {
@@ -43,6 +45,8 @@ const PasswordInput = forwardRef(
           required={required}
           icon={<GoKey />}
           ref={ref}
+          className={classInput}
+          variant={variant}
         />
         <Button
           type="button"
