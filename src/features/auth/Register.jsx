@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
 import avatar from "@assets/avatar.jpg";
@@ -13,6 +13,7 @@ import PasswordValidation from "@dashCommon/PasswordValidation";
 import { toast } from "sonner";
 import { FaRegUser } from "react-icons/fa";
 import { MdAlternateEmail } from "react-icons/md";
+import { RegisterContext } from "@context/RegisterContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Register = () => {
@@ -22,30 +23,37 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [passwordChecked, setPasswordChecked] = useState(false);
   const [conditionsChecked, setConditionsChecked] = useState(false);
-  const [registrationData, setRegistrationData] = useState({
-    username: "",
-    email: "",
+  const [passwords, setPasswords] = useState({
     password: "",
     confirmPassword: "",
-    plan: "",
-    billingCycle: "",
-    paymentMethodId: "",
   });
+  const { password, confirmPassword } = passwords;
+  const passwordInfo = {
+    length: password.length,
+    match: password.length > 0 && password === confirmPassword,
+  };
+  const { registrationData, setRegistrationData } = useContext(RegisterContext);
   const { createCheckoutSession } = useCheckoutSession();
   const { registerUser, loading, error } = useRegister();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setRegistrationData({
-      ...registrationData,
-      [id]: value,
-    });
 
-    if (id === "password") {
-      if (!passwordChecked && value.length > 0) {
+    if (id === "password" || id === "confirmPassword") {
+      setPasswords((prev) => ({
+        ...prev,
+        [id]: value,
+      }));
+
+      if (id === "password" && !passwordChecked && value.length > 0) {
         setPasswordChecked(true);
       }
+    } else {
+      setRegistrationData((prev) => ({
+        ...prev,
+        [id]: value,
+      }))
     }
   };
 
@@ -82,12 +90,12 @@ const Register = () => {
     }
 
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{5,}$/;
-    if (!passwordRegex.test(registrationData.password)) {
+    if (!passwordRegex.test(passwords.password)) {
       toast.warning("La contraseña no cumple con los requisitos.");
       return;
     }
 
-    if (registrationData.password !== registrationData.confirmPassword) {
+    if (!passwordInfo.match) {
       toast.warning("Las contraseñas no coinciden");
       return;
     }
@@ -95,8 +103,8 @@ const Register = () => {
     const dataToSend = {
       username: registrationData.username,
       email: registrationData.email,
-      password: registrationData.password,
-      confirmPassword: registrationData.confirmPassword,
+      password: passwords.password,
+      confirmPassword: passwords.confirmPassword,
       plan: fullPlan,
       billingCycle: selectedBillingCycle,
       paymentMethodId: registrationData.paymentMethodId,
@@ -126,8 +134,7 @@ const Register = () => {
         handleError(err);
       }
     } else if (
-      registrationData.plan === "pro" ||
-      registrationData.plan === "premium"
+      registrationData.plan === "pro" || registrationData.plan === "premium"
     ) {
       try {
         sessionStorage.setItem("userData", JSON.stringify(dataToSend));
@@ -153,7 +160,7 @@ const Register = () => {
       }
     }
   };
-
+// ////******************************************* */
   useEffect(() => {
     if (successMessage) {
       setTimeout(() => navigate("/login"), 3000);
@@ -192,7 +199,7 @@ const Register = () => {
       }));
       setErrorMessage("");
     }
-  }, [searchParams, errorMessage]);
+  }, [searchParams, errorMessage, setRegistrationData]);
 
   const currentPlanValue = `${registrationData?.plan || "free"}_${
     registrationData?.billingCycle || "monthly"
@@ -252,11 +259,12 @@ const Register = () => {
           />
 
           <PasswordValidation
-            password={registrationData.password}
-            confirmPassword={registrationData.confirmPassword}
+            password={passwords.password}
+            confirmPassword={passwords.confirmPassword}
             onPasswordChange={handleChange}
             onConfirmPasswordChange={handleChange}
             passwordChecked={passwordChecked}
+            passwordInfo={passwordInfo}
           />
 
           <section className="flex flex-col md:flex-row text-xs my-4">
@@ -309,7 +317,7 @@ const Register = () => {
               <SubmitButton
                 label="Registrarse"
                 loading={loading}
-                disabled={loading}
+                disabled={loading || !passwordInfo.match}
                 className="z-[2] w-full md:w-auto p-3"
               />
             </span>
