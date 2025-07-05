@@ -30,8 +30,7 @@ const Input = ({
 }) => {
   const inputClasses = {
     default: "inputStyle shadow",
-    error:
-      "px-4 py-2 border border-red-500 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500",
+    error: "inputStyle shadow inputError"
   };
 
   const isCheckboxOrRadio = type === "checkbox" || type === "radio";

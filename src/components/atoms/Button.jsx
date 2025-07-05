@@ -22,6 +22,7 @@ const Button = ({
     toggle: "btnIcon",
     danger: "btnDanger",
     action: "actionBtn",
+    disabledBtn: "btnDisabled"
   };
 
   return (
