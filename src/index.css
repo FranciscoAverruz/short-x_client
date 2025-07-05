@@ -27,8 +27,19 @@
     @apply flex px-4 py-2 justify-start text-sm hover:bg-light-btnMenuHoverBg/10 hover:dark:bg-dark-btnMenuHoverBg w-full gap-3 rounded-none opacity-70;
   }
 
+  .btnBase {
+  @apply text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
+}
+
+  .btnDisabled {
+    @apply btnBase; 
+    @apply bg-gradient-to-r from-gray-300 via-gray-400 to-gray-500;
+    @apply dark:from-gray-700 dark:via-gray-600 dark:to-gray-500;
+    @apply cursor-not-allowed pointer-events-none opacity-50;
+  }
+
   .btnPrimary {
-    @apply text-dark-Title py-1 px-2 rounded-lg transition-all duration-300 shadow-md justify-center items-center md:gap-3;
+    @apply btnBase;
     @apply bg-gradient-to-r from-light-primaryFrom via-light-primaryVia to-light-primaryTo hover:brightness-200;
     @apply dark:from-dark-primaryFrom dark:via-dark-primaryVia dark:to-dark-primaryTo focus:ring-transparent;
   }
@@ -82,6 +93,11 @@
     @apply bg-light-inputBg/50 text-light-inputText border-light-inputText/30;
     @apply dark:bg-dark-inputBg/20 dark:text-dark-inputText/60 dark:border-dark-inputText/30;
     @apply border px-4 py-2 rounded-md focus:outline-none focus:ring-2;
+  }
+
+  .inputError {
+  @apply border-red-500 focus:ring-red-500
+         dark:border-red-400 dark:focus:ring-red-400;
   }
 
   .title {
