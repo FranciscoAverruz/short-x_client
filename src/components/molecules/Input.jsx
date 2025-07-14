@@ -29,8 +29,8 @@ const Input = ({
   ...rest
 }) => {
   const inputClasses = {
-    default: "inputStyle shadow",
-    error: "inputStyle shadow inputError"
+    default: "inputStyle",
+    error: "inputStyle inputError"
   };
 
   const isCheckboxOrRadio = type === "checkbox" || type === "radio";
