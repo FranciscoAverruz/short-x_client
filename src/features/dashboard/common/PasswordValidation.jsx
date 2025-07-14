@@ -16,6 +16,7 @@ const PasswordValidation = ({
   passwordChecked,
   onPasswordChange,
   onConfirmPasswordChange,
+  className
 }) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
@@ -52,7 +53,7 @@ const PasswordValidation = ({
 
   return (
     <article
-      className={`relative flex flex-col  gap-2 w-full ${
+      className={`relative flex flex-col gap-2 w-full ${className} ${
         register ? "md:flex-row" : ""
       }`}
     >
@@ -133,7 +134,7 @@ const PasswordValidation = ({
         value={confirmPassword}
         onChange={onConfirmPasswordChange}
         className="w-full"
-        variant={`${passwordInfo.match ? "default" :"error" }`}
+        variant={`${passwordInfo?.match ? "default" :"error" }`}
         required
       />
       
