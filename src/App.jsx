@@ -24,6 +24,7 @@ import DashboardLayout from "@layouts/DashboardLayout.jsx";
 import RedirectHandler from "@urlShortener/RedirectHandler.jsx";
 import { Toaster } from "sonner";
 import { useEffect } from "react";
+import ForgotPassword from "@auth/ForgotPassword";
 
 function App() {
   const navigate = useNavigate();
@@ -68,11 +69,13 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/About" element={<About />} />
-          <Route path="/Privacy" element={<Privacy />} />
-          <Route path="/Contact" element={<Contact />} />
+          <Route path="/login/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/login/reset-password" element={<ChangePassword />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/Conditions" element={<Conditions />} />
+          <Route path="/conditions" element={<Conditions />} />
         </Route>
 
         {/* payment =========================================================== */}
