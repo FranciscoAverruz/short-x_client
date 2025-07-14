@@ -9,6 +9,7 @@ import PasswordInput from "@molecules/PasswordInput";
 import { AuthContext } from "@context/AuthContext";
 import { MdAlternateEmail } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
+import { RegisterContext } from "@context/RegisterContext";
 
 const Login = () => {
   const [loginError, setLoginError] = useState(null);
@@ -16,6 +17,7 @@ const Login = () => {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
   const { login } = useLogin();
   const { loading, error, dispatch, isAdmin } = useContext(AuthContext);
+  const { registrationData, setRegistrationData } = useContext(RegisterContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,7 +37,15 @@ const Login = () => {
   }, [isAdmin, location, navigate]);
 
   const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.id]: e.target.value });
+    const { id, value } = e.target;
+    setCredentials({ ...credentials, [id]: value });
+    if (id === "email") {
+      setRegistrationData((prev) => ({
+        ...prev,
+        email: value,
+      }));
+      console.log("loginData in Login ===> ", value);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -49,7 +59,7 @@ const Login = () => {
       title="Iniciar sesión"
       onSubmit={handleSubmit}
       formContent={
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="pt-[1px]">
           <Input
             label={"Correo electrónico"}
             id="email"
@@ -82,6 +92,7 @@ const Login = () => {
                 label="Olvide mi contraseña"
                 variant="link"
                 className="mt-2 ml-1 md:ml-auto"
+                onClick={() => navigate("/login/forgotpassword")}
               />
             </span>
           </article>
