@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Input from "@molecules/Input.jsx";
 import Button from "@atoms/Button.jsx";
-import avatar from "@assets/avatar.jpg";
 import PlanLabel from "@dashCommon/PlanLabel.jsx";
 import AuthLayout from "@auth/AuthLayout";
 import useRegister from "@hooks/useRegister.jsx";
@@ -207,7 +206,6 @@ const Register = () => {
   return (
     <AuthLayout
       title="Registrarse"
-      imageSrc={avatar}
       formContent={
         <form onSubmit={handleSubmit}>
           <article className="flex flex-col-reverse md:flex-row w-full gap-2">
@@ -243,7 +241,7 @@ const Register = () => {
               <Button
                 label="Cambiar"
                 onClick={() => setModalOpen(true)}
-                className=" h-[2.6rem] m-0 px-4 md:px-2 text-xs rounded-none rounded-r-lg inputStyle items-center hover:brightness-125"
+                className=" h-[2.6rem] m-0 px-4 md:px-2 text-xs rounded-none rounded-r-lg inputStyle items-center hover:brightness-125 shadow-md shadow-slate-500/80 dark:shadow-slate-950 z-50"
                 variant="secondary"
               />
             </aside>
