@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import RevealOnScroll from "@common/RevealOnScroll.jsx";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -38,10 +39,14 @@ const FAQSection = () => {
 
   return (
     <section className="faq-section p-8 w-screen h-[42rem] md:h-[38rem] pt-0 pb-20 md:pt-20 gap-0 md:gap-10">
+      <RevealOnScroll>
       <h2 className="title mb-5 md:mb-8">Preguntas Frecuentes</h2>
+      </RevealOnScroll>
+      <RevealOnScroll>
       <div className="faq-list">
         {faqs.map((faq, index) => (
           <div className="faq-item" key={index}>
+            <RevealOnScroll>
             <button
               className="faq-question flex justify-between items-center w-full"
               onClick={() => toggleAnswer(index)}
@@ -54,9 +59,11 @@ const FAQSection = () => {
             {activeIndex === index && (
               <p className="faq-answer text-left">{faq.answer}</p>
             )}
+          </RevealOnScroll>
           </div>
         ))}
       </div>
+      </RevealOnScroll>
     </section>
   );
 };
