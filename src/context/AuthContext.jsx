@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import useAuthAxios from "@hooks/useAuthAxios";
+import axios from "axios";
 import { useJwt } from "react-jwt";
 import { API_URL } from "@src/Env.jsx";
 import { logError } from "@utils/logger";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useRef } from "react";
 
 const getUserFromStorage = () => {
   const sessionUser = sessionStorage.getItem("user");
@@ -98,7 +98,6 @@ const AuthReducer = (state, action) => {
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-  const authAxios = useAuthAxios();
 
   const token = state.user?.token || "";
 
@@ -110,26 +109,31 @@ const AuthContextProvider = ({ children }) => {
   const plan = state.user?.plan || decodedToken?.plan;
   const startDate = decodedToken?.startDate;
 
+  const subscriptionFetched = useRef(false);
+  const paymentFetched = useRef(false);
+
   // user's subscription
   useEffect(() => {
     const fetchSubscription = async () => {
-      if (!userId || (state.subscription && state.subscription.status)) return;
+      if (!userId || !token || subscriptionFetched.current) return;
 
       dispatch({ type: "SET_LOADING", payload: true });
 
       try {
-        if (!authAxios) {
-          logError("No hay instancia de authAxios disponible.");
-          return;
-        }
+        const axiosInstance = axios.create({
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        const response = await authAxios.get(
+        const response = await axiosInstance.get(
           `${API_URL}/subscription/${userId}/info`
         );
+
         dispatch({
           type: "SET_SUBSCRIPTION",
           payload: response.data.subscription,
         });
+
+        subscriptionFetched.current = true;
       } catch (err) {
         logError("Error al obtener la suscripción:", err);
       } finally {
@@ -138,31 +142,32 @@ const AuthContextProvider = ({ children }) => {
     };
 
     fetchSubscription();
-  }, [userId, authAxios, state.subscription, token]);
+  }, [userId, token]);
 
   // Gets payment history
   useEffect(() => {
     const fetchPaymentHistory = async () => {
-      if (!userId || (state.paymentHistory && state.paymentHistory.length > 0))
-        return;
+      if (!userId || !token || paymentFetched.current) return;
 
       dispatch({ type: "SET_LOADING", payload: true });
 
       try {
-        if (!authAxios) {
-          logError("No hay instancia de authAxios disponible.");
-          return;
-        }
+        const axiosInstance = axios.create({
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        const response = await authAxios.get(
+        const response = await axiosInstance.get(
           `${API_URL}/subscription/${userId}/payment-history`
         );
+
         dispatch({
           type: "SET_PAYMENT_HISTORY",
           payload: Array.isArray(response.data.payments)
             ? response.data.payments
             : [],
         });
+
+        paymentFetched.current = true;
       } catch (err) {
         logError("Error al obtener historial de pagos:", err);
       } finally {
@@ -171,7 +176,7 @@ const AuthContextProvider = ({ children }) => {
     };
 
     fetchPaymentHistory();
-  }, [userId, authAxios, state.paymentHistory]);
+  }, [userId, token]);
 
   return (
     <AuthContext.Provider
