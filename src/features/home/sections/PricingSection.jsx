@@ -7,6 +7,7 @@ import bgPricing from "@assets/bgPricing.webp";
 import ToggleBillingCycle from "@homeSections/ToggleBillingCycle";
 import { FaMedal } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import RevealOnScroll from "@common/RevealOnScroll.jsx";
 
 const PricingSection = ({ handlePlanSelect }) => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -30,32 +31,37 @@ const PricingSection = ({ handlePlanSelect }) => {
 
   return (
     <main className="flex justify-center items-center flex-col text-center w-full h-fit">
+      <RevealOnScroll>
       <h2 className="flex title mb-3 p-5">
         Encuentra el Plan Perfecto para Ti
       </h2>
+      </RevealOnScroll>
       {/* Billing Cycle Toggle *************************************************************/}
+      <RevealOnScroll>
       <article className="flex w-full justify-center mb-16">
         <ToggleBillingCycle isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
       </article>
+      </RevealOnScroll>
 
       {/* Pricing Cards ********************************************************************/}
-      <section className="grid w-[90%] md:w-full grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+      <RevealOnScroll>
+      <section className="grid w-full grid-cols-1 lg:grid-cols-3 px-5 md:px-0 gap-8">
         {plans.map((plan, index) => (
           <aside
             key={index}
-            className={`plan flex flex-col md:flex-row lg:flex-col transition-all duration-300 shadow-lg rounded-xl md:rounded-none lg:rounded-xl m-1 ${
+            className={`group plan flex flex-col md:flex-row lg:flex-col transition-all duration-300 shadow-xl rounded-xl md:rounded-none lg:rounded-xl border-2 dark:border-dark-inputBg cursor-pointer ${
               plan.isRelevant
                 ? "bg-dark-sectionBg/40 text-dark-Title dark:bg-light-sectionBg/30 dark:text-dark-Title scale-110 z-20"
                 : "bg-light-sectionBg/50 dark:bg-dark-sectionBg/50  grlTxt scale-100 z-10"
             }`}
           >
             <article
-              className={`relative p-5 rounded-t-lg md:rounded-t-none lg:rounded-t-lg flex flex-col items-center md:min-w-44 md:max-w-44 lg:min-w-full lg:max-w-full ${plan.planType}`}
+              className={`relative p-5 rounded-t-lg md:rounded-t-none lg:rounded-t-lg flex flex-col items-center md:min-w-44 md:max-w-44 lg:min-w-full lg:max-w-full transition-all duration-300 ease-in-out group-hover:brightness-150 ${plan.planType}`}
             >
               <div
                 className="absolute inset-0 bg-cover rounded-t-lg md:rounded-t-none lg:rounded-t-lg opacity-20"
-                style={{ backgroundImage: `url(${bgPricing})` }}
-              ></div>
+                style={{ backgroundImage: `url(${bgPricing})`}}
+              />
               <h3 className="title text-2xl font-bold">{plan.name}</h3>
               <p className="hidden md:flex lg:hidden absolute bottom-4 left-0 text-lg text-light-Title dark:text-dark-Title bg-light-bg/70 dark:bg-dark-bg/50 p-3 font-bold opacity-100 w-full justify-center items-center">
                 {isAnnual ? plan.pricing.annual : plan.pricing.monthly}
@@ -96,6 +102,7 @@ const PricingSection = ({ handlePlanSelect }) => {
           </aside>
         ))}
       </section>
+      </RevealOnScroll>
     </main>
   );
 };
