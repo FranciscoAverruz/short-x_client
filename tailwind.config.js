@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  safelist: ["text-Tlight-heading2", "text-Tdark-heading2"],
+  safelist: ["text-Tlight-heading2", "text-Tdark-heading2", "inputStyle"],
   darkMode: "selector",
   theme: {
     extend: {
@@ -17,8 +17,7 @@ export default {
           subTitle: "#7686BC",
           grlText: "#303651",
           inputText: "#697089",
-          // accent:	"#FA7575",
-          accent: "#FFCC66",
+          accent: "#D4A032",
           cardBg: "#EBF3FF",
           cardAccent: "#605DFF",
           btnSecBg: "#F1F3FF",
@@ -36,10 +35,6 @@ export default {
           dangerVia: "#f5a9a9",
           dangerTo: "#f44336",
           btnDangerBorder: "#f44336",
-          // navbarFrom: "#3B6FFF",
-          // navbarVia: "#1C4BFF",
-          // navbarTo: "#0F36C8",
-
           link: "#3B6FFF",
           iconFrom: "#4F8BFF",
           iconVia: "#3B6FFF",
@@ -78,9 +73,6 @@ export default {
           dangerVia: "#c2185b",
           dangerTo: "#b71c1c",
           btnDangerBorder: "#b71c1c",
-          // navbarFrom: "#1C4BFF",
-          // navbarVia: "#0F36C8",
-          // navbarTo: "#081F7A",
 
           link: "#4F8BFF",
           iconFrom: "#3B6FFF",
