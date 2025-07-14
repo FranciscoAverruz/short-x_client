@@ -11,19 +11,19 @@ const Footer = () => {
   const footerOptions = [
     {
       label: "Sobre Nosotros",
-      link: "/About",
+      link: "/about",
     },
     {
       label: "Términos y Condiciones",
-      link: "/Conditions",
+      link: "/conditions",
     },
     {
       label: "Política de Privacidad",
-      link: "/Privacy",
+      link: "/privacy",
     },
     {
       label: "Contacto",
-      link: "/Contact",
+      link: "/contact",
     },
   ];
 
