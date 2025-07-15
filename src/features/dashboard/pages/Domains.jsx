@@ -14,7 +14,7 @@ const Domains = () => {
         Dominios Personalizados
       </h1>
       <hr className="divider mb-8" />
-      {!plan.startsWith("premium") ? (
+      {!plan?.startsWith("premium") ? (
         <PremiumMessage />
       ) : (
         <Suspense fallback={<div>Cargando...</div>}>
