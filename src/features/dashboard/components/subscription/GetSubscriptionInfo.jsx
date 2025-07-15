@@ -12,7 +12,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const GetSubscriptionInfo = () => {
   const { subscription, loading, plan, startDate } = useContext(AuthContext);
   const currentPlanDetails = plans.find((p) => plan?.includes(p.planType));
-  const subsciptionStartDate = FormatDate(subscription?.startDate);
   const formatedStartDate = FormatDate(startDate);
   const renewalDate = FormatDate(subscription?.renewalDate);
 
@@ -21,7 +20,7 @@ const GetSubscriptionInfo = () => {
     return <div>No hay información de suscripción disponible.</div>;
 
   return (
-    <main className="flex flex-col p-4 md:p-5 w-full h-full">
+    <section className="flex flex-col p-4 md:p-5 w-full h-full">
       <AnimatePresence>
         <aside className="flex flex-col lg:flex-row gap-5 w-full">
           <motion.article
@@ -51,7 +50,6 @@ const GetSubscriptionInfo = () => {
 
               <strong className="subTitle2 text-base">Fecha de inicio:</strong>
               <p className="text-sm mb-1 ml-2 -mt-1">
-                {subsciptionStartDate}
                 {formatedStartDate}
               </p>
               {!plan.startsWith("free") && (
@@ -86,7 +84,6 @@ const GetSubscriptionInfo = () => {
           </motion.article>
         </aside>
       </AnimatePresence>
-
       <hr className="divider" />
       <aside className="flex flex-col md:flex-row w-full items-center mt-2">
         {subscription?.status === "pending" && (
@@ -94,7 +91,7 @@ const GetSubscriptionInfo = () => {
             Tu suscripción se cancelará el {renewalDate}.
           </p>
         )}
-        {subscription?.status === "pendingToFree" && !plan.startsWith("free") (
+        {subscription?.status === "pendingToFree" && !plan.startsWith("free") && (
           <p className="text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold">
             Tu suscripción cambiara a <strong className="text-xl">Free</strong>{" "}
             el {renewalDate}.
@@ -112,7 +109,7 @@ const GetSubscriptionInfo = () => {
         </article>
         }
       </aside>
-    </main>
+    </section>
   );
 };
 
