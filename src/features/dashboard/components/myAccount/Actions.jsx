@@ -140,7 +140,7 @@ const Actions = ({ user, totalUrls, handleRedirectToMyUrls }) => {
               open={isCancelModalOpen}
               onClose={() => setIsCancelModalOpen(false)}
               title="¿Estás seguro?"
-              subtitle="La cancelación de las cuenta toma 24 horas en procesarse"
+              subtitle="La cancelación de la cuenta toma 24 horas en procesarse"
               content={
                 subscription?.status === "pending" ? (
                   <article className="w-[80%]">
