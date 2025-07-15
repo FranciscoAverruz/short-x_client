@@ -22,8 +22,8 @@ const AuthLayout = ({
           </p>
         </div>
       </article>
-      <article className="w-full py-5">
-          <h2 className="flex title mb-8 justify-center lg:justify-start">
+      <article className="w-full py-5 mt-5">
+          <h2 className="flex title mb-8 justify-center text-center lg:justify-start">
             {title}
           </h2>
           {formContent}
