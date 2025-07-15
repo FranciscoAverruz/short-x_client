@@ -91,7 +91,7 @@ const Login = () => {
               <Button
                 label="Olvide mi contraseña"
                 variant="link"
-                className="mt-2 ml-1 md:ml-auto"
+                className="mt-2 ml-4 md:ml-auto"
                 onClick={() => navigate("/login/forgotpassword")}
               />
             </span>
@@ -114,8 +114,8 @@ const Login = () => {
             </span>
           </article>
 
-          <article className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-10">
-            <span className="labelInput">¿Aún no tienes una Cuenta?</span>
+          <article className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-10 pt-5 md:pt-0 labelInput">
+            ¿Aún no tienes una Cuenta?
             <Button
               label="Regístrate"
               variant="link"

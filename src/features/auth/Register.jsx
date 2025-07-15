@@ -321,7 +321,7 @@ const Register = () => {
             </span>
           </article>
 
-          <section className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-5">
+          <section className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-5 pt-5 md:pt-0">
             <span className="labelInput">¿Ya tienes una Cuenta?</span>
             <span className="">
               <Button
