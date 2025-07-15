@@ -73,7 +73,7 @@ const NavBar = ({ hasScrolled }) => {
         className={`flex flex-row justify-center gap-0 md:mt-0 md:max-h-screen md:opacity-100 md:bg-transparent w-screen md:w-auto py-2 md:py-0 transition-all duration-200 ease-in-out ${
           menuOpen
             ? "max-h-screen opacity-100 bg-light-bg/90 dark:bg-dark-bg/90 backdrop-blur-md mt-0 w-screen md:w-auto"
-            : "max-h-0 opacity-0"
+            : "opacity-0 -translate-x-96 md:translate-x-0"
         }`}
       >
         <aside className="flex flex-row items-center justify-center">
@@ -89,7 +89,7 @@ const NavBar = ({ hasScrolled }) => {
               />
             ))}
           </article>
-          <article className="flex rotate-90 scale-75 md:rotate-0 md:scale-100 h-5 md:h-fit w-fit p-0 md:p-1 justify-center items-center">
+          <article className="flex rotate-90 scale-75 md:rotate-0 md:scale-100 h-5 md:h-fit -p-5 md:p-1 justify-center items-center">
             <ThemeSwitch />
           </article>
         </aside>
