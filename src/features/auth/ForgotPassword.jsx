@@ -74,19 +74,19 @@ const ForgotPassword = () => {
     <AuthLayout
       title="Restablecer contraseña"
       formContent={
-        <form onSubmit={handleSubmit} className="flex flex-col">
+        <form onSubmit={handleSubmit} >
         <p
-          className={`col-span-6 md:col-span-4 row-start-2 md:row-start-1 font-semibold text-red-700 dark:text-red-400 text-sm w-full h-full flex items-center justify-center transition-opacity duration-300 ${
+          className={`font-semibold text-red-700 dark:text-red-400 text-sm w-full transition-opacity duration-300 -translate-y-5 ${
             tooManyAttempts ? "opacity-100" : "opacity-0"
-          }`}
+          } text-center md:text-left`}
           style={{ minHeight: "1.5rem" }}
         >
           Demasiados intentos fallidos. Intenta de nuevo en
-          <strong className="mx-2">{formattedCooldown}</strong>segundos.
+          <span className="font-bold ml-2">{formattedCooldown}</span>
         </p>
 
-        <p className="flex subTitle1 text-base py-3 text-center md:text-left">
-          Te enviaremos un enlace para restablecer la contraseña de la cuenta asociada a este correo electrónico.
+        <p className="flex subTitle1 text-base text-center md:text-left">
+          Te enviaremos un enlace para restablecer la contraseña de la cuenta asociada a este correo.
         </p>
           <Input
             label={"Correo electrónico"}
@@ -97,18 +97,18 @@ const ForgotPassword = () => {
             required
             icon={<MdAlternateEmail />}
           />
-          <p className="border-t-0 text-sm grlTxt pb-2 ml-2">
+          <p className="border-t-0 text-sm grlTxt pb-5 md:pb-2 ml-2">
             * Asegúrate de estar usando un correo válido. Revisa también tu
             carpeta de spam.
           </p>
           <section className="grid grid-rows-2 md:grid-rows-1 grid-cols-6 gap-0 h-full">
             {error && (
-              <p className="col-span-6 md:col-span-4 row-start-2 md:row-start-1 font-semibold text-red-700 dark:text-red-400 text-sm w-full h-full flex items-center justify-center">
+              <p className="col-span-6 md:col-span-4 row-start-2 md:row-start-1 font-semibold text-red-700 dark:text-red-400 text-sm w-full h-full flex items-center text-center">
                 {error}
               </p>
             )}
             {message && (
-              <p className="col-span-6 md:col-span-4 row-start-2 md:row-start-1 font-semibold text-green-700 dark:text-green-400 text-sm w-full h-full flex items-center justify-center">
+              <p className="col-span-6 md:col-span-4 row-start-2 md:row-start-1 font-semibold text-green-700 dark:text-green-400 text-sm w-full h-full flex items-center text-center">
                 {message}
               </p>
             )}
@@ -121,24 +121,22 @@ const ForgotPassword = () => {
               />
             </span>
           </section>
-          <article className="flex flex-col md:flex-row justify-center items-center md:justify-start md:items-baseline w-full border-t-2 mt-10">
-            <span className="labelInput">¿Aún no tienes una Cuenta?</span>
+          <article className="flex flex-col md:flex-row text-center md:text-left items-center md:items-baseline w-full border-t-2 mt-5 md:mt-10 pt-5 labelInput">
+            ¿Aún no tienes una Cuenta?
             <Button
               label="Regístrate"
               variant="link"
               onClick={() => navigate("/register")}
-              className="font-bold mt-5 md:ml-1"
+              className="font-bold mt-2 md:mt-0 md:ml-1"
             />
           </article>
-          <article className="flex flex-row ">
-            <p className="labelInput">
+          <article className="flex flex-col md:flex-row text-center md:text-left items-center md:items-baseline w-full mt-5 md:mt-0 labelInput">
               ¿Tienes problemas para recuperar tu contraseña?
-            </p>
             <Button
               label="Contactanos"
               variant="link"
               onClick={() => navigate("/contact")}
-              className="font-bold mx-2"
+              className="font-bold mx-2 mt-2 md:mt-0"
             />
           </article>
         </form>
