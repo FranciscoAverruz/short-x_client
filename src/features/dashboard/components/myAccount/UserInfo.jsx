@@ -170,20 +170,18 @@ const UserInfo = ({ user, setUser, isCancellationPending }) => {
       </section>
 
       {/* Shows subscription data */}
-      {localSubscription && isPending && !plan.startsWith("free") (
+      {localSubscription && isPending && !plan.startsWith("free") && (
         <>
           <hr className="divider" />
-          <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-center">
-            Tu suscripción se cancelará el{" "}
-            {FormatDate(localSubscription.renewalDate)}.
+          <p className="text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full text-center items-center">
+            Tu suscripción se cancelará el{" "}{FormatDate(localSubscription.renewalDate)}.
           </p>
         </>
       )}
 
-      {localSubscription && isPendingToFree && !plan.startsWith("free") (
-        <p className="flex text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full justify-center items-baseline">
-          Tu suscripción cambiará a{" "}
-          <strong className="text-xl mx-2">Free</strong> el{" "}
+      {localSubscription && isPendingToFree && !plan.startsWith("free") && (
+        <p className="text-md text-amber-500 dark:text-dark-accent drop-shadow-sm font-semibold w-full text-center items-baseline">
+          Tu suscripción cambiará a<strong className="text-xl mx-2">Free</strong>el{" "}
           {FormatDate(localSubscription.renewalDate)}.
         </p>
       )}
