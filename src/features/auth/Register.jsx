@@ -209,7 +209,7 @@ const Register = () => {
       formContent={
         <form onSubmit={handleSubmit}>
           <article className="flex flex-col-reverse md:flex-row w-full gap-2">
-            <aside className="w-full">
+            <section className="w-full">
               <Input
                 label={"Nombre de Usuario"}
                 type="text"
@@ -219,7 +219,7 @@ const Register = () => {
                 icon={<FaRegUser />}
                 required
               />
-            </aside>
+            </section>
             <aside className="md:w-[70%] flex items-end p-0">
               <span className="relative w-full">
                 <Input
@@ -227,7 +227,7 @@ const Register = () => {
                   type="text"
                   id="plan"
                   value={currentPlanValue}
-                  className="rounded-r-none w-full"
+                  className="rounded-r-none w-full text-transparent "
                   style={{ textIndent: "-9999px" }}
                   readOnly
                   required
