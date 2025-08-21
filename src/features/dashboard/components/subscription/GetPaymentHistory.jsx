@@ -40,7 +40,12 @@ const GetPaymentHistory = () => {
         });
       } catch (err) {
         logError("Error al obtener historial de pagos:", err);
-        setError("Hubo un problema al obtener los pagos.");
+
+        const isNotFound = err?.response?.status === 404;
+        const message = isNotFound
+          ? "Todavía no tienes historial de pagos."
+          : "Ocurrió un error al cargar el historial de pagos.";
+        setError(message);
       } finally {
         setLoading(false);
       }
@@ -52,9 +57,16 @@ const GetPaymentHistory = () => {
   if (loading) {
     return <Loader type="spinner" className="w-full h-full" />;
   }
-  if (error) return <div className="text-red-500">{error}</div>;
-  if (!paymentHistory || paymentHistory.length === 0)
-    return <div>No hay pagos registrados.</div>;
+
+  if (error || !paymentHistory || paymentHistory.length === 0)
+    return (
+      <section>
+        <h2 className="text-xl subTitle1 p-4 md:p-0 lg:py-2 px-1 w-full h-fit">
+          Historial de Pagos
+        </h2>
+        <p className="paragraphText">{error}</p>
+      </section>
+    );
 
   const toggleDetailsVisibility = (paymentId) => {
     setDetailsVisibility((prevState) => ({
