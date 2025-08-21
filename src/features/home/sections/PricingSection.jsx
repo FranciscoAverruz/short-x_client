@@ -72,9 +72,9 @@ const PricingSection = ({ handlePlanSelect }) => {
               <p className="absolute md:hidden lg:flex top-0 left-0 flex text-lg text-light-Title dark:text-dark-Title bg-light-bg/70 dark:bg-dark-bg/50 p-2 font-bold opacity-100 w-full justify-center items-center">
                 {isAnnual ? plan.pricing.annual : plan.pricing.monthly}
               </p>
-              <h1 className={`grlTxt text-xl mb-5 font-semibold drop-shadow-md ${plan.isRelevant ? "dark:text-dark-ttBg" : ""}`}> 
+              <h2 className={`grlTxt text-xl mb-5 font-semibold drop-shadow-md ${plan.isRelevant ? "dark:text-dark-ttBg" : ""}`}> 
                 {plan.description}
-              </h1>
+              </h2>
               <section>
                 <ul className="list-disc pl-4 mb-1 text-start my-1">
                   {plan.features.map((feature, idx) => (
