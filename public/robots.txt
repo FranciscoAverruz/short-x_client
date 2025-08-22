@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /login
+Disallow: /login/forgotpassword
+Disallow: /login/reset-password
+Disallow: /register
+Disallow: /dashboard
+Disallow: /cancel
+Disallow: /success
+
+Sitemap: https://st-x.netlify.app/sitemap.xml
